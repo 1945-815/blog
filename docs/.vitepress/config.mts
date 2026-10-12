@@ -14,7 +14,8 @@ export default defineConfig({
       { text: '文章', link: '/articles/' },
       { text: '路线图', link: '/roadmap' },
       { text: '项目复盘', link: '/projects' },
-      { text: '关于', link: '/about' }
+      { text: '关于', link: '/about' },
+      { text: 'GitHub', link: 'https://github.com/1945-815' }
     ],
     search: { provider: 'local' },
     sidebar: {

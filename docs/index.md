@@ -11,6 +11,9 @@ hero:
     - theme: alt
       text: 查看路线图
       link: /roadmap
+    - theme: alt
+      text: GitHub 仓库
+      link: https://github.com/1945-815/blog
 features:
   - title: Java 后端
     details: Spring Boot、MyBatis-Plus、MySQL 与 Redis 的业务开发笔记。
