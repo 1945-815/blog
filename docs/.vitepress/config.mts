@@ -21,10 +21,10 @@ export default defineConfig({
     sidebar: {
       '/articles/': [
         {
-          text: '文章草稿',
+          text: '站点文章样例',
           items: [
             { text: 'Java 集合的选择', link: '/articles/java-collections' },
-            { text: 'Redis TTL 与缓存边界', link: '/articles/redis-ttl' },
+            { text: 'Redis TTL 临时状态', link: '/articles/redis-ttl' },
             { text: 'RAG 文档问答链路', link: '/articles/rag-document-qa' }
           ]
         }
