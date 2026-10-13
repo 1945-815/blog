@@ -8,12 +8,28 @@
     "title": "我的 Java 后端学习路线：学过什么，哪些还在实践"
   },
   {
+    "id": 31,
+    "planDate": "2023-10-30",
+    "stage": 1,
+    "stageName": "Java 基础与数据结构",
+    "slug": "002-java-class-object",
+    "title": "第一次理解 Java 类和对象：字段、方法与封装"
+  },
+  {
     "id": 2,
     "planDate": "2023-11-18",
     "stage": 1,
     "stageName": "Java 基础与数据结构",
     "slug": "java-collections",
     "title": "Java 集合的选择：List、Set、Map 分别解决什么问题"
+  },
+  {
+    "id": 32,
+    "planDate": "2023-11-28",
+    "stage": 1,
+    "stageName": "Java 基础与数据结构",
+    "slug": "004-data-structures-basics",
+    "title": "数据结构入门：数组、链表、栈、队列与复杂度"
   },
   {
     "id": 3,
@@ -24,12 +40,36 @@
     "title": "Stream API 的常见用法与容易忽略的副作用"
   },
   {
+    "id": 33,
+    "planDate": "2024-01-20",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "008-mysql-table-design-joins",
+    "title": "MySQL 表设计与多表查询：从实体关系写 SQL"
+  },
+  {
     "id": 8,
     "planDate": "2024-02-10",
     "stage": 2,
     "stageName": "数据库与 Spring 基础",
     "slug": "mysql-transaction-index-idempotency",
     "title": "数据库事务、索引与重复提交问题"
+  },
+  {
+    "id": 34,
+    "planDate": "2024-02-25",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "010-mysql-explain-index",
+    "title": "用 EXPLAIN 理解 MySQL 索引：读懂一条查询计划"
+  },
+  {
+    "id": 35,
+    "planDate": "2024-03-15",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "011-jdbc-preparedstatement-dao",
+    "title": "JDBC 预编译与 DAO：参数绑定和持久层边界"
   },
   {
     "id": 6,

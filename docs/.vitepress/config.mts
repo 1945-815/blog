@@ -28,7 +28,9 @@ export default defineConfig({
           collapsed: true,
           items: [
             { text: "Java 后端学习路线", link: "/articles/java-backend-learning-route" },
+            { text: "Java 类和对象", link: "/articles/002-java-class-object" },
             { text: "Java 集合的选择", link: "/articles/java-collections" },
+            { text: "数据结构入门", link: "/articles/004-data-structures-basics" },
             { text: "Stream API 与副作用", link: "/articles/stream-api-side-effects" },
           ]
         },
@@ -36,7 +38,10 @@ export default defineConfig({
           text: "阶段二：数据库与 Spring 基础",
           collapsed: true,
           items: [
+            { text: "MySQL 表设计与多表查询", link: "/articles/008-mysql-table-design-joins" },
             { text: "事务、索引与重复提交", link: "/articles/mysql-transaction-index-idempotency" },
+            { text: "EXPLAIN 与索引", link: "/articles/010-mysql-explain-index" },
+            { text: "JDBC 预编译与 DAO", link: "/articles/011-jdbc-preparedstatement-dao" },
             { text: "Spring MVC 请求流程", link: "/articles/spring-mvc-request-flow" },
             { text: "Maven 多环境配置", link: "/articles/maven-environment-config" },
             { text: "接口校验与错误响应", link: "/articles/spring-validation-error-response" },
