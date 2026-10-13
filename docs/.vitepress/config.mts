@@ -11,12 +11,12 @@ export default defineConfig({
     siteTitle: '张耘璨的博客',
     nav: [
       { component: 'BlogNavItem', props: { label: '首页', icon: 'home', href: '/' } },
-      { component: 'BlogNavItem', props: { label: 'Java技术栈', icon: 'code', href: '/categories/java' } },
-      { component: 'BlogNavItem', props: { label: '微服务', icon: 'network', href: '/categories/microservices' } },
-      { component: 'BlogNavItem', props: { label: '数据库', icon: 'database', href: '/categories/database' } },
-      { component: 'BlogNavItem', props: { label: 'AI生态', icon: 'ai', href: '/categories/ai' } },
-      { component: 'BlogNavItem', props: { label: '前端技术', icon: 'frontend', href: '/categories/frontend' } },
-      { component: 'BlogNavItem', props: { label: '随笔', icon: 'notes', href: '/categories/notes' } },
+      { component: 'BlogNavItem', props: { label: 'Java技术栈', icon: 'code', href: '/categories/java', topic: 'java' } },
+      { component: 'BlogNavItem', props: { label: '微服务', icon: 'network', href: '/categories/microservices', topic: 'microservices' } },
+      { component: 'BlogNavItem', props: { label: '数据库', icon: 'database', href: '/categories/database', topic: 'database' } },
+      { component: 'BlogNavItem', props: { label: 'AI生态', icon: 'ai', href: '/categories/ai', topic: 'ai' } },
+      { component: 'BlogNavItem', props: { label: '前端技术', icon: 'frontend', href: '/categories/frontend', topic: 'frontend' } },
+      { component: 'BlogNavItem', props: { label: '随笔', icon: 'notes', href: '/categories/notes', topic: 'notes' } },
       { component: 'BlogNavItem', props: { label: '关于我', icon: 'about', href: '/about' } }
     ],
     socialLinks: [{ icon: 'github', link: 'https://github.com/1945-815' }],

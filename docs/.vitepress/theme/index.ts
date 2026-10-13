@@ -12,6 +12,7 @@ import BlogList from './components/BlogList.vue'
 import CategoriesHome from './components/CategoriesHome.vue'
 import BlogCategory from './components/BlogCategory.vue'
 import ArticleMeta from './components/ArticleMeta.vue'
+import TagSearch from './components/TagSearch.vue'
 import './custom.css'
 
 export default {
@@ -31,5 +32,6 @@ export default {
     app.component('BlogList', BlogList)
     app.component('CategoriesHome', CategoriesHome)
     app.component('BlogCategory', BlogCategory)
+    app.component('TagSearch', TagSearch)
   }
 } satisfies Theme
