@@ -5,11 +5,16 @@
   "description": "张耘璨的 Java 后端与 AI 应用技术博客",
   "type": "module",
   "scripts": {
+    "build": "vitepress build docs",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
     "vitepress": "^1.6.4"
+  },
+  "dependencies": {
+    "lucide-vue-next": "^0.577.0",
+    "qrcode.vue": "^3.11.0"
   }
 }

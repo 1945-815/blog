@@ -8,20 +8,16 @@ export default defineConfig({
   cleanUrls: true,
   themeConfig: {
     logo: undefined,
-    siteTitle: '🔥 张耘璨的博客',
+    siteTitle: '张耘璨的博客',
     nav: [
-      { text: '首页', link: '/' },
-      { text: 'Java 技术栈', items: [
-        { text: 'Java 基础与集合', link: '/categories/java' },
-        { text: 'Spring 生态', link: '/categories/spring' },
-        { text: '全部技术分类', link: '/categories/' }
-      ] },
-      { text: '微服务', link: '/categories/microservices' },
-      { text: '数据库', link: '/categories/database' },
-      { text: 'AI 生态', link: '/categories/ai' },
-      { text: '前端技术', link: '/categories/frontend' },
-      { text: '随笔', link: '/categories/notes' },
-      { text: '关于我', link: '/about' }
+      { component: 'BlogNavItem', props: { label: '首页', icon: 'home', href: '/' } },
+      { component: 'BlogNavItem', props: { label: 'Java技术栈', icon: 'code', href: '/categories/java' } },
+      { component: 'BlogNavItem', props: { label: '微服务', icon: 'network', href: '/categories/microservices' } },
+      { component: 'BlogNavItem', props: { label: '数据库', icon: 'database', href: '/categories/database' } },
+      { component: 'BlogNavItem', props: { label: 'AI生态', icon: 'ai', href: '/categories/ai' } },
+      { component: 'BlogNavItem', props: { label: '前端技术', icon: 'frontend', href: '/categories/frontend' } },
+      { component: 'BlogNavItem', props: { label: '随笔', icon: 'notes', href: '/categories/notes' } },
+      { component: 'BlogNavItem', props: { label: '关于我', icon: 'about', href: '/about' } }
     ],
     socialLinks: [{ icon: 'github', link: 'https://github.com/1945-815' }],
     search: { provider: 'local' },

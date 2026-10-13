@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { withBase } from 'vitepress'
+import { Github, MapPin } from 'lucide-vue-next'
 import type { BlogArticle } from '../../../articles.data'
+import ContactCard from './ContactCard.vue'
 
 const props = defineProps<{ articles: BlogArticle[] }>()
 const selected = computed(() => {
-  const slugs = ['redis-hot-document-cache', 'activiti7-approval-flow', 'rag-document-qa', 'document-retrieval-platform-redacted']
+  const slugs = ['redis-hot-document-cache', 'activiti7-approval-flow', 'rag-document-qa']
   return slugs.map((slug) => props.articles.find((article) => article.url.includes(slug))).filter((article): article is BlogArticle => Boolean(article))
 })
 </script>
@@ -18,10 +20,11 @@ const selected = computed(() => {
         <img class="profile-avatar" :src="withBase('/avatar-monogram.svg')" alt="张耘璨的文字头像" width="80" height="80" />
         <h2>张耘璨</h2>
         <p class="profile-role">Java 后端开发者 · AI 应用探索者</p>
-        <p class="profile-location">⌖ 中国</p>
+        <p class="profile-location"><MapPin :size="15" :stroke-width="1.8" aria-hidden="true" />中华人民共和国</p>
+        <ContactCard />
         <p class="profile-about">写下可解释的技术选择，也记录学习与实践之间的距离。</p>
         <div class="profile-skills"><span v-for="skill in ['Java', 'Spring Boot', 'Spring Cloud', 'Redis', 'RabbitMQ', 'Elasticsearch', 'RAG']" :key="skill">{{ skill }}</span></div>
-        <div class="profile-links"><a href="https://github.com/1945-815" target="_blank" rel="noopener noreferrer">GitHub ↗</a><span title="个人主页链接待补充">掘金 · 待添加</span><span title="个人主页链接待补充">CSDN · 待添加</span></div>
+        <div class="profile-links"><a href="https://github.com/1945-815" target="_blank" rel="noopener noreferrer"><Github :size="15" :stroke-width="1.8" aria-hidden="true" />GitHub ↗</a></div>
       </div>
     </section>
     <section class="side-card featured-card">
