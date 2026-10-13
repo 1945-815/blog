@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="430" viewBox="0 0 1600 430" role="img" aria-label="深色山脉与技术网格背景">
+  <rect width="1600" height="430" fill="#1b292d"/>
+  <path d="M0 0h1600v430H0z" fill="#233539" opacity=".46"/>
+  <g stroke="#91b4a6" stroke-opacity=".11" fill="none">
+    <path d="M0 92h1600M0 172h1600M0 252h1600M0 332h1600"/>
+    <path d="M80 0v430M240 0v430M400 0v430M560 0v430M720 0v430M880 0v430M1040 0v430M1200 0v430M1360 0v430M1520 0v430"/>
+  </g>
+  <circle cx="1260" cy="103" r="58" fill="#dfc9a7" opacity=".78"/>
+  <circle cx="1260" cy="103" r="76" stroke="#dfc9a7" stroke-opacity=".26" fill="none"/>
+  <path d="M0 325L180 245l164 49 206-153 180 116 152-72 171 130 164-153 196 131 187-97v234H0z" fill="#405551"/>
+  <path d="M0 352l177-46 151 54 232-144 187 130 170-80 165 107 142-101 176 67 200-58v149H0z" fill="#304a49"/>
+  <path d="M0 396l170-42 150 29 157-70 233 87 170-64 166 57 166-83 169 53 219-15v82H0z" fill="#182e32"/>
+  <path d="M0 373c192-13 297-7 474 18 201 30 381 10 563-15 220-31 388-17 563 3" fill="none" stroke="#91b4a6" stroke-opacity=".26" stroke-width="2"/>
+  <g fill="#d8e0d6" opacity=".3" font-family="monospace" font-size="18">
+    <text x="105" y="117">{ learn → build → reflect }</text>
+    <text x="1162" y="284">java / spring / rag</text>
+  </g>
+</svg>

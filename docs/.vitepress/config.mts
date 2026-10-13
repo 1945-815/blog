@@ -8,15 +8,22 @@ export default defineConfig({
   cleanUrls: true,
   themeConfig: {
     logo: undefined,
-    siteTitle: '张耘璨 / 技术手记',
+    siteTitle: '🔥 张耘璨的博客',
     nav: [
       { text: '首页', link: '/' },
-      { text: '文章', link: '/articles/' },
-      { text: '路线图', link: '/roadmap' },
-      { text: '项目复盘', link: '/projects' },
-      { text: '关于', link: '/about' },
-      { text: 'GitHub', link: 'https://github.com/1945-815' }
+      { text: 'Java 技术栈', items: [
+        { text: 'Java 基础与集合', link: '/categories/java' },
+        { text: 'Spring 生态', link: '/categories/spring' },
+        { text: '全部技术分类', link: '/categories/' }
+      ] },
+      { text: '微服务', link: '/categories/microservices' },
+      { text: '数据库', link: '/categories/database' },
+      { text: 'AI 生态', link: '/categories/ai' },
+      { text: '前端技术', link: '/categories/frontend' },
+      { text: '随笔', link: '/categories/notes' },
+      { text: '关于我', link: '/about' }
     ],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/1945-815' }],
     search: { provider: 'local' },
     sidebar: {
       '/articles/': [
@@ -86,7 +93,7 @@ export default defineConfig({
       message: '内容以个人学习与项目复盘为主，企业经历只做经许可的脱敏表达。',
       copyright: '© 2026 张耘璨 · 用 Markdown 记录工程实践'
     },
-    outline: { label: '本页目录', level: [2, 3] },
+    outline: { label: '文章目录', level: [2, 3] },
     docFooter: { prev: '上一篇', next: '下一篇' }
   },
   markdown: {
