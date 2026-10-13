@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "planDate": "2023-10-20",
+    "stage": 1,
+    "stageName": "Java 基础与数据结构",
+    "slug": "java-backend-learning-route",
+    "title": "我的 Java 后端学习路线：学过什么，哪些还在实践"
+  },
+  {
+    "id": 2,
+    "planDate": "2023-11-18",
+    "stage": 1,
+    "stageName": "Java 基础与数据结构",
+    "slug": "java-collections",
+    "title": "Java 集合的选择：List、Set、Map 分别解决什么问题"
+  },
+  {
+    "id": 3,
+    "planDate": "2023-12-25",
+    "stage": 1,
+    "stageName": "Java 基础与数据结构",
+    "slug": "stream-api-side-effects",
+    "title": "Stream API 的常见用法与容易忽略的副作用"
+  },
+  {
+    "id": 8,
+    "planDate": "2024-02-10",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "mysql-transaction-index-idempotency",
+    "title": "数据库事务、索引与重复提交问题"
+  },
+  {
+    "id": 6,
+    "planDate": "2024-04-05",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "spring-mvc-request-flow",
+    "title": "Spring MVC 请求从进入到返回的大致流程"
+  },
+  {
+    "id": 5,
+    "planDate": "2024-05-10",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "maven-environment-config",
+    "title": "Maven 配置文件与多环境配置的使用整理"
+  },
+  {
+    "id": 4,
+    "planDate": "2024-06-20",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "spring-validation-error-response",
+    "title": "Spring Boot 接口中的参数校验与统一错误响应"
+  },
+  {
+    "id": 7,
+    "planDate": "2024-07-20",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "mybatis-plus-filter-pagination",
+    "title": "用 MyBatis-Plus 实现条件筛选和分页查询"
+  },
+  {
+    "id": 20,
+    "planDate": "2024-08-20",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "docker-local-backend-environment",
+    "title": "用 Docker 搭建本地后端开发环境"
+  },
+  {
+    "id": 17,
+    "planDate": "2025-01-15",
+    "stage": 3,
+    "stageName": "企业开发技术学习",
+    "slug": "nacos-service-discovery-config",
+    "title": "Nacos 在微服务中的注册发现与配置管理"
+  },
+  {
+    "id": 18,
+    "planDate": "2025-02-12",
+    "stage": 3,
+    "stageName": "企业开发技术学习",
+    "slug": "gateway-openfeign-responsibilities",
+    "title": "Gateway 与 OpenFeign 在服务调用中的分工"
+  },
+  {
+    "id": 10,
+    "planDate": "2025-03-10",
+    "stage": 3,
+    "stageName": "企业开发技术学习",
+    "slug": "redis-hot-document-cache",
+    "title": "热门文档访问场景下的 Redis 缓存设计"
+  },
+  {
+    "id": 16,
+    "planDate": "2025-05-18",
+    "stage": 3,
+    "stageName": "企业开发技术学习",
+    "slug": "rabbitmq-consumer-boundary",
+    "title": "RabbitMQ 异步处理的基本流程与消费者边界"
+  },
+  {
+    "id": 14,
+    "planDate": "2025-07-20",
+    "stage": 3,
+    "stageName": "企业开发技术学习",
+    "slug": "elasticsearch-document-search-mapping",
+    "title": "Elasticsearch 标题与内容检索的索引设计"
+  },
+  {
+    "id": 19,
+    "planDate": "2025-09-10",
+    "stage": 3,
+    "stageName": "企业开发技术学习",
+    "slug": "sentinel-flow-control",
+    "title": "Sentinel 限流实践：规则、入口与降级边界"
+  },
+  {
+    "id": 11,
+    "planDate": "2025-10-08",
+    "stage": 3,
+    "stageName": "企业开发技术学习",
+    "slug": "spring-security-jwt-flow",
+    "title": "Spring Security 与 JWT 的认证授权流程"
+  },
+  {
+    "id": 24,
+    "planDate": "2026-01-20",
+    "stage": 4,
+    "stageName": "Java 后端实习与业务实践",
+    "slug": "api-doc-security-checklist",
+    "title": "Java 后端项目中的接口文档与安全检查清单"
+  },
+  {
+    "id": 27,
+    "planDate": "2026-02-12",
+    "stage": 4,
+    "stageName": "Java 后端实习与业务实践",
+    "slug": "appointment-order-state-idempotency",
+    "title": "预约和服务订单中的状态流转与重复提交"
+  },
+  {
+    "id": 29,
+    "planDate": "2026-03-05",
+    "stage": 4,
+    "stageName": "Java 后端实习与业务实践",
+    "slug": "clinic-appointment-approval-redacted",
+    "title": "诊所预约与审批平台的业务流程设计（脱敏）"
+  },
+  {
+    "id": 9,
+    "planDate": "2026-03-26",
+    "stage": 4,
+    "stageName": "Java 后端实习与业务实践",
+    "slug": "redis-ttl",
+    "title": "Redis TTL 在验证码和临时状态管理中的应用"
+  },
+  {
+    "id": 12,
+    "planDate": "2026-04-15",
+    "stage": 4,
+    "stageName": "Java 后端实习与业务实践",
+    "slug": "activiti7-approval-flow",
+    "title": "Activiti 7 审批流程：从流程定义到任务处理"
+  },
+  {
+    "id": 25,
+    "planDate": "2026-05-06",
+    "stage": 4,
+    "stageName": "Java 后端实习与业务实践",
+    "slug": "document-search-api-design",
+    "title": "文档检索服务的接口设计：上传、分类与分页"
+  },
+  {
+    "id": 26,
+    "planDate": "2026-05-27",
+    "stage": 4,
+    "stageName": "Java 后端实习与业务实践",
+    "slug": "activiti-comment-report-approval",
+    "title": "评论或举报审批如何接入 Activiti 流程"
+  },
+  {
+    "id": 13,
+    "planDate": "2026-06-17",
+    "stage": 4,
+    "stageName": "Java 后端实习与业务实践",
+    "slug": "approval-and-business-status",
+    "title": "审批状态、任务状态与业务状态如何对应"
+  },
+  {
+    "id": 15,
+    "planDate": "2026-07-08",
+    "stage": 4,
+    "stageName": "Java 后端实习与业务实践",
+    "slug": "canal-mysql-to-elasticsearch",
+    "title": "用 Canal 同步 MySQL 变更到搜索索引"
+  },
+  {
+    "id": 23,
+    "planDate": "2026-07-29",
+    "stage": 4,
+    "stageName": "Java 后端实习与业务实践",
+    "slug": "ai-coding-tools-workflow",
+    "title": "Codex 和 Cursor 如何辅助接口开发与代码理解"
+  },
+  {
+    "id": 28,
+    "planDate": "2026-08-19",
+    "stage": 4,
+    "stageName": "Java 后端实习与业务实践",
+    "slug": "document-retrieval-platform-redacted",
+    "title": "企业文档检索平台的模块划分与技术选型（脱敏）"
+  },
+  {
+    "id": 30,
+    "planDate": "2026-09-30",
+    "stage": 4,
+    "stageName": "Java 后端实习与业务实践",
+    "slug": "internship-api-collaboration-retro",
+    "title": "从实习项目中复盘接口开发、联调与问题定位"
+  },
+  {
+    "id": 21,
+    "planDate": "2026-10-15",
+    "stage": 5,
+    "stageName": "AI 应用探索",
+    "slug": "rag-document-qa",
+    "title": "RAG 文档问答的基本链路：文档、检索与模型 API"
+  },
+  {
+    "id": 22,
+    "planDate": "2026-11-05",
+    "stage": 5,
+    "stageName": "AI 应用探索",
+    "slug": "rag-chunking-vector-search-demo",
+    "title": "文档切分和向量检索：一个小型 RAG Demo 的实现"
+  }
+]

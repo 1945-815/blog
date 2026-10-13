@@ -21,13 +21,65 @@ export default defineConfig({
     sidebar: {
       '/articles/': [
         {
-          text: '站点文章样例',
+          text: "阶段一：Java 基础与数据结构",
+          collapsed: true,
           items: [
-            { text: 'Java 集合的选择', link: '/articles/java-collections' },
-            { text: 'Redis TTL 临时状态', link: '/articles/redis-ttl' },
-            { text: 'RAG 文档问答链路', link: '/articles/rag-document-qa' }
+            { text: "Java 后端学习路线", link: "/articles/java-backend-learning-route" },
+            { text: "Java 集合的选择", link: "/articles/java-collections" },
+            { text: "Stream API 与副作用", link: "/articles/stream-api-side-effects" },
           ]
-        }
+        },
+        {
+          text: "阶段二：数据库与 Spring 基础",
+          collapsed: true,
+          items: [
+            { text: "事务、索引与重复提交", link: "/articles/mysql-transaction-index-idempotency" },
+            { text: "Spring MVC 请求流程", link: "/articles/spring-mvc-request-flow" },
+            { text: "Maven 多环境配置", link: "/articles/maven-environment-config" },
+            { text: "接口校验与错误响应", link: "/articles/spring-validation-error-response" },
+            { text: "MyBatis-Plus 筛选分页", link: "/articles/mybatis-plus-filter-pagination" },
+            { text: "Docker 本地环境", link: "/articles/docker-local-backend-environment" },
+          ]
+        },
+        {
+          text: "阶段三：企业开发技术学习",
+          collapsed: true,
+          items: [
+            { text: "Nacos 注册与配置", link: "/articles/nacos-service-discovery-config" },
+            { text: "Gateway 与 OpenFeign", link: "/articles/gateway-openfeign-responsibilities" },
+            { text: "Redis 热门文档缓存", link: "/articles/redis-hot-document-cache" },
+            { text: "RabbitMQ 异步处理", link: "/articles/rabbitmq-consumer-boundary" },
+            { text: "Elasticsearch 检索", link: "/articles/elasticsearch-document-search-mapping" },
+            { text: "Sentinel 限流", link: "/articles/sentinel-flow-control" },
+            { text: "Spring Security 与 JWT", link: "/articles/spring-security-jwt-flow" },
+          ]
+        },
+        {
+          text: "阶段四：Java 后端实习与业务实践",
+          collapsed: true,
+          items: [
+            { text: "接口文档与安全清单", link: "/articles/api-doc-security-checklist" },
+            { text: "预约与订单状态", link: "/articles/appointment-order-state-idempotency" },
+            { text: "诊所预约与审批（脱敏）", link: "/articles/clinic-appointment-approval-redacted" },
+            { text: "Redis TTL 与验证码", link: "/articles/redis-ttl" },
+            { text: "Activiti 7 审批流程", link: "/articles/activiti7-approval-flow" },
+            { text: "文档检索接口设计", link: "/articles/document-search-api-design" },
+            { text: "评论与举报审批", link: "/articles/activiti-comment-report-approval" },
+            { text: "审批、任务与业务状态", link: "/articles/approval-and-business-status" },
+            { text: "Canal 同步搜索索引", link: "/articles/canal-mysql-to-elasticsearch" },
+            { text: "Codex 与 Cursor", link: "/articles/ai-coding-tools-workflow" },
+            { text: "文档检索平台（脱敏）", link: "/articles/document-retrieval-platform-redacted" },
+            { text: "实习接口开发复盘", link: "/articles/internship-api-collaboration-retro" },
+          ]
+        },
+        {
+          text: "阶段五：AI 应用探索",
+          collapsed: true,
+          items: [
+            { text: "RAG 文档问答链路", link: "/articles/rag-document-qa" },
+            { text: "文档切分与向量检索", link: "/articles/rag-chunking-vector-search-demo" },
+          ]
+        },
       ]
     },
     footer: {

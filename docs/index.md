@@ -49,10 +49,10 @@ features:
   </div>
   <div class="home-grid">
     <a class="home-card" href="/blog/articles/">
-      <span class="eyebrow">Writing</span><h3>文章草稿</h3><p>Java 集合、Redis TTL 和 RAG 文档问答的首批文章草稿。</p>
+      <span class="eyebrow">Writing</span><h3>30 篇技术文章</h3><p>按 Java 基础、企业技术学习、实习实践和 AI 应用五个阶段阅读。</p>
     </a>
     <a class="home-card" href="/blog/roadmap">
-      <span class="eyebrow">Roadmap</span><h3>30 篇内容路线</h3><p>按指定起始日期 2026.09.25 排列的复盘与写作计划。</p>
+      <span class="eyebrow">Roadmap</span><h3>30 篇内容路线</h3><p>从 2023.10.11 开始整理的五阶段学习与实践路线。</p>
     </a>
     <a class="home-card" href="/blog/projects">
       <span class="eyebrow">Projects</span><h3>项目复盘</h3><p>从简历里的文档检索与预约审批场景整理可公开的项目介绍。</p>
@@ -65,6 +65,6 @@ features:
     <div><h2>内容原则</h2><p>让主页能支撑交流，也经得起追问。</p></div>
   </div>
   <div class="note-callout">
-    简历中能支撑的经历按实际职责描述；路线图上的学习主题不默认等于已掌握。规划日期用于整理顺序，不代表文章已在过去发布。
+    简历中能支撑的经历按实际职责描述；路线图上的学习主题不默认等于已掌握。阶段参考日期用于整理顺序；本批文章实际在 2026-10-13 公开。
   </div>
 </section>
