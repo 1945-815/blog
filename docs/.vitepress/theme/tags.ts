@@ -1,6 +1,6 @@
 import { withBase } from 'vitepress'
 import type { BlogArticle } from '../../articles.data'
-import { topicArticles } from './blog'
+import { belongsTo, topicArticles, topics } from './blog'
 import type { TopicId } from './blog'
 
 // Empty topics remain visible as learning directions. Published tag counts come from Front Matter.
@@ -57,17 +57,45 @@ export function allTagOptions(articles: BlogArticle[]): TagOption[] {
     .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, 'zh-CN'))
 }
 
-export function tagHref(name: string) {
-  return `/tags/?tag=${encodeURIComponent(name)}`
+export function categoryTagHref(topic: TopicId, name?: string) {
+  const path = `/categories/${topic}`
+  return name ? `${path}?tag=${encodeURIComponent(name)}` : path
 }
 
-export function onTagLinkClick(event: MouseEvent, name: string) {
+export function selectedCategoryTag() {
+  return typeof window === 'undefined' ? '' : new URLSearchParams(window.location.search).get('tag')?.trim() || ''
+}
+
+export function setCategoryTag(topic: TopicId, name?: string) {
+  if (typeof window === 'undefined') return
+  window.history.pushState({}, '', withBase(categoryTagHref(topic, name)))
+  window.dispatchEvent(new Event('blog-category-tag-change'))
+}
+
+export function onCategoryTagLinkClick(event: MouseEvent, topic: TopicId, name: string) {
   if (typeof window === 'undefined' || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
-  if (window.location.pathname.replace(/\/$/, '') === withBase('/tags/').replace(/\/$/, '')) {
+  const cleanPath = (path: string) => path.replace(/\.html$/, '').replace(/\/$/, '')
+  if (cleanPath(window.location.pathname) === cleanPath(withBase(categoryTagHref(topic)))) {
     event.preventDefault()
-    window.history.pushState({}, '', withBase(tagHref(name)))
-    window.dispatchEvent(new Event('blog-tags-change'))
+    setCategoryTag(topic, name)
   }
+}
+
+// Article tags outside a category page still open an existing category with the tag preselected.
+export function topicForTag(articles: BlogArticle[], name: string, article?: BlogArticle): TopicId {
+  const matching = topics.map((topic) => topic.id).filter((topic) =>
+    topicSuggestions[topic]?.some((suggestion) => tagKey(suggestion) === tagKey(name))
+  )
+  if (article) {
+    const ownTopic = matching.find((topic) => belongsTo(article, topic))
+    if (ownTopic) return ownTopic
+  }
+  if (matching.length) return matching[0]
+  if (article) {
+    const ownTopic = topics.find((topic) => belongsTo(article, topic.id))
+    if (ownTopic) return ownTopic.id
+  }
+  return topics.find((topic) => topicArticles(articles, topic.id).some((item) => hasTag(item, name)))?.id || 'java'
 }
 
 export function byPublishedDate(a: BlogArticle, b: BlogArticle) {

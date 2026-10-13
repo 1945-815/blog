@@ -51,9 +51,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--vp-c-brand-1); 
 .blog-nav-group { position: relative; height: var(--vp-nav-height); }
 .blog-nav-group-heading { display: flex; align-items: center; }
 .nav-chevron { margin-left: -2px; transition: transform .18s ease; }
-.blog-nav-group:hover .nav-chevron, .blog-nav-group:focus-within .nav-chevron { transform: rotate(180deg); }
+.blog-nav-group:hover .nav-chevron, .blog-nav-group:focus-within .nav-chevron, .blog-nav-group.is-open .nav-chevron { transform: rotate(180deg); }
 .nav-tag-dropdown { position: absolute; top: calc(100% - 1px); left: 0; z-index: 50; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; width: 260px; padding: 13px; border: 1px solid var(--blog-line); border-radius: 12px; background: var(--blog-card); box-shadow: 0 15px 38px rgba(20,30,30,.13); opacity: 0; visibility: hidden; transform: translateY(-7px); pointer-events: none; transition: opacity .18s ease, transform .18s ease, visibility .18s ease; }
-.blog-nav-group:hover .nav-tag-dropdown, .blog-nav-group:focus-within .nav-tag-dropdown { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
+.blog-nav-group:hover .nav-tag-dropdown, .blog-nav-group:focus-within .nav-tag-dropdown, .blog-nav-group.is-open .nav-tag-dropdown { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
 .nav-tag-link { display: flex; align-items: center; justify-content: space-between; gap: 5px; min-width: 0; padding: 8px 9px; border-radius: 7px; background: var(--vp-c-bg-soft); color: var(--vp-c-text-1); font-size: 11.5px; text-decoration: none; transition: background .16s ease, color .16s ease; }
 .nav-tag-link span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .nav-tag-link small { color: var(--blog-muted); font-size: 10px; }
@@ -155,13 +155,14 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--vp-c-brand-1); 
 .archive-header > p:last-child { margin: 12px 0 0; color: var(--blog-muted); font-size: 14px; line-height: 1.65; }
 .breadcrumb { display: inline-block; margin-bottom: 20px; color: var(--blog-muted); font-size: 12px; text-decoration: none; }
 .filter-row, .subtopic-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
-.filter-row button, .subtopic-list a { padding: 8px 12px; border: 1px solid var(--blog-line); border-radius: 8px; background: var(--blog-card); color: var(--vp-c-text-2); font: inherit; font-size: 12px; }
+.filter-row button, .subtopic-list button { padding: 8px 12px; border: 1px solid var(--blog-line); border-radius: 8px; background: var(--blog-card); color: var(--vp-c-text-2); font: inherit; font-size: 12px; }
 .filter-row button { cursor: pointer; }
-.tag-search-shortcut { align-self: center; margin-left: auto; color: var(--vp-c-brand-1); font-size: 12px; font-weight: 700; text-decoration: none; }
 .filter-row button:hover, .filter-row button.active { border-color: #ae8d6a; color: var(--vp-c-brand-1); background: var(--vp-c-brand-soft); }
-.subtopic-list a { text-decoration: none; transition: color .16s ease, border-color .16s ease, background .16s ease; }
-.subtopic-list a:hover { border-color: #ae8d6a; color: var(--vp-c-brand-1); background: var(--vp-c-brand-soft); }
+.subtopic-list button { cursor: pointer; transition: color .16s ease, border-color .16s ease, background .16s ease; }
+.subtopic-list button:hover, .subtopic-list button.active { border-color: #ae8d6a; color: var(--vp-c-brand-1); background: var(--vp-c-brand-soft); }
 .subtopic-list b { margin-left: 5px; color: var(--vp-c-brand-1); }
+.category-filter-status { margin: -10px 0 20px; color: var(--blog-muted); font-size: 12px; }
+.category-filter-status button { margin-left: 8px; padding: 0; border: 0; background: transparent; color: var(--vp-c-brand-1); font: inherit; font-weight: 700; cursor: pointer; }
 .tag-filter-panel { margin-bottom: 32px; padding: 22px 24px; border: 1px solid var(--blog-line); border-radius: 12px; background: var(--blog-card); box-shadow: var(--blog-shadow); }
 .tag-filter-heading { display: flex; justify-content: space-between; align-items: start; gap: 16px; }
 .tag-filter-heading h2 { margin: 0; font-size: 17px; }
