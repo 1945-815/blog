@@ -4,9 +4,9 @@
 
 学习路线从 **2023-10-11** 开始整理，覆盖 Java 基础、数据库与 Spring、2025 年技术练习、2026 年 1—9 月实习，以及 2026 年 10 月后的 AI 应用探索。
 
-**现有 30 篇文章于 2026-10-13 公开；新增 10 篇按 2026-10-20 至 2026-12-22 规划公开。**下表日期是学习阶段参考节点与阅读顺序，不是假定的历史发文记录。新增文章的阶段参考日期对应 Java 基础和数据库学习阶段。
+**现有 30 篇文章于 2026-10-13 公开；新增 15 篇按 2026-10-20 至 2027-01-26 规划公开。**下表日期是学习阶段参考节点与阅读顺序，不是假定的历史发文记录。新增文章的阶段参考日期对应 Java 基础和数据库学习阶段。
 
-建议节奏：学习阶段每 2—4 周整理一篇，实习阶段每 1—3 周整理一篇，AI 阶段每 2—3 周整理一篇。当前路线包括 30 篇已公开文章和 10 篇新增规划文章；阶段之间的空档不暗示当时没有学习或实践。
+建议节奏：学习阶段每 2—4 周整理一篇，实习阶段每 1—3 周整理一篇，AI 阶段每 2—3 周整理一篇。当前路线包括 30 篇已公开文章和 15 篇新增规划文章；阶段之间的空档不暗示当时没有学习或实践。
 
 ## 五个阶段
 
@@ -18,7 +18,7 @@
 | 阶段四：Java 后端实习与业务实践 | 2026.01.06—2026.09.30 | 结合简历可支撑的接口、预约、文档检索与审批职责做脱敏复盘。 |
 | 阶段五：AI 应用探索 | 2026.10 起 | 沿文档处理、检索、模型 API 的链路继续学习；后续节点仍属规划。 |
 
-## 40 篇文章的学习顺序
+## 45 篇文章的学习顺序
 
 | 阶段参考日期 | 文章 | 阶段 |
 |---|---|---|
@@ -40,7 +40,9 @@
 | 2024-06-10 | [MyBatis 参数映射与动态 SQL：完成条件查询](/articles/016-mybatis-dynamic-sql) | 数据库与 Spring 基础 |
 | 2024-06-20 | [Spring Boot 接口中的参数校验与统一错误响应](/articles/spring-validation-error-response) | 数据库与 Spring 基础 |
 | 2024-07-20 | [用 MyBatis-Plus 实现条件筛选和分页查询](/articles/mybatis-plus-filter-pagination) | 数据库与 Spring 基础 |
+| 2024-07-30 | [Redis 基础数据结构与 TTL：临时状态和 key 设计](/articles/019-redis-types-ttl) | 数据库与 Spring 基础 |
 | 2024-08-20 | [用 Docker 搭建本地后端开发环境](/articles/docker-local-backend-environment) | 数据库与 Spring 基础 |
+| 2024-08-30 | [Spring Boot 练习项目：从表结构到分页 CRUD 接口](/articles/021-springboot-crud-project) | 数据库与 Spring 基础 |
 | 2025-01-15 | [Nacos 在微服务中的注册发现与配置管理](/articles/nacos-service-discovery-config) | 企业开发技术学习 |
 | 2025-02-12 | [Gateway 与 OpenFeign 在服务调用中的分工](/articles/gateway-openfeign-responsibilities) | 企业开发技术学习 |
 | 2025-03-10 | [热门文档访问场景下的 Redis 缓存设计](/articles/redis-hot-document-cache) | 企业开发技术学习 |
@@ -62,12 +64,15 @@
 | 2026-09-30 | [从实习项目中复盘接口开发、联调与问题定位](/articles/internship-api-collaboration-retro) | Java 后端实习与业务实践 |
 | 2026-10-15 | [RAG 文档问答的基本链路：文档、检索与模型 API](/articles/rag-document-qa) | AI 应用探索 |
 | 2026-11-05 | [文档切分和向量检索：一个小型 RAG Demo 的实现](/articles/rag-chunking-vector-search-demo) | AI 应用探索 |
+| 2026-11-20 | [用 Spring AI 和 Ollama 完成第一次本地模型调用](/articles/043-spring-ai-ollama) | AI 应用探索 |
+| 2026-12-10 | [Embedding 接入 Elasticsearch：dense_vector、KNN 与维度核对](/articles/044-elasticsearch-embedding-knn) | AI 应用探索 |
+| 2027-01-10 | [Agent 工具调用：输入校验、权限边界与失败处理](/articles/045-agent-tool-boundaries) | AI 应用探索 |
 
 ## 示例题目与现有文章的关系
 
-原选题按阶段参考组织。现有 30 篇已公开，新增 10 篇补充 Java 类与对象、异常 IO、多线程、数据结构、MySQL 表设计、EXPLAIN、JDBC、Spring IoC/AOP 和 MyBatis 动态 SQL 学习。MySQL 索引、Nacos、Redis 缓存、RabbitMQ、Elasticsearch、Activiti 和 RAG 已有相应文章。
+原选题按阶段参考组织。现有 30 篇已公开，新增 15 篇补充 Java 异常 IO、多线程、Spring IoC/AOP、MyBatis 动态 SQL、Redis TTL、Spring Boot CRUD，以及本地模型、Embedding 检索和 Agent 安全边界学习。MySQL 索引、Nacos、Redis 缓存、RabbitMQ、Elasticsearch、Activiti 和 RAG 已有相应文章。
 
-待补充的主题包括 LRU 缓存实现、真实慢查询排查、LangChain 独立实践和 Agent 工具调用。实习文章中的审批场景以简历里的评论、举报和内部审批为准，不写成未经证实的请假流程或性能成果。
+待补充的主题包括 LRU 缓存实现、真实慢查询排查、LangChain 独立实践和基于真实模型的 Agent 工具调用。实习文章中的审批场景以简历里的评论、举报和内部审批为准，不写成未经证实的请假流程或性能成果。
 
 ## 20 篇重点文章提纲
 

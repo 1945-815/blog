@@ -51,7 +51,9 @@ export default defineConfig({
             { text: "MyBatis 参数映射与动态 SQL", link: "/articles/016-mybatis-dynamic-sql" },
             { text: "接口校验与错误响应", link: "/articles/spring-validation-error-response" },
             { text: "MyBatis-Plus 筛选分页", link: "/articles/mybatis-plus-filter-pagination" },
+            { text: "Redis 数据结构与 TTL", link: "/articles/019-redis-types-ttl" },
             { text: "Docker 本地环境", link: "/articles/docker-local-backend-environment" },
+            { text: "Spring Boot CRUD 练习项目", link: "/articles/021-springboot-crud-project" },
           ]
         },
         {
@@ -91,6 +93,9 @@ export default defineConfig({
           items: [
             { text: "RAG 文档问答链路", link: "/articles/rag-document-qa" },
             { text: "文档切分与向量检索", link: "/articles/rag-chunking-vector-search-demo" },
+            { text: "Spring AI 与 Ollama", link: "/articles/043-spring-ai-ollama" },
+            { text: "Embedding 与 Elasticsearch KNN", link: "/articles/044-elasticsearch-embedding-knn" },
+            { text: "Agent 工具调用边界", link: "/articles/045-agent-tool-boundaries" },
           ]
         },
       ]

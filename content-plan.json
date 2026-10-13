@@ -144,12 +144,28 @@
     "title": "用 MyBatis-Plus 实现条件筛选和分页查询"
   },
   {
+    "id": 41,
+    "planDate": "2024-07-30",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "019-redis-types-ttl",
+    "title": "Redis 基础数据结构与 TTL：临时状态和 key 设计"
+  },
+  {
     "id": 20,
     "planDate": "2024-08-20",
     "stage": 2,
     "stageName": "数据库与 Spring 基础",
     "slug": "docker-local-backend-environment",
     "title": "用 Docker 搭建本地后端开发环境"
+  },
+  {
+    "id": 42,
+    "planDate": "2024-08-30",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "021-springboot-crud-project",
+    "title": "Spring Boot 练习项目：从表结构到分页 CRUD 接口"
   },
   {
     "id": 17,
@@ -318,5 +334,29 @@
     "stageName": "AI 应用探索",
     "slug": "rag-chunking-vector-search-demo",
     "title": "文档切分和向量检索：一个小型 RAG Demo 的实现"
+  },
+  {
+    "id": 43,
+    "planDate": "2026-11-20",
+    "stage": 5,
+    "stageName": "AI 应用探索",
+    "slug": "043-spring-ai-ollama",
+    "title": "用 Spring AI 和 Ollama 完成第一次本地模型调用"
+  },
+  {
+    "id": 44,
+    "planDate": "2026-12-10",
+    "stage": 5,
+    "stageName": "AI 应用探索",
+    "slug": "044-elasticsearch-embedding-knn",
+    "title": "Embedding 接入 Elasticsearch：dense_vector、KNN 与维度核对"
+  },
+  {
+    "id": 45,
+    "planDate": "2027-01-10",
+    "stage": 5,
+    "stageName": "AI 应用探索",
+    "slug": "045-agent-tool-boundaries",
+    "title": "Agent 工具调用：输入校验、权限边界与失败处理"
   }
 ]
