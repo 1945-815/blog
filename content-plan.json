@@ -32,12 +32,28 @@
     "title": "数据结构入门：数组、链表、栈、队列与复杂度"
   },
   {
+    "id": 36,
+    "planDate": "2023-12-10",
+    "stage": 1,
+    "stageName": "Java 基础与数据结构",
+    "slug": "005-java-exceptions-file-io",
+    "title": "Java 异常与文件 IO：把失败路径写清楚"
+  },
+  {
     "id": 3,
     "planDate": "2023-12-25",
     "stage": 1,
     "stageName": "Java 基础与数据结构",
     "slug": "stream-api-side-effects",
     "title": "Stream API 的常见用法与容易忽略的副作用"
+  },
+  {
+    "id": 37,
+    "planDate": "2023-12-28",
+    "stage": 1,
+    "stageName": "Java 基础与数据结构",
+    "slug": "007-java-concurrency-basics",
+    "title": "Java 多线程起步：共享状态、线程安全与同步"
   },
   {
     "id": 33,
@@ -80,12 +96,36 @@
     "title": "Spring MVC 请求从进入到返回的大致流程"
   },
   {
+    "id": 38,
+    "planDate": "2024-04-20",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "013-spring-ioc-di",
+    "title": "Spring IoC 与 DI：对象创建和依赖管理"
+  },
+  {
     "id": 5,
     "planDate": "2024-05-10",
     "stage": 2,
     "stageName": "数据库与 Spring 基础",
     "slug": "maven-environment-config",
     "title": "Maven 配置文件与多环境配置的使用整理"
+  },
+  {
+    "id": 39,
+    "planDate": "2024-05-25",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "015-spring-aop-transactions",
+    "title": "Spring AOP 与事务：横切逻辑和事务边界"
+  },
+  {
+    "id": 40,
+    "planDate": "2024-06-10",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "016-mybatis-dynamic-sql",
+    "title": "MyBatis 参数映射与动态 SQL：完成条件查询"
   },
   {
     "id": 4,

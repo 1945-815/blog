@@ -4,9 +4,9 @@
 
 学习路线从 **2023-10-11** 开始整理，覆盖 Java 基础、数据库与 Spring、2025 年技术练习、2026 年 1—9 月实习，以及 2026 年 10 月后的 AI 应用探索。
 
-**现有 30 篇文章于 2026-10-13 公开；新增 5 篇按 2026-10-20 至 2026-11-17 规划公开。**下表日期是学习阶段参考节点与阅读顺序，不是假定的历史发文记录。新增文章的阶段参考日期对应 Java 基础和数据库学习阶段。
+**现有 30 篇文章于 2026-10-13 公开；新增 10 篇按 2026-10-20 至 2026-12-22 规划公开。**下表日期是学习阶段参考节点与阅读顺序，不是假定的历史发文记录。新增文章的阶段参考日期对应 Java 基础和数据库学习阶段。
 
-建议节奏：学习阶段每 2—4 周整理一篇，实习阶段每 1—3 周整理一篇，AI 阶段每 2—3 周整理一篇。当前路线包括 30 篇已公开文章和 5 篇新增规划文章；阶段之间的空档不暗示当时没有学习或实践。
+建议节奏：学习阶段每 2—4 周整理一篇，实习阶段每 1—3 周整理一篇，AI 阶段每 2—3 周整理一篇。当前路线包括 30 篇已公开文章和 10 篇新增规划文章；阶段之间的空档不暗示当时没有学习或实践。
 
 ## 五个阶段
 
@@ -18,7 +18,7 @@
 | 阶段四：Java 后端实习与业务实践 | 2026.01.06—2026.09.30 | 结合简历可支撑的接口、预约、文档检索与审批职责做脱敏复盘。 |
 | 阶段五：AI 应用探索 | 2026.10 起 | 沿文档处理、检索、模型 API 的链路继续学习；后续节点仍属规划。 |
 
-## 35 篇文章的学习顺序
+## 40 篇文章的学习顺序
 
 | 阶段参考日期 | 文章 | 阶段 |
 |---|---|---|
@@ -26,13 +26,18 @@
 | 2023-10-30 | [第一次理解 Java 类和对象：字段、方法与封装](/articles/002-java-class-object) | Java 基础与数据结构 |
 | 2023-11-18 | [Java 集合的选择：List、Set、Map 分别解决什么问题](/articles/java-collections) | Java 基础与数据结构 |
 | 2023-11-28 | [数据结构入门：数组、链表、栈、队列与复杂度](/articles/004-data-structures-basics) | Java 基础与数据结构 |
+| 2023-12-10 | [Java 异常与文件 IO：把失败路径写清楚](/articles/005-java-exceptions-file-io) | Java 基础与数据结构 |
 | 2023-12-25 | [Stream API 的常见用法与容易忽略的副作用](/articles/stream-api-side-effects) | Java 基础与数据结构 |
+| 2023-12-28 | [Java 多线程起步：共享状态、线程安全与同步](/articles/007-java-concurrency-basics) | Java 基础与数据结构 |
 | 2024-01-20 | [MySQL 表设计与多表查询：从实体关系写 SQL](/articles/008-mysql-table-design-joins) | 数据库与 Spring 基础 |
 | 2024-02-10 | [数据库事务、索引与重复提交问题](/articles/mysql-transaction-index-idempotency) | 数据库与 Spring 基础 |
 | 2024-02-25 | [用 EXPLAIN 理解 MySQL 索引：读懂一条查询计划](/articles/010-mysql-explain-index) | 数据库与 Spring 基础 |
 | 2024-03-15 | [JDBC 预编译与 DAO：参数绑定和持久层边界](/articles/011-jdbc-preparedstatement-dao) | 数据库与 Spring 基础 |
 | 2024-04-05 | [Spring MVC 请求从进入到返回的大致流程](/articles/spring-mvc-request-flow) | 数据库与 Spring 基础 |
+| 2024-04-20 | [Spring IoC 与 DI：对象创建和依赖管理](/articles/013-spring-ioc-di) | 数据库与 Spring 基础 |
 | 2024-05-10 | [Maven 配置文件与多环境配置的使用整理](/articles/maven-environment-config) | 数据库与 Spring 基础 |
+| 2024-05-25 | [Spring AOP 与事务：横切逻辑和事务边界](/articles/015-spring-aop-transactions) | 数据库与 Spring 基础 |
+| 2024-06-10 | [MyBatis 参数映射与动态 SQL：完成条件查询](/articles/016-mybatis-dynamic-sql) | 数据库与 Spring 基础 |
 | 2024-06-20 | [Spring Boot 接口中的参数校验与统一错误响应](/articles/spring-validation-error-response) | 数据库与 Spring 基础 |
 | 2024-07-20 | [用 MyBatis-Plus 实现条件筛选和分页查询](/articles/mybatis-plus-filter-pagination) | 数据库与 Spring 基础 |
 | 2024-08-20 | [用 Docker 搭建本地后端开发环境](/articles/docker-local-backend-environment) | 数据库与 Spring 基础 |
@@ -60,9 +65,9 @@
 
 ## 示例题目与现有文章的关系
 
-原选题按阶段参考组织。现有 30 篇已公开，第一批新增 5 篇补充 Java 类与对象、数据结构、MySQL 表设计、EXPLAIN 和 JDBC 持久层练习。MySQL 索引、Nacos、Redis 缓存、RabbitMQ、Elasticsearch、Activiti 和 RAG 已有相应文章。
+原选题按阶段参考组织。现有 30 篇已公开，新增 10 篇补充 Java 类与对象、异常 IO、多线程、数据结构、MySQL 表设计、EXPLAIN、JDBC、Spring IoC/AOP 和 MyBatis 动态 SQL 学习。MySQL 索引、Nacos、Redis 缓存、RabbitMQ、Elasticsearch、Activiti 和 RAG 已有相应文章。
 
-待补充的主题包括 LRU 缓存实现、Spring IoC 源码、真实慢查询排查、LangChain 独立实践和 Agent 工具调用。实习文章中的审批场景以简历里的评论、举报和内部审批为准，不写成未经证实的请假流程或性能成果。
+待补充的主题包括 LRU 缓存实现、真实慢查询排查、LangChain 独立实践和 Agent 工具调用。实习文章中的审批场景以简历里的评论、举报和内部审批为准，不写成未经证实的请假流程或性能成果。
 
 ## 20 篇重点文章提纲
 

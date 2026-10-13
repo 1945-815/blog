@@ -31,7 +31,9 @@ export default defineConfig({
             { text: "Java 类和对象", link: "/articles/002-java-class-object" },
             { text: "Java 集合的选择", link: "/articles/java-collections" },
             { text: "数据结构入门", link: "/articles/004-data-structures-basics" },
+            { text: "Java 异常与文件 IO", link: "/articles/005-java-exceptions-file-io" },
             { text: "Stream API 与副作用", link: "/articles/stream-api-side-effects" },
+            { text: "Java 多线程起步", link: "/articles/007-java-concurrency-basics" },
           ]
         },
         {
@@ -43,7 +45,10 @@ export default defineConfig({
             { text: "EXPLAIN 与索引", link: "/articles/010-mysql-explain-index" },
             { text: "JDBC 预编译与 DAO", link: "/articles/011-jdbc-preparedstatement-dao" },
             { text: "Spring MVC 请求流程", link: "/articles/spring-mvc-request-flow" },
+            { text: "Spring IoC 与 DI", link: "/articles/013-spring-ioc-di" },
             { text: "Maven 多环境配置", link: "/articles/maven-environment-config" },
+            { text: "Spring AOP 与事务", link: "/articles/015-spring-aop-transactions" },
+            { text: "MyBatis 参数映射与动态 SQL", link: "/articles/016-mybatis-dynamic-sql" },
             { text: "接口校验与错误响应", link: "/articles/spring-validation-error-response" },
             { text: "MyBatis-Plus 筛选分页", link: "/articles/mybatis-plus-filter-pagination" },
             { text: "Docker 本地环境", link: "/articles/docker-local-backend-environment" },
