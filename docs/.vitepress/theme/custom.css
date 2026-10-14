@@ -115,10 +115,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--vp-c-brand-1); 
 .contact-item button { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 7px 11px; border: 1px solid var(--blog-line); border-radius: 8px; background: var(--vp-c-bg-soft); color: var(--vp-c-text-1); font: inherit; font-size: 12px; cursor: pointer; }
 .contact-item button:hover, .contact-item button:focus-visible { border-color: #ae8d6a; color: var(--vp-c-brand-1); }
 .contact-item button svg { color: var(--vp-c-brand-1); }
-.contact-qq-text { display: inline-flex; align-items: center; min-height: 34px; padding: 7px 11px; border: 1px solid var(--blog-line); border-radius: 8px; background: var(--vp-c-bg-soft); color: var(--vp-c-text-1); font-size: 12px; white-space: nowrap; }
 .contact-popover { position: absolute; top: calc(100% + 9px); left: 0; z-index: 20; width: max-content; max-width: min(240px, 78vw); padding: 11px 13px; border: 1px solid var(--blog-line); border-radius: 9px; background: var(--blog-card); box-shadow: 0 12px 30px rgba(20,30,30,.17); color: var(--vp-c-text-1); font-size: 12px; opacity: 0; visibility: hidden; transform: translateY(-5px); pointer-events: none; transition: opacity .18s ease, transform .18s ease, visibility .18s ease; }
 .contact-popover strong { color: var(--vp-c-brand-1); font-weight: 700; }
 .contact-item:hover .contact-popover, .contact-item:focus-within .contact-popover { opacity: 1; visibility: visible; transform: translateY(0); }
+.contact-qq .contact-popover { left: auto; right: 0; }
 .profile-about { margin: 16px 0; padding-top: 15px; border-top: 1px solid var(--blog-line); color: var(--vp-c-text-2); font-size: 12.5px; line-height: 1.7; }
 .profile-skills { gap: 6px; }
 .profile-links { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 18px; padding-top: 15px; border-top: 1px solid var(--blog-line); font-size: 11.5px; }
