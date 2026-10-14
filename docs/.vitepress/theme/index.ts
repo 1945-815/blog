@@ -19,7 +19,6 @@ export default {
   extends: DefaultTheme,
   Layout: () => h(DefaultTheme.Layout, null, {
     'nav-bar-title-before': () => h(BrandMark),
-    'nav-bar-title-after': () => h('span', { class: 'brand-detail' }, 'Java 后端 · AI 应用'),
     'doc-before': () => h(ArticleMeta)
   }),
   enhanceApp({ app }) {

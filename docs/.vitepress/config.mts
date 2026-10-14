@@ -11,15 +11,34 @@ export default defineConfig({
     siteTitle: '张耘璨的博客',
     nav: [
       { component: 'BlogNavItem', props: { label: '首页', icon: 'home', href: '/' } },
-      { component: 'BlogNavItem', props: { label: 'Java技术栈', icon: 'code', href: '/categories/java', topic: 'java' } },
-      { component: 'BlogNavItem', props: { label: '微服务', icon: 'network', href: '/categories/microservices', topic: 'microservices' } },
-      { component: 'BlogNavItem', props: { label: '数据库', icon: 'database', href: '/categories/database', topic: 'database' } },
-      { component: 'BlogNavItem', props: { label: 'AI生态', icon: 'ai', href: '/categories/ai', topic: 'ai' } },
-      { component: 'BlogNavItem', props: { label: '前端技术', icon: 'frontend', href: '/categories/frontend', topic: 'frontend' } },
-      { component: 'BlogNavItem', props: { label: '随笔', icon: 'notes', href: '/categories/notes', topic: 'notes' } },
-      { component: 'BlogNavItem', props: { label: '关于我', icon: 'about', href: '/about' } }
+      { component: 'BlogNavItem', props: { label: 'Java技术栈', icon: 'code', href: '/categories/java', links: [
+        { label: 'Java 基础', href: '/categories/java' },
+        { label: 'Spring 生态', href: '/categories/spring' },
+        { label: '微服务', href: '/categories/microservices' }
+      ] } },
+      { component: 'BlogNavItem', props: { label: 'Python技术', icon: 'python', href: '/categories/python' } },
+      { component: 'BlogNavItem', props: { label: '前端技术', icon: 'frontend', href: '/categories/frontend', links: [
+        { label: '前端文章', href: '/categories/frontend' },
+        { label: '项目记录', href: '/projects' }
+      ] } },
+      { component: 'BlogNavItem', props: { label: '数据存储', icon: 'database', href: '/categories/database', links: [
+        { label: '数据库', href: '/categories/database' },
+        { label: '中间件', href: '/categories/middleware' }
+      ] } },
+      { component: 'BlogNavItem', props: { label: 'AI生态', icon: 'ai', href: '/categories/ai' } },
+      { component: 'BlogNavItem', props: { label: '周边技术', icon: 'peripheral', href: '/categories/middleware', links: [
+        { label: '微服务', href: '/categories/microservices' },
+        { label: '中间件', href: '/categories/middleware' },
+        { label: '随笔与实践', href: '/categories/notes' }
+      ] } },
+      { component: 'BlogNavItem', props: { label: '帮助文档', icon: 'help', href: '/roadmap', links: [
+        { label: '技术分类', href: '/categories/' },
+        { label: '成长路线', href: '/roadmap' },
+        { label: '项目记录', href: '/projects' },
+        { label: '关于我', href: '/about' }
+      ] } }
     ],
-    socialLinks: [{ icon: 'github', link: 'https://github.com/1945-815' }],
+    socialLinks: [{ icon: { svg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18V4.8a1 1 0 0 1 1.2-1A17 17 0 0 1 12 6a17 17 0 0 1 7.8-2.2 1 1 0 0 1 1.2 1V18a1 1 0 0 1-1 1 17 17 0 0 0-8 2 17 17 0 0 0-8-2 1 1 0 0 1-1-1Z"/></svg>' }, link: '/blog/roadmap', ariaLabel: '成长路线' }],
     search: { provider: 'local' },
     sidebar: {
       '/articles/': [

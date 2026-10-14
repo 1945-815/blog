@@ -40,9 +40,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--vp-c-brand-1); 
 .VPNav { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
 .VPNavBar { background: var(--vp-nav-bg-color) !important; }
 .VPNavBar .divider-line { background-color: var(--blog-line) !important; }
-.VPNavBarTitle .title { position: relative; padding-bottom: 13px; font-weight: 760; letter-spacing: -.03em; }
+.VPNavBarTitle .title { position: relative; font-weight: 760; letter-spacing: -.03em; }
 .brand-mark { display: block; flex: 0 0 26px; width: 26px; height: 26px; margin-right: 8px; }
-.brand-detail { position: absolute; top: 38px; left: 34px; color: var(--blog-muted); font-size: 10px; font-weight: 500; letter-spacing: .02em; white-space: nowrap; }
 .blog-nav-item { display: inline-flex; align-items: center; gap: 6px; height: var(--vp-nav-height); padding: 0 9px; color: var(--vp-c-text-1); font-size: 13px; font-weight: 520; white-space: nowrap; text-decoration: none; transition: color .18s ease; }
 .blog-nav-item svg { flex: 0 0 auto; color: var(--blog-muted); }
 .blog-nav-item:hover, .blog-nav-item.is-active { color: var(--vp-c-brand-1); }
@@ -52,11 +51,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--vp-c-brand-1); 
 .blog-nav-group-heading { display: flex; align-items: center; }
 .nav-chevron { margin-left: -2px; transition: transform .18s ease; }
 .blog-nav-group:hover .nav-chevron, .blog-nav-group:focus-within .nav-chevron, .blog-nav-group.is-open .nav-chevron { transform: rotate(180deg); }
-.nav-tag-dropdown { position: absolute; top: calc(100% - 1px); left: 0; z-index: 50; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; width: 260px; padding: 13px; border: 1px solid var(--blog-line); border-radius: 12px; background: var(--blog-card); box-shadow: 0 15px 38px rgba(20,30,30,.13); opacity: 0; visibility: hidden; transform: translateY(-7px); pointer-events: none; transition: opacity .18s ease, transform .18s ease, visibility .18s ease; }
+.nav-tag-dropdown { position: absolute; top: calc(100% - 1px); left: 0; z-index: 50; display: grid; grid-template-columns: minmax(0, 1fr); gap: 5px; width: 180px; padding: 10px; border: 1px solid var(--blog-line); border-radius: 10px; background: var(--blog-card); box-shadow: 0 15px 38px rgba(20,30,30,.13); opacity: 0; visibility: hidden; transform: translateY(-7px); pointer-events: none; transition: opacity .18s ease, transform .18s ease, visibility .18s ease; }
 .blog-nav-group:hover .nav-tag-dropdown, .blog-nav-group:focus-within .nav-tag-dropdown, .blog-nav-group.is-open .nav-tag-dropdown { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
 .nav-tag-link { display: flex; align-items: center; justify-content: space-between; gap: 5px; min-width: 0; padding: 8px 9px; border-radius: 7px; background: var(--vp-c-bg-soft); color: var(--vp-c-text-1); font-size: 11.5px; text-decoration: none; transition: background .16s ease, color .16s ease; }
 .nav-tag-link span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.nav-tag-link small { color: var(--blog-muted); font-size: 10px; }
 .nav-tag-link:hover, .nav-tag-link:focus-visible { background: var(--vp-c-brand-soft); color: var(--vp-c-brand-1); }
 .mobile-tag-toggle { display: none; }
 .VPHome { margin-bottom: 0 !important; }
@@ -117,12 +115,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--vp-c-brand-1); 
 .contact-item button { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 7px 11px; border: 1px solid var(--blog-line); border-radius: 8px; background: var(--vp-c-bg-soft); color: var(--vp-c-text-1); font: inherit; font-size: 12px; cursor: pointer; }
 .contact-item button:hover, .contact-item button:focus-visible { border-color: #ae8d6a; color: var(--vp-c-brand-1); }
 .contact-item button svg { color: var(--vp-c-brand-1); }
+.contact-qq-text { display: inline-flex; align-items: center; min-height: 34px; padding: 7px 11px; border: 1px solid var(--blog-line); border-radius: 8px; background: var(--vp-c-bg-soft); color: var(--vp-c-text-1); font-size: 12px; white-space: nowrap; }
 .contact-popover { position: absolute; top: calc(100% + 9px); left: 0; z-index: 20; width: max-content; max-width: min(240px, 78vw); padding: 11px 13px; border: 1px solid var(--blog-line); border-radius: 9px; background: var(--blog-card); box-shadow: 0 12px 30px rgba(20,30,30,.17); color: var(--vp-c-text-1); font-size: 12px; opacity: 0; visibility: hidden; transform: translateY(-5px); pointer-events: none; transition: opacity .18s ease, transform .18s ease, visibility .18s ease; }
 .contact-popover strong { color: var(--vp-c-brand-1); font-weight: 700; }
 .contact-item:hover .contact-popover, .contact-item:focus-within .contact-popover { opacity: 1; visibility: visible; transform: translateY(0); }
-.contact-qr-popover { left: auto; right: 0; display: grid; justify-items: center; gap: 7px; width: 170px; text-align: center; }
-.contact-qr-popover svg { display: block; max-width: 100%; height: auto; padding: 5px; border-radius: 4px; background: #fff; }
-.contact-qr-popover span { color: var(--blog-muted); font-size: 10px; white-space: nowrap; }
 .profile-about { margin: 16px 0; padding-top: 15px; border-top: 1px solid var(--blog-line); color: var(--vp-c-text-2); font-size: 12.5px; line-height: 1.7; }
 .profile-skills { gap: 6px; }
 .profile-links { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 18px; padding-top: 15px; border-top: 1px solid var(--blog-line); font-size: 11.5px; }
