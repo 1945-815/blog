@@ -39,16 +39,15 @@ export function tagCount(articles: BlogArticle[], name: string) {
   return articles.filter((article) => hasTag(article, name)).length
 }
 
-export function topicTagOptions(articles: BlogArticle[], topic: TopicId, includeArticleTags = false): TagOption[] {
-  const suggestions = topicSuggestions[topic] || []
-  const names = [...suggestions]
-  if (includeArticleTags) {
-    const discovered = topicArticles(articles, topic).flatMap(articleTagNames)
-    const extras = [...new Set(discovered)].filter((name) => !names.some((existing) => tagKey(existing) === tagKey(name)))
-    extras.sort((a, b) => tagCount(articles, b) - tagCount(articles, a) || a.localeCompare(b, 'zh-CN'))
-    names.push(...extras.slice(0, Math.max(0, 10 - names.length)))
-  }
-  return names.map((name) => ({ name, count: tagCount(articles, name) }))
+export function topicTagOptions(articles: BlogArticle[], topic: TopicId): TagOption[] {
+  const scopedArticles = topicArticles(articles, topic)
+  const names = scopedArticles.length
+    ? [...new Map(scopedArticles.flatMap((article) => article.tags).map((name) => [tagKey(name), name.trim()])).values()]
+    : [...(topicSuggestions[topic] || [])]
+
+  return names
+    .map((name) => ({ name, count: tagCount(scopedArticles, name) }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, 'zh-CN'))
 }
 
 export function allTagOptions(articles: BlogArticle[]): TagOption[] {
