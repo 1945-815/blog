@@ -59,8 +59,8 @@
 | 2026-07-29 | [Codex 和 Cursor 如何辅助接口开发与代码理解](/articles/ai-coding-tools-workflow) | Java 后端实习与业务实践 |
 | 2026-08-19 | [企业文档检索平台的模块划分与技术选型（脱敏）](/articles/document-retrieval-platform-redacted) | Java 后端实习与业务实践 |
 | 2026-09-30 | [从实习项目中复盘接口开发、联调与问题定位](/articles/internship-api-collaboration-retro) | Java 后端实习与业务实践 |
-| 2026-10-15 | [RAG 文档问答的基本链路：文档、检索与模型 API](/articles/rag-document-qa) | AI 应用探索 |
-| 2026-10-15 | [文档切分和向量检索：一个小型 RAG Demo 的实现](/articles/rag-chunking-vector-search-demo) | AI 应用探索 |
-| 2026-10-15 | [用 Spring AI 和 Ollama 完成第一次本地模型调用](/articles/043-spring-ai-ollama) | AI 应用探索 |
-| 2026-10-15 | [Embedding 接入 Elasticsearch：dense_vector、KNN 与维度核对](/articles/044-elasticsearch-embedding-knn) | AI 应用探索 |
+| 2026-10-01 | [RAG 文档问答的基本链路：文档、检索与模型 API](/articles/rag-document-qa) | AI 应用探索 |
+| 2026-10-04 | [文档切分和向量检索：一个小型 RAG Demo 的实现](/articles/rag-chunking-vector-search-demo) | AI 应用探索 |
+| 2026-10-08 | [用 Spring AI 和 Ollama 完成第一次本地模型调用](/articles/043-spring-ai-ollama) | AI 应用探索 |
+| 2026-10-12 | [Embedding 接入 Elasticsearch：dense_vector、KNN 与维度核对](/articles/044-elasticsearch-embedding-knn) | AI 应用探索 |
 | 2026-10-15 | [Agent 工具调用：输入校验、权限边界与失败处理](/articles/045-agent-tool-boundaries) | AI 应用探索 |
