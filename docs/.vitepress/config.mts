@@ -2,13 +2,13 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   lang: 'zh-CN',
-  title: '张耘璨 · Java 后端与 AI 应用',
+  title: 'Cyzee · Java 后端与 AI 应用',
   description: '记录 Java 后端工程实践、业务工作流与 RAG 应用探索。',
   base: '/blog/',
   cleanUrls: true,
   themeConfig: {
     logo: undefined,
-    siteTitle: '张耘璨的博客',
+    siteTitle: 'Cyzee 的博客',
     nav: [
       { component: 'BlogNavItem', props: { label: '首页', icon: 'home', href: '/' } },
       { component: 'BlogNavItem', props: { label: 'Java技术栈', icon: 'code', href: '/categories/java', links: [
@@ -151,7 +151,7 @@ export default defineConfig({
     },
     footer: {
       message: '内容以个人学习与项目复盘为主，企业经历只做经许可的脱敏表达。',
-      copyright: '© 2026 张耘璨 · 用 Markdown 记录工程实践'
+      copyright: '© 2026 Cyzee · 用 Markdown 记录工程实践'
     },
     outline: { label: '文章目录', level: [2, 3] },
     docFooter: { prev: '上一篇', next: '下一篇' }
@@ -162,7 +162,7 @@ export default defineConfig({
   head: [
     ['meta', { name: 'theme-color', content: '#f7f8f5' }],
     ['meta', { property: 'og:type', content: 'website' }],
-    ['meta', { property: 'og:title', content: '张耘璨 · Java 后端与 AI 应用' }],
+    ['meta', { property: 'og:title', content: 'Cyzee · Java 后端与 AI 应用' }],
     ['meta', { property: 'og:description', content: 'Java 后端工程实践、业务工作流与 RAG 应用探索。' }]
   ]
 })

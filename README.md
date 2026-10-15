@@ -1,4 +1,4 @@
-# 张耘璨的 Java 后端与 AI 应用技术博客
+# Cyzee 的 Java 后端与 AI 应用技术博客
 
 个人技术博客｜Java 后端、微服务、Redis 与 RAG 应用探索。
 

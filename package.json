@@ -2,7 +2,7 @@
   "name": "java-backend-blog",
   "version": "1.0.0",
   "private": true,
-  "description": "张耘璨的 Java 后端与 AI 应用技术博客",
+  "description": "Cyzee 的 Java 后端与 AI 应用技术博客",
   "type": "module",
   "scripts": {
     "build": "vitepress build docs",
