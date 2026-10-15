@@ -55,7 +55,7 @@ export default defineConfig({
         { label: '中间件', href: '/categories/middleware' },
         { label: '随笔与实践', href: '/categories/notes' }
       ] } },
-      { component: 'BlogNavItem', props: { label: '帮助文档', icon: 'help', href: '/roadmap', links: [
+      { component: 'BlogNavItem', props: { label: '帮助文档', icon: 'help', href: '/roadmap', align: 'end', links: [
         { label: '技术分类', href: '/categories/' },
         { label: 'Tag 标签检索', href: '/tags' },
         { label: '成长路线', href: '/roadmap' },

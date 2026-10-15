@@ -5,7 +5,7 @@ import { House, Network, NotebookPen, UserRound, ChevronDown, BookOpen } from 'l
 
 type NavIcon = 'home' | 'code' | 'network' | 'database' | 'ai' | 'frontend' | 'notes' | 'about' | 'python' | 'peripheral' | 'help'
 type NavLink = { label: string; href: string }
-const props = defineProps<{ label: string; icon: NavIcon; href: string; links?: NavLink[]; screenMenu?: boolean }>()
+const props = defineProps<{ label: string; icon: NavIcon; href: string; links?: NavLink[]; screenMenu?: boolean; align?: 'start' | 'end' }>()
 
 function createNavIcon(name: string, draw: (strokeWidth: number) => VNode[]) {
   return defineComponent({
@@ -90,13 +90,27 @@ const icons = {
 }
 const route = useRoute()
 const closeScreen = inject<(() => void) | undefined>('close-screen', undefined)
-const active = computed(() => route.path === withBase(props.href) || route.path === `${withBase(props.href)}.html`)
+function isLinkActive(href: string) {
+  const path = withBase(href.split('?')[0]).replace(/\/$/, '') || '/'
+  const currentPath = route.path.replace(/\/$/, '') || '/'
+  return currentPath === path || currentPath === `${path}.html`
+}
+
+const active = computed(() => isLinkActive(props.href))
 const mobileExpanded = ref(false)
 const hovered = ref(false)
+const focused = ref(false)
+const menuOpen = computed(() => hovered.value || focused.value)
 
 function onNavigate() {
   hovered.value = false
+  focused.value = false
   if (props.screenMenu) closeScreen?.()
+}
+
+function onFocusOut(event: FocusEvent) {
+  const group = event.currentTarget as HTMLElement
+  if (!(event.relatedTarget instanceof Node && group.contains(event.relatedTarget))) focused.value = false
 }
 
 function onMenuClick(event: MouseEvent) {
@@ -110,17 +124,17 @@ function onMenuClick(event: MouseEvent) {
 </script>
 
 <template>
-  <div class="blog-nav-group" :class="{ 'in-screen-menu': screenMenu, 'is-open': hovered }" @mouseenter="hovered = true" @mouseleave="hovered = false">
+  <div class="blog-nav-group" :class="{ 'in-screen-menu': screenMenu, 'is-open': menuOpen, 'align-end': align === 'end' }" @mouseenter="hovered = true" @mouseleave="hovered = false" @focusin="focused = true" @focusout="onFocusOut">
     <div class="blog-nav-group-heading">
-      <a class="blog-nav-item" :class="{ 'is-active': active, 'in-screen-menu': screenMenu }" :href="withBase(href)" :aria-current="active ? 'page' : undefined" @click="onNavigate">
+      <a class="blog-nav-item" :class="{ 'is-active': active, 'in-screen-menu': screenMenu }" :href="withBase(href)" :aria-current="active ? 'page' : undefined" :aria-haspopup="links?.length && !screenMenu ? 'true' : undefined" :aria-expanded="links?.length && !screenMenu ? menuOpen : undefined" @click="onNavigate">
         <component :is="icons[icon]" :size="16" :stroke-width="1.8" aria-hidden="true" />
         <span>{{ label }}</span>
         <ChevronDown v-if="links?.length && !screenMenu" :size="13" :stroke-width="1.8" class="nav-chevron" aria-hidden="true" />
       </a>
       <button v-if="screenMenu && links?.length" class="mobile-tag-toggle" type="button" :aria-label="label + '子菜单'" :aria-expanded="mobileExpanded" @click="mobileExpanded = !mobileExpanded"><ChevronDown :size="16" aria-hidden="true" /></button>
     </div>
-    <div v-if="links?.length && (!screenMenu || mobileExpanded)" class="nav-tag-dropdown" :class="{ 'mobile-tags': screenMenu }" :aria-label="label + '子菜单'">
-      <a v-for="link in links" :key="link.href" class="nav-tag-link" :href="withBase(link.href)" @click="onMenuClick"><span>{{ link.label }}</span></a>
+    <div v-if="links?.length && (!screenMenu || mobileExpanded)" class="nav-tag-dropdown" :class="{ 'mobile-tags': screenMenu, 'nav-tag-dropdown--end': align === 'end' }" :aria-label="label + '子菜单'">
+      <a v-for="link in links" :key="link.href" class="nav-tag-link" :class="{ 'is-current': isLinkActive(link.href) }" :href="withBase(link.href)" :aria-current="isLinkActive(link.href) ? 'page' : undefined" @click="onMenuClick"><span>{{ link.label }}</span></a>
     </div>
   </div>
 </template>
