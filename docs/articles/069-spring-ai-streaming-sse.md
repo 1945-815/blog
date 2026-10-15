@@ -65,19 +65,23 @@ server:
 public class StreamingChatController {
     private final ChatClient chatClient;
 
+    public record StreamRequest(String prompt) {}
+
     public StreamingChatController(ChatClient.Builder builder) {
         this.chatClient = builder.build();
     }
 
-    @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @PostMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<ServerSentEvent<String>> stream(
-            @RequestParam String prompt,
+            @RequestBody StreamRequest request,
             @RequestHeader(value = "X-Request-Id", required = false) String requestId) {
-        if (prompt.isBlank() || prompt.length() > 1000) {
+        String prompt = request.prompt();
+        if (prompt == null || prompt.isBlank() || prompt.length() > 1000) {
             return Flux.error(new ResponseStatusException(
                 HttpStatus.BAD_REQUEST, "prompt 长度必须在 1 到 1000 之间"));
         }
-        String id = requestId == null ? UUID.randomUUID().toString() : requestId;
+        String id = requestId != null && requestId.matches("[A-Za-z0-9._-]{1,64}")
+            ? requestId : UUID.randomUUID().toString();
         return chatClient.prompt().user(prompt).stream().content()
             .map(chunk -> ServerSentEvent.builder(chunk).event("delta").build())
             .doOnError(error -> log.warn("AI stream failed, requestId={}", id, error));
@@ -110,10 +114,15 @@ GROUP BY status;
 调用示例使用 `curl -N` 禁用客户端缓冲：
 
 ~~~bash
-curl -N "http://localhost:8080/api/ai/stream?prompt=请用三句话解释Java集合"
+curl -N -X POST "http://localhost:8080/api/ai/stream" \
+  -H "Content-Type: application/json" \
+  -H "X-Request-Id: demo-123" \
+  -d '{"prompt":"请用三句话解释Java集合"}'
 ~~~
 
 浏览器端也可以通过 `fetch` 的 `ReadableStream` 读取响应体并按空行解析 SSE 事件。若使用原生 `EventSource`，需注意它默认使用 GET 且不便携带自定义 Authorization 请求头；认证方式和 prompt 长度应按项目安全模型设计。
+
+如果需要接收客户端提供的 X-Request-Id，应先限制为 1 到 64 位的安全字符；不符合规则时由服务端生成 UUID。prompt 使用 POST 请求体传输，避免出现在 URL、代理访问日志和浏览器历史记录中。
 
 ## 五、项目真实落地
 

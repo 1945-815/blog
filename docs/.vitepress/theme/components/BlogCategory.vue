@@ -10,17 +10,18 @@ import ProfileCard from './ProfileCard.vue'
 
 const props = defineProps<{ topic: TopicId }>()
 const definition = computed(() => topics.find((item) => item.id === props.topic)!)
-const posts = computed(() => topicArticles(articles, props.topic).reverse())
+const scopedPosts = computed(() => topicArticles(articles, props.topic))
+const posts = computed(() => [...scopedPosts.value].reverse())
 const selectedTag = ref('')
 const subtopics = computed(() => {
   const options = topicTagOptions(articles, props.topic)
   if (selectedTag.value && !options.some((item) => tagKey(item.name) === tagKey(selectedTag.value))) {
-    options.push({ name: selectedTag.value, count: tagCount(articles, selectedTag.value) })
+    options.push({ name: selectedTag.value, count: tagCount(scopedPosts.value, selectedTag.value) })
   }
-  return options
+  return options.map((item) => ({ ...item, count: tagCount(scopedPosts.value, item.name) }))
 })
 const visiblePosts = computed(() => selectedTag.value
-  ? [...articles].filter((article) => hasTag(article, selectedTag.value)).reverse()
+  ? posts.value.filter((article) => hasTag(article, selectedTag.value))
   : posts.value)
 
 function syncFromUrl() {

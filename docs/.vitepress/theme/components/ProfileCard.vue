@@ -31,6 +31,6 @@ const selected = computed(() => {
       <div class="side-heading"><span class="side-heading-mark"></span><h2>精选文章</h2></div>
       <ol><li v-for="(article, index) in selected" :key="article.url"><span>{{ String(index + 1).padStart(2, '0') }}</span><a :href="withBase(article.url)">{{ article.title }}</a></li></ol>
     </section>
-    <section class="side-card side-note"><span class="side-heading-mark"></span><h2>关于这个博客</h2><p>文章按成长阶段编排，页面显示真实公开日期。学习阶段参考日期仅用于说明顺序。</p><a :href="withBase('/roadmap')">查看成长路线 →</a></section>
+    <section class="side-card side-note"><span class="side-heading-mark"></span><h2>关于这个博客</h2><p>文章按学习路线参考日期编排；补充文章会在正文标注计划公开日期，计划日期不代表历史发文时间。</p><a :href="withBase('/roadmap')">查看成长路线 →</a></section>
   </aside>
 </template>

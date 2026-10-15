@@ -98,6 +98,6 @@ export function topicForTag(articles: BlogArticle[], name: string, article?: Blo
   return topics.find((topic) => topicArticles(articles, topic.id).some((item) => hasTag(item, name)))?.id || 'java'
 }
 
-export function byPublishedDate(a: BlogArticle, b: BlogArticle) {
-  return b.date.localeCompare(a.date) || b.planDate.localeCompare(a.planDate) || a.title.localeCompare(b.title, 'zh-CN')
+export function byRouteDate(a: BlogArticle, b: BlogArticle) {
+  return b.planDate.localeCompare(a.planDate) || b.date.localeCompare(a.date) || a.title.localeCompare(b.title, 'zh-CN')
 }

@@ -15,5 +15,9 @@
   },
   "dependencies": {
     "lucide-vue-next": "^0.577.0"
+  },
+  "overrides": {
+    "vite": "^6.4.3",
+    "esbuild": "^0.25.12"
   }
 }

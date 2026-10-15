@@ -2,7 +2,7 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { withBase } from 'vitepress'
 import { data as articles } from '../../../articles.data'
-import { allTagOptions, byPublishedDate, hasTag, tagKey } from '../tags'
+import { allTagOptions, byRouteDate, hasTag, tagKey } from '../tags'
 import ArticleCard from './ArticleCard.vue'
 import ProfileCard from './ProfileCard.vue'
 
@@ -13,7 +13,7 @@ const tagQuery = ref('')
 const options = allTagOptions(articles)
 
 const filteredOptions = computed(() => options.filter((option) => tagKey(option.name).includes(tagKey(tagQuery.value))).slice(0, tagQuery.value ? 60 : 32))
-const matching = computed(() => articles.filter((article) => selected.value.every((name) => hasTag(article, name))).sort(byPublishedDate))
+const matching = computed(() => articles.filter((article) => selected.value.every((name) => hasTag(article, name))).sort(byRouteDate))
 const totalPages = computed(() => Math.max(1, Math.ceil(matching.value.length / pageSize)))
 const currentPage = computed(() => Math.min(page.value, totalPages.value))
 const visible = computed(() => matching.value.slice((currentPage.value - 1) * pageSize, currentPage.value * pageSize))
@@ -68,6 +68,6 @@ onUnmounted(() => {
       <p v-if="!filteredOptions.length" class="tag-empty-options">没有匹配的标签。</p>
       <p v-else-if="!tagQuery" class="tag-filter-hint">显示常用标签；输入名称可查找全部 {{ options.length }} 个标签与学习方向。</p>
     </section>
-    <div class="blog-main-grid"><main class="blog-feed" id="tag-results"><div class="section-heading"><div><p class="section-eyebrow">RELATED ARTICLES</p><h2>{{ selected.length ? `Tag：${selected.join(' + ')}` : '全部文章' }}</h2><p aria-live="polite">相关文章：{{ matching.length }} 篇 · 按公开日期倒序</p></div></div><div v-if="visible.length" class="article-list"><ArticleCard v-for="article in visible" :key="article.url" :article="article" /></div><div v-else class="empty-card"><h2>没有同时匹配的文章</h2><p>可以移除一个筛选条件，或选择其他标签。</p><button type="button" class="clear-tags" @click="updateUrl([])">查看全部文章 →</button></div><nav v-if="totalPages > 1" class="tag-pagination" aria-label="文章分页"><button type="button" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)">上一页</button><button v-for="number in totalPages" :key="number" type="button" :class="{ active: currentPage === number }" :aria-current="currentPage === number ? 'page' : undefined" @click="goToPage(number)">{{ number }}</button><button type="button" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)">下一页</button></nav></main><ProfileCard :articles="articles" /></div>
+    <div class="blog-main-grid"><main class="blog-feed" id="tag-results"><div class="section-heading"><div><p class="section-eyebrow">RELATED ARTICLES</p><h2>{{ selected.length ? `Tag：${selected.join(' + ')}` : '全部文章' }}</h2><p aria-live="polite">相关文章：{{ matching.length }} 篇 · 按学习路线参考日期倒序</p></div></div><div v-if="visible.length" class="article-list"><ArticleCard v-for="article in visible" :key="article.url" :article="article" /></div><div v-else class="empty-card"><h2>没有同时匹配的文章</h2><p>可以移除一个筛选条件，或选择其他标签。</p><button type="button" class="clear-tags" @click="updateUrl([])">查看全部文章 →</button></div><nav v-if="totalPages > 1" class="tag-pagination" aria-label="文章分页"><button type="button" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)">上一页</button><button v-for="number in totalPages" :key="number" type="button" :class="{ active: currentPage === number }" :aria-current="currentPage === number ? 'page' : undefined" @click="goToPage(number)">{{ number }}</button><button type="button" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)">下一页</button></nav></main><ProfileCard :articles="articles" /></div>
   </div>
 </template>

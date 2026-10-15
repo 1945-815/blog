@@ -6,6 +6,30 @@ export default defineConfig({
   description: '记录 Java 后端工程实践、业务工作流与 RAG 应用探索。',
   base: '/blog/',
   cleanUrls: true,
+  sitemap: { hostname: 'https://1945-815.github.io/blog/' },
+  transformHead({ page, pageData, title, description }) {
+    const relativePath = page
+      .replace(/^\/+/, '')
+      .replace(/(^|\/)index\.md$/, '$1')
+      .replace(/\.md$/, '')
+    const canonical = new URL('/blog/' + relativePath, 'https://1945-815.github.io').toString()
+    const pageTitle = String(pageData.frontmatter.title || title.replace(/ \| .+$/, ''))
+    const pageDescription = String(pageData.frontmatter.description || description)
+    const isArticle = relativePath.startsWith('articles/') && relativePath !== 'articles'
+    const isNotFound = relativePath === '404'
+    return [
+      ...(isNotFound ? [] : [['link', { rel: 'canonical', href: canonical }]]),
+      ['meta', { property: 'og:type', content: isArticle ? 'article' : 'website' }],
+      ['meta', { property: 'og:title', content: pageTitle }],
+      ['meta', { property: 'og:description', content: pageDescription }],
+      ['meta', { property: 'og:url', content: canonical }],
+      ['meta', { property: 'og:image', content: 'https://1945-815.github.io/blog/banner-water.jpg' }],
+      ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+      ['meta', { name: 'twitter:title', content: pageTitle }],
+      ['meta', { name: 'twitter:description', content: pageDescription }],
+      ...(isNotFound ? [['meta', { name: 'robots', content: 'noindex' }]] : [])
+    ]
+  },
   themeConfig: {
     logo: undefined,
     siteTitle: 'Cyzee 的博客',
@@ -33,6 +57,7 @@ export default defineConfig({
       ] } },
       { component: 'BlogNavItem', props: { label: '帮助文档', icon: 'help', href: '/roadmap', links: [
         { label: '技术分类', href: '/categories/' },
+        { label: 'Tag 标签检索', href: '/tags' },
         { label: '成长路线', href: '/roadmap' },
         { label: '项目记录', href: '/projects' },
         { label: '关于我', href: '/about' }
@@ -160,9 +185,6 @@ export default defineConfig({
     lineNumbers: true
   },
   head: [
-    ['meta', { name: 'theme-color', content: '#f7f8f5' }],
-    ['meta', { property: 'og:type', content: 'website' }],
-    ['meta', { property: 'og:title', content: 'Cyzee · Java 后端与 AI 应用' }],
-    ['meta', { property: 'og:description', content: 'Java 后端工程实践、业务工作流与 RAG 应用探索。' }]
+    ['meta', { name: 'theme-color', content: '#f7f8f5' }]
   ]
 })

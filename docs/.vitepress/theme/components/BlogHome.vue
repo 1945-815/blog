@@ -23,7 +23,7 @@ const latest = computed(() => [...articles].reverse().slice(0, 8))
         </main>
         <ProfileCard :articles="articles" />
       </div>
-      <section class="home-categories" aria-labelledby="category-title"><div class="section-heading"><div><p class="section-eyebrow">EXPLORE BY TOPIC</p><h2 id="category-title">按技术方向阅读</h2></div><a :href="withBase('/categories/')">全部分类 ↗</a></div><div class="category-grid"><CategoryCard v-for="topic in topics.slice(0, 6)" :key="topic.id" v-bind="topic" :count="topicArticles(articles, topic.id).length" /></div></section>
+      <section class="home-categories" aria-labelledby="category-title"><div class="section-heading"><div><p class="section-eyebrow">EXPLORE BY TOPIC</p><h2 id="category-title">按技术方向阅读</h2></div><a :href="withBase('/categories/')">全部分类 ↗</a></div><div class="category-grid"><CategoryCard v-for="topic in topics.filter((item) => !['python', 'frontend', 'notes'].includes(item.id))" :key="topic.id" v-bind="topic" :count="topicArticles(articles, topic.id).length" /></div></section>
     </div>
   </div>
 </template>

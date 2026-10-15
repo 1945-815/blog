@@ -64,3 +64,49 @@
 | 2026-10-08 | [用 Spring AI 和 Ollama 完成第一次本地模型调用](/articles/043-spring-ai-ollama) | AI 应用探索 |
 | 2026-10-12 | [Embedding 接入 Elasticsearch：dense_vector、KNN 与维度核对](/articles/044-elasticsearch-embedding-knn) | AI 应用探索 |
 | 2026-10-15 | [Agent 工具调用：输入校验、权限边界与失败处理](/articles/045-agent-tool-boundaries) | AI 应用探索 |
+
+## 主题补充文章
+
+下面补充当前文章归档中的其他文章，按主题提供导航入口，不表示学习时间、首次公开时间或发布时间。主线学习顺序仍以上表为准；文章的计划日期和实际公开状态请以各文章页说明为准。
+
+### Java 语言、并发与 JVM
+
+- [从接口到运行时分派：用多态组织可扩展的 Java 业务](/articles/046-java-polymorphism-interface)
+- [CompletableFuture 异步编排：线程池隔离、超时与异常边界](/articles/051-completablefuture-async-orchestration)
+- [JVM 内存与 OOM 排查：从运行时区域到堆转储证据](/articles/052-jvm-memory-oom-diagnosis)
+- [Java 类加载与 SPI：从类身份到可控的扩展发现](/articles/053-java-spi-classloader)
+- [Java 反射与内省：理解框架如何读取对象属性](/articles/056-java-reflection-bean-introspection)
+- [Java 日期时间处理：用 java.time 解决时区与区间边界](/articles/061-java-time-zone-boundaries)
+- [Java 字符串实践：String 不可变性与 StringBuilder](/articles/066-java-string-stringbuilder)
+- [Java 泛型为什么不能随便强转：类型擦除、通配符与分页 DTO](/articles/071-java-generics-type-erasure)
+- [BigDecimal 金额计算：从舍入规则到分摊尾差](/articles/072-bigdecimal-money-rounding)
+
+### Spring、工程化与微服务
+
+- [MyBatis 查询与批量写入性能：识别 N+1 并控制数据库往返](/articles/047-mybatis-query-batch-performance)
+- [Maven 多模块项目：聚合、依赖管理与团队构建边界](/articles/048-maven-multi-module)
+- [Spring Boot 启动与自动配置：从条件装配到问题诊断](/articles/049-springboot-auto-configuration)
+- [RuoYi RBAC 权限模型：从角色菜单到后端接口校验](/articles/050-ruoyi-rbac-permission-model)
+- [Spring 定时任务与 Quartz：从单机触发到多实例调度](/articles/055-quartz-scheduled-jobs)
+- [Nginx 反向代理与负载均衡：把请求稳妥地交给 Spring Boot](/articles/058-nginx-java-load-balancing)
+- [Spring Boot 应用容器化发布：从可执行 JAR 到多阶段镜像](/articles/059-springboot-docker-multistage)
+- [Spring Cloud Gateway 过滤器顺序与耗时统计](/articles/063-gateway-filter-order-timing)
+- [Linux 上运行 Spring Boot JAR：systemd 管理与故障排查](/articles/065-linux-springboot-jar-systemd)
+
+### 数据库、缓存与搜索
+
+- [Redis 分布式锁实践：租约、唯一标识与数据库兜底](/articles/054-redis-distributed-lock)
+- [Redis Lua 实现每日点赞配额：把检查和计数放进同一次操作](/articles/057-redis-daily-quota-lua)
+- [MySQL 分组统计实战：从订单明细到分类报表](/articles/062-mysql-grouped-reporting)
+- [Elasticsearch bool 查询与高亮：组合过滤条件并返回可展示片段](/articles/064-elasticsearch-bool-highlight)
+- [MySQL InnoDB MVCC：一致性读与事务快照](/articles/067-mysql-innodb-mvcc-consistent-read)
+- [Elasticsearch 深分页：用 PIT 与 search_after 稳定翻页](/articles/074-elasticsearch-pit-search-after)
+- [Redis 持久化与恢复：RDB、AOF 和缓存重建的边界](/articles/075-redis-persistence-recovery)
+
+### AI 与工程实践
+
+- [RAG 检索评估：用黄金问题集定位召回与回答问题](/articles/060-rag-retrieval-evaluation)
+- [Transactional Outbox：让 MySQL 写入与 RabbitMQ 事件可靠衔接](/articles/068-transactional-outbox-mysql-rabbitmq)
+- [Spring AI 流式响应：用 WebFlux 与 SSE 逐段返回模型内容](/articles/069-spring-ai-streaming-sse)
+- [Spring AI 会话记忆：会话隔离、窗口裁剪与 JDBC 持久化](/articles/070-spring-ai-chat-memory-session)
+- [Spring Boot 文件上传：大小校验、隔离存储与失败补偿](/articles/073-springboot-file-upload-quarantine)
