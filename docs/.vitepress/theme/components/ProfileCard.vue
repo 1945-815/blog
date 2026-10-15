@@ -15,9 +15,9 @@ const selected = computed(() => {
 <template>
   <aside class="blog-sidebar" aria-label="作者信息与精选文章">
     <section class="side-card profile-card">
-      <div class="profile-cover" :style="{ backgroundImage: `url(${withBase('/banner-tech.svg')})` }"></div>
+      <div class="profile-cover" :style="{ backgroundImage: `url(${withBase('/banner-water.jpg')})` }"></div>
       <div class="profile-content">
-        <img class="profile-avatar" :src="withBase('/avatar-monogram.svg')" alt="Cyzee 的头像" width="80" height="80" />
+        <img class="profile-avatar" :src="withBase('/avatar-water.jpg')" alt="宁静水面涟漪头像" width="80" height="80" />
         <h2>Cyzee</h2>
         <p class="profile-role">Java 后端开发者 · AI 应用探索者</p>
         <p class="profile-location"><MapPin :size="15" :stroke-width="1.8" aria-hidden="true" />中华人民共和国</p>

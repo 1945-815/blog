@@ -99,7 +99,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--vp-c-brand-1); 
 .blog-sidebar { display: grid; gap: 16px; }
 .profile-cover { height: 104px; border-radius: 11px 11px 0 0; background-color: #334b4a; background-position: center 58%; background-size: cover; }
 .profile-content { padding: 0 23px 23px; }
-.profile-avatar { display: block; position: relative; margin-top: -37px; border: 4px solid var(--blog-card); border-radius: 50%; background: var(--blog-card); }
+.profile-avatar { display: block; position: relative; margin-top: -37px; border: 4px solid var(--blog-card); border-radius: 50%; background: var(--blog-card); object-fit: cover; object-position: center 65%; }
 .profile-content h2 { margin: 11px 0 3px; font-size: 20px; letter-spacing: -.03em; }
 .profile-role { margin: 0; color: var(--vp-c-text-2); font-size: 12px; }
 .profile-location { display: flex; align-items: center; gap: 7px; margin: 17px 0 0; padding: 12px 0; border-top: 1px solid var(--blog-line); border-bottom: 1px solid var(--blog-line); color: var(--blog-muted); font-size: 12px; }
