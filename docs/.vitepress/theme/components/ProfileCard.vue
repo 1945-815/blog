@@ -15,7 +15,7 @@ const selected = computed(() => {
 <template>
   <aside class="blog-sidebar" aria-label="作者信息与精选文章">
     <section class="side-card profile-card">
-      <div class="profile-cover" :style="{ backgroundImage: `url(${withBase('/banner-water.jpg')})` }"></div>
+      <div class="profile-cover" :style="{ backgroundImage: `url(${withBase('/profile-cover-sea.jpg')})` }"></div>
       <div class="profile-content">
         <img class="profile-avatar" :src="withBase('/avatar-patrick.jpg')" alt="派大星头像" width="80" height="80" />
         <h2>Cyzee</h2>
