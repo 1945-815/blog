@@ -79,7 +79,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--vp-c-brand-1); 
 .article-card:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(23,34,37,.09); border-color: rgba(133,97,66,.27); }
 .article-card-top { display: flex; justify-content: space-between; gap: 14px; align-items: center; font-size: 11px; }
 .article-category { color: var(--vp-c-brand-1); font-weight: 740; letter-spacing: .04em; }
-.article-phase { color: var(--blog-muted); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
 .article-card h3 { margin: 12px 0 9px; font-size: clamp(18px, 1.65vw, 22px); line-height: 1.42; letter-spacing: -.025em; font-weight: 760; }
 .article-card h3 a { color: var(--vp-c-text-1); text-decoration: none; }
 .article-card h3 a:hover { color: var(--vp-c-brand-1); }

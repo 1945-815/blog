@@ -14,7 +14,7 @@ function tagTopic(tag: string) {
 
 <template>
   <article class="article-card">
-    <div class="article-card-top"><span class="article-category">{{ article.category || article.phase }}</span><span class="article-phase">{{ article.phase }} · 学习路线参考 {{ article.planDate }}</span></div>
+    <div class="article-card-top"><span class="article-category">{{ article.category || article.phase }}</span></div>
     <h3><a :href="withBase(article.url)">{{ article.title }}</a></h3>
     <p class="article-description">{{ article.description }}</p>
     <div class="article-tags"><a v-for="tag in article.tags.slice(0, 3)" :key="tag" :href="withBase(categoryTagHref(tagTopic(tag), tag))" target="_self" @click="onCategoryTagLinkClick($event, tagTopic(tag), tag)">{{ tag }}</a></div>
