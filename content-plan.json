@@ -702,5 +702,21 @@
     "stageName": "数据库与 Spring 基础",
     "slug": "git-version-control-classroom",
     "title": "Git 课堂笔记整理：暂存、提交、分支与冲突处理"
+  },
+  {
+    "id": 89,
+    "planDate": "2026-10-16",
+    "stage": 6,
+    "stageName": "Web 基础",
+    "slug": "vue2-admin-learning-notes",
+    "title": "Vue 2 管理后台学习记录：组件、路由与请求拦截"
+  },
+  {
+    "id": 90,
+    "planDate": "2026-10-16",
+    "stage": 3,
+    "stageName": "企业开发技术学习",
+    "slug": "software-development-workflow-scrum",
+    "title": "软件项目开发流程笔记：从需求评审到 Scrum 迭代"
   }
 ]
