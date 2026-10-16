@@ -38,6 +38,44 @@ Servlet Container -> Filter Chain -> DispatcherServlet
   -> HttpMessageConverter -> HTTP Response
 ```
 
+`0718SpringBoot请求响应` 的课堂材料依次练习了查询参数、路径变量、JSON 请求体和日期。下面按 Java 17 / Spring Boot 3.3.x 写法展示三个入口：`@RequestBody` 读取 JSON，`@RequestParam` 读取查询参数，`@PathVariable` 读取路径片段，返回对象由消息转换器序列化。
+
+```java
+import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/demo")
+public class DemoController {
+    public record UserInput(String name, LocalDate birthday) {}
+
+    @GetMapping("/users/{id}")
+    public String user(@PathVariable Long id) {
+        return "user-" + id;
+    }
+
+    @GetMapping("/dates")
+    public LocalDate date(@RequestParam
+                          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate value) {
+        return value;
+    }
+
+    @PostMapping("/users")
+    public UserInput create(@RequestBody UserInput input) {
+        return input; // 仅演示绑定与响应，不写数据库
+    }
+}
+```
+
+本地启动后可分别请求 `GET /api/demo/users/1`、`GET /api/demo/dates?value=2026-07-18`，以及带 `Content-Type: application/json` 的 `POST /api/demo/users`，请求体如 `{"name":"小林","birthday":"2026-07-18"}`。缺少必需查询参数或 JSON 格式错误通常由参数解析阶段形成 4xx 响应；具体错误结构取决于项目异常处理配置。课堂笔记把所有 400 都概括为“请求方式异常”并不准确：HTTP 方法不匹配通常是 405。
+
 ## 四、真实项目落地
 
 在本地 Spring Boot 示例接口上分别观察过滤器、拦截器、Controller 与异常处理器的调用顺序，记录请求和响应。

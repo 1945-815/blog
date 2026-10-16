@@ -39,6 +39,8 @@ Controller 接收并校验 HTTP 请求，Service 放业务规则，Mapper 负责
 
 ## 三、核心代码实现
 
+`0721SpringBoot案例01/笔记/案例01.md` 的课堂项目明确使用 Java 17、Spring Boot 3.3.5 与 `mybatis-spring-boot-starter` 3.0.5，练习员工/部门实体、Controller/Service/Mapper 分层和分页。本篇代码是按同类 CRUD 流程整理的练习示例，依赖版本应以这份课堂 POM 为复现基线；不要把示例表结构和字段说成企业系统实表。配置数据库时用本机环境变量注入账号密码，课堂笔记中的演示口令不进入文章。
+
 练习表结构：
 
 ~~~sql
