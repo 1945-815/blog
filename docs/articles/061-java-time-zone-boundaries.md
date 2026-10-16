@@ -127,6 +127,31 @@ LocalDateTime 表示没有时区的本地日历日期时间；Instant 表示时�
 
 通过这次回看常用类笔记，我发现日期时间不只是记住格式字符，还要先讲清楚数据代表“日历日期”还是“时间点”。以前我会下意识用 Date 或 LocalDateTime 保存所有时间；现在我会先把业务语义和时区约定写下来，再确定 Java 类型、数据库字段和接口格式。作为一名 2027 届 Java 后端实习生，我希望能把这类基础边界问题提前处理，而不是等到报表或定时任务出现偏差后再补救。
 
+## 补充：课堂 `Date`/`Calendar` 写法如何迁移
+
+本地 3 月 11 日笔记练习了 `Date`、`SimpleDateFormat` 和 `Calendar`。阅读旧代码时，`Date` 更接近时间线上一个时刻，格式化和日历计算通常由其他 API 承担；`SimpleDateFormat` 是可变对象，不要把单个实例作为无保护的全局共享对象。新代码优先按业务含义选择 `java.time` 类型，尤其不要把不带时区的 `LocalDateTime` 自动当作 UTC。
+
+~~~java
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
+public class DateMigrationDemo {
+    public static void main(String[] args) {
+        ZoneId zone = ZoneId.of("Asia/Shanghai");
+        LocalDate day = LocalDate.of(2026, 3, 11);
+        Instant start = day.atStartOfDay(zone).toInstant();
+        Instant nextStart = day.plusDays(1).atStartOfDay(zone).toInstant();
+        String display = DateTimeFormatter.ofPattern("uuuu-MM-dd")
+                .format(day);
+        System.out.println(display + " [" + start + ", " + nextStart + ")");
+    }
+}
+~~~
+
+`Calendar.add(DAY_OF_MONTH, 1)` 对应的是日历日变化；`Instant.plus(24, HOURS)` 则是固定时长，两者在夏令时切换等情形下可能不同。日期区间边界按业务 `ZoneId` 各自求次日零点，正是前文左闭右开查询的依据。
+
 ## 参考资料
 
 - [Java SE 17 Instant API](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html)

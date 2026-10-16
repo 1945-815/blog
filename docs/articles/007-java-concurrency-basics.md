@@ -128,6 +128,72 @@ public class ConcurrentCounterDemo {
 
 不能。volatile 主要解决可见性与特定内存顺序问题，不提供复合操作的互斥。
 
+## 补充：`Lock` 与 `Condition` 的生产者消费者练习
+
+本地 3 月 17 日笔记用共享计数值练习“生产 +1、消费 -1”，强调等待条件要用 `while` 重检。下面是一格缓冲区的独立示例。`await` 会在等待时释放关联锁；被唤醒后重新获得锁并检查条件。`signalAll` 只通知等待线程，并不保证它立刻运行。与之相比，`Thread.sleep` 不会释放已持有的这把锁。
+
+~~~java
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class ConditionDemo {
+    static class Slot {
+        private final ReentrantLock lock = new ReentrantLock();
+        private final Condition changed = lock.newCondition();
+        private int value; // 仅允许 0 或 1
+
+        void produce() throws InterruptedException {
+            lock.lockInterruptibly();
+            try {
+                while (value == 1) changed.await();
+                value = 1;
+                changed.signalAll();
+            } finally {
+                lock.unlock();
+            }
+        }
+
+        void consume() throws InterruptedException {
+            lock.lockInterruptibly();
+            try {
+                while (value == 0) changed.await();
+                value = 0;
+                changed.signalAll();
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Slot slot = new Slot();
+        Thread producer = new Thread(() -> {
+            try { for (int i = 0; i < 3; i++) slot.produce(); }
+            catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        });
+        Thread consumer = new Thread(() -> {
+            try { for (int i = 0; i < 3; i++) slot.consume(); }
+            catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        });
+        producer.start();
+        consumer.start();
+        producer.join();
+        consumer.join();
+        System.out.println("三次生产和消费已结束");
+    }
+}
+~~~
+
+保存为 `ConditionDemo.java`，JDK 8+ 可运行。线程被中断时本例恢复中断标记后退出；若生产者中途退出而消费者仍等待，完整服务还需要关闭状态或超时唤醒机制。本例只演示同步协议。实际任务队列优先评估 `BlockingQueue`，避免自行维护条件变量。课堂笔记中的“多线程一定提高效率”并无通用保证，是否获益取决于任务与资源。
+
+### 创建方式、状态与线程池参数
+
+3 月 16–17 日笔记分别使用继承 `Thread`、实现 `Runnable`、实现 `Callable`。`Thread.start()` 请求启动新线程，直接调用 `run()` 只是当前线程的一次普通方法调用。`Runnable` 没有返回值；`Callable<V>` 可返回结果并声明受检异常，可以通过 `ExecutorService.submit` 得到 `Future<V>`。应按任务模型和生命周期选择，而不是认为“有返回值才允许使用 Callable”。
+
+`Thread.State` 列出 `NEW`、`RUNNABLE`、`BLOCKED`、`WAITING`、`TIMED_WAITING`、`TERMINATED`；这些是 Java 层状态，不等同于操作系统线程调度的全部细节。调试等待问题时要同时看持有的锁、等待的条件以及中断路径。
+
+自定义 `ThreadPoolExecutor` 时，笔记提及核心线程数、最大线程数、空闲保留时间及单位、工作队列、线程工厂和拒绝策略。队列若无界，最大线程数可能长期不起预期作用，任务积压也会带来内存风险；拒绝策略必须与上游限流和失败反馈相配合。本文的固定线程池只演示任务提交与关闭，不能直接当作高负载服务的线程池配置。
+
 ## 参考资料
 
 - [Oracle Java Tutorial：Synchronization](https://docs.oracle.com/javase/tutorial/essential/concurrency/sync.html)

@@ -110,3 +110,14 @@
 - [Spring AI 流式响应：用 WebFlux 与 SSE 逐段返回模型内容](/articles/069-spring-ai-streaming-sse)
 - [Spring AI 会话记忆：会话隔离、窗口裁剪与 JDBC 持久化](/articles/070-spring-ai-chat-memory-session)
 - [Spring Boot 文件上传：大小校验、隔离存储与失败补偿](/articles/073-springboot-file-upload-quarantine)
+
+## 2026 年本地课堂资料补充
+
+以下六篇于 2026-10-16 根据 2026 年 3 月、6 月的本地课堂笔记写成；课堂资料日期不作为文章历史发布日期。它们补足原路线中缺少的基础主题，均为学习整理与课堂案例。
+
+1. [Java 基础语法：变量、输入与流程控制](/articles/java-syntax-control-flow-notes)
+2. [Object 与包装类](/articles/java-object-wrapper-notes)
+3. [MySQL 基础 SQL：建表与单表查询](/articles/mysql-basic-crud-notes)
+4. [员工信息管理：JDBC 课堂案例](/articles/jdbc-employee-classroom-case)
+5. [HTML 与 CSS：表格与表单](/articles/html-css-form-notes)
+6. [JavaScript 基础与 DOM 事件](/articles/javascript-dom-events-notes)

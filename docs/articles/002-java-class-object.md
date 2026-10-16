@@ -134,6 +134,21 @@ public class ClassObjectDemo {
 
 构造方法与类同名、没有返回类型，在创建对象时调用；普通方法有返回类型，通过对象或类调用来执行操作。
 
+## 补充：`static`、重载与 JavaBean 约定
+
+本地 3 月 6 日与 9 日的课堂笔记还讨论了静态成员、方法重载与 JavaBean。当前 `Book` 示例中的 `normalizePrice` 属于静态方法：它不依赖某一本书的状态，因此无需 `this`。静态方法**没有隐式对象引用**，不能直接写 `price` 访问实例字段；但如果显式传入 `Book book`，仍可通过 `book.getPrice()` 访问对象状态。`static { ... }` 叫静态初始化块，不是“匿名代码块”。
+
+若要在已有的 `setPrice(BigDecimal)` 之外接受十进制字符串，可在 `Book` 中再加下面这个方法。两者名字相同、参数列表不同，构成重载；编译器按实参类型选择调用目标，返回类型不同本身不能构成重载。
+
+~~~java
+public void setPrice(String decimal) {
+    setPrice(new BigDecimal(decimal));
+}
+
+~~~
+
+字符串格式错误会从 `BigDecimal` 构造器抛出 `NumberFormatException`。`Book` 用带参数构造器和受控操作维护不变量；它不必为了满足 JavaBean 的无参构造器与读写属性约定而开放所有字段。JavaBean 是一种约定，并非所有类都必须遵守。要了解引用判等可看 [Object 与包装类](./java-object-wrapper-notes.md)；接口/继承下的方法分派见 [多态与接口](./046-java-polymorphism-interface.md)。
+
 ## 参考资料
 
 - [Java Language Basics: Classes and Objects](https://docs.oracle.com/javase/tutorial/java/javaOO/classes.html)

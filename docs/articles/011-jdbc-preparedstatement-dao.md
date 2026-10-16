@@ -191,6 +191,85 @@ PreparedStatement 将 SQL 结构与值参数分开绑定，可以正确处理参
 
 JDBC 资源使用完应关闭。try-with-resources 会在正常或异常离开代码块时执行关闭逻辑，减少资源泄漏风险。
 
+## 补充：配置来源与驱动版本
+
+本地 3 月 20–23 日课堂笔记演示了把 JDBC 连接参数放入 `.properties`，比写死在 Java 类中便于切换练习环境。上面的示例选择环境变量，二者都是配置来源；若用 `db.properties`，只应提交不含真实密码的模板，实际口令从环境变量或受控密钥来源覆盖。`Properties.load` 可从类路径读取配置，但要明确流的字符编码与配置文件部署位置。不要把数据库口令写进博客或 Git 历史。
+
+课堂截图使用 Connector/J 5.1.49 和旧驱动名 `com.mysql.jdbc.Driver`，属于旧环境。本文 Maven 依赖为 26.7.0，驱动类名应使用 `com.mysql.cj.jdbc.Driver`；通过 JDBC 4 驱动自动注册时，上文 `DriverManager.getConnection` 不必手动 `Class.forName`。依赖版本和 MySQL/JDK 兼容范围应按[官方版本表](https://dev.mysql.com/doc/connector-j/en/connector-j-versions.html)核对，不能混抄不同代的连接 URL 和驱动参数。
+
+## 补充：一条连接上的转账事务
+
+本地 3 月 23 日笔记用“从账户 1 向账户 2 转账 500”说明为什么两次更新要一起成功或一起回滚。下面是修正后的独立练习：金额用 `DECIMAL`/`BigDecimal`，扣款语句同时检查余额，检查两条语句的影响行数。先在独立练习库建立表：
+
+~~~sql
+CREATE TABLE account_demo (
+    id BIGINT PRIMARY KEY,
+    balance DECIMAL(12, 2) NOT NULL
+) ENGINE=InnoDB;
+INSERT INTO account_demo (id, balance) VALUES (1, 1000.00), (2, 100.00);
+~~~
+
+~~~java
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class JdbcTransferDemo {
+    static void transfer(Connection connection, long from, long to,
+                         BigDecimal amount) throws SQLException {
+        if (from == to || amount == null || amount.signum() <= 0) {
+            throw new IllegalArgumentException("账户与金额无效");
+        }
+        connection.setAutoCommit(false);
+        try {
+            int debit;
+            try (PreparedStatement ps = connection.prepareStatement(
+                    "UPDATE account_demo SET balance = balance - ? " +
+                    "WHERE id = ? AND balance >= ?")) {
+                ps.setBigDecimal(1, amount);
+                ps.setLong(2, from);
+                ps.setBigDecimal(3, amount);
+                debit = ps.executeUpdate();
+            }
+            int credit;
+            try (PreparedStatement ps = connection.prepareStatement(
+                    "UPDATE account_demo SET balance = balance + ? WHERE id = ?")) {
+                ps.setBigDecimal(1, amount);
+                ps.setLong(2, to);
+                credit = ps.executeUpdate();
+            }
+            if (debit != 1 || credit != 1) {
+                throw new SQLException("账户不存在或余额不足");
+            }
+            connection.commit();
+        } catch (SQLException | RuntimeException failure) {
+            try { connection.rollback(); }
+            catch (SQLException rollbackFailure) { failure.addSuppressed(rollbackFailure); }
+            throw failure;
+        }
+    }
+
+    public static void main(String[] args) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(
+                requiredEnv("DB_URL"), requiredEnv("DB_USER"),
+                requiredEnv("DB_PASSWORD"))) {
+            transfer(connection, 1, 2, new BigDecimal("500.00"));
+        }
+    }
+
+    private static String requiredEnv(String name) {
+        String value = System.getenv(name);
+        if (value == null || value.trim().isEmpty())
+            throw new IllegalStateException("请先设置 " + name);
+        return value;
+    }
+}
+~~~
+
+保存为 `JdbcTransferDemo.java`，JDK 8+ 与上文 Connector/J 依赖可运行，前提是连接到含上述表的 MySQL 练习库。该单连接示例通过 `try-with-resources` 关闭连接；若连接来自连接池，还应由事务管理边界负责恢复连接状态。`SELECT` 也可以参与事务中的一致性读取或锁定，不能把“事务只用于增删改”当规则。转账的并发、幂等和审计还需另行设计，此处只演示原子提交与回滚。单表 SQL 入门见 [MySQL 基础](./mysql-basic-crud-notes.md)，将 DAO 放入业务流程的课堂案例见 [员工信息管理](./jdbc-employee-classroom-case.md)。
+
 ## 参考资料
 
 - [MySQL Connector/J Developer Guide](https://dev.mysql.com/doc/connector-j/en/)
