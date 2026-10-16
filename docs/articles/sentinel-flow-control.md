@@ -43,6 +43,22 @@ public Result onBlocked(Query query, BlockException ex) {
 }
 ```
 
+### 与本地课程资料对照
+
+0901、0902 的课程资料覆盖了关联限流、链路限流、快速失败/预热/排队等流控效果、慢调用比例与异常比例/异常数熔断、热点参数限流、授权规则和系统规则；也演示 `@SentinelResource`、统一异常处理、Feign 集成与 Gateway 入口限流。现有文章只展示了 QPS 和 `blockHandler`，容易让人误以为 Sentinel 只有这一类规则，因此这里把规则边界补全。
+
+| 规则 | 主要判断依据 | 适合先验证的问题 |
+| --- | --- | --- |
+| 关联流控 | 关联资源的调用情况 | 写资源高峰时是否需要保护读资源 |
+| 链路流控 | 指定调用入口到达当前资源的流量 | 同一资源由不同入口调用时是否需要区别限流 |
+| 热点参数 | 请求参数的特定取值 | 某些热门商品/用户参数是否形成热点 |
+| 熔断降级 | 慢调用比例、异常比例或异常数 | 下游持续慢或报错时是否应暂时停止调用 |
+| 授权与系统规则 | 来源、系统负载等规则条件 | 是否需限制调用来源或系统整体入口 |
+
+流控规则的 `controlBehavior` 是另一个维度：快速失败立即拒绝，预热逐步提高放行速率，匀速排队让请求按设定节奏通过。课程把最后一种称作排队。
+
+`@SentinelResource` 的 `blockHandler` 处理 `BlockException`，方法参数需与原方法一致并在末尾增加异常参数；`fallback` 处理业务方法抛出的异常。两者同时配置时，规则拦截进入 `blockHandler`。Gateway 规则需由网关 adapter 注册路由或 API 分组资源并配置回调；普通 Web 资源的注解示例不能代表网关规则配置。课程版本和规则持久化方式需结合实际依赖核对。
+
 ### 源码与机制观察
 
 观察资源埋点、规则匹配和 block handler 的调用链，分别测试入口限流与依赖熔断。规则命中应有指标、日志和告警，不通过生产故障来验证默认规则。
@@ -89,3 +105,5 @@ Sentinel 规则保护的是明确的资源边界。为每条规则准备可解�
 
 - [Sentinel Flow Control](https://sentinelguard.io/en-us/docs/flow-control.html)
 - [Sentinel Circuit Breaking](https://sentinelguard.io/en-us/docs/circuit-breaking.html)
+- [Sentinel 注解支持](https://sentinelguard.io/zh-cn/docs/annotation-support.html)
+- [Sentinel Gateway 流量控制](https://sentinelguard.io/en-us/docs/api-gateway-flow-control.html)

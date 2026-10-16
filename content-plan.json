@@ -718,5 +718,53 @@
     "stageName": "企业开发技术学习",
     "slug": "software-development-workflow-scrum",
     "title": "软件项目开发流程笔记：从需求评审到 Scrum 迭代"
+  },
+  {
+    "id": 91,
+    "planDate": "2026-10-16",
+    "stage": 3,
+    "stageName": "企业开发技术学习",
+    "slug": "linux-command-basics",
+    "title": "Linux 基础操作笔记：命令、权限与网络排查"
+  },
+  {
+    "id": 92,
+    "planDate": "2026-10-16",
+    "stage": 4,
+    "stageName": "Java 后端实习与业务实践",
+    "slug": "wolf2w-course-project-flow",
+    "title": "旅游分享微服务课程流程：注册、攻略与内容检索"
+  },
+  {
+    "id": 93,
+    "planDate": "2026-10-16",
+    "stage": 3,
+    "stageName": "企业开发技术学习",
+    "slug": "bloom-filter-fundamentals",
+    "title": "布隆过滤器入门：用概率结构拦截不存在的数据"
+  },
+  {
+    "id": 94,
+    "planDate": "2026-10-16",
+    "stage": 1,
+    "stageName": "Java 基础与数据结构",
+    "slug": "java-design-patterns-overview",
+    "title": "Java 设计模式总览：按创建、结构与行为梳理"
+  },
+  {
+    "id": 95,
+    "planDate": "2026-10-16",
+    "stage": 4,
+    "stageName": "Java 后端实习与业务实践",
+    "slug": "dau-mau-metrics",
+    "title": "DAU 与 MAU：先统一活跃口径，再看留存和频率"
+  },
+  {
+    "id": 96,
+    "planDate": "2026-10-16",
+    "stage": 3,
+    "stageName": "企业开发技术学习",
+    "slug": "swagger2-skywalking-observability",
+    "title": "Swagger2 接口文档与 SkyWalking 链路追踪：课堂配置和版本边界"
   }
 ]

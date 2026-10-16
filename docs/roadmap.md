@@ -121,3 +121,14 @@
 4. [员工信息管理：JDBC 课堂案例](/articles/jdbc-employee-classroom-case)
 5. [HTML 与 CSS：表格与表单](/articles/html-css-form-notes)
 6. [JavaScript 基础与 DOM 事件](/articles/javascript-dom-events-notes)
+
+### 2026-10-16 本地课程资料补充
+
+本批文章依据本地课程笔记和资料整理，写作日期不代表历史学习时间或公开发布时间。课堂项目复盘明确标注为学习案例；独立示例不表示真实企业项目实践。
+
+- [Linux 基础操作笔记：命令、权限与网络排查](/articles/linux-command-basics)
+- [旅游分享微服务课程流程：注册、攻略与内容检索](/articles/wolf2w-course-project-flow)
+- [布隆过滤器入门：用概率结构拦截不存在的数据](/articles/bloom-filter-fundamentals)
+- [Java 设计模式总览：按创建、结构与行为梳理](/articles/java-design-patterns-overview)
+- [DAU 与 MAU：先统一活跃口径，再看留存和频率](/articles/dau-mau-metrics)
+- [Swagger2 接口文档与 SkyWalking 链路追踪：课堂配置和版本边界](/articles/swagger2-skywalking-observability)

@@ -39,13 +39,19 @@ try {
   handler.handle(m);             // 幂等业务逻辑
   channel.basicAck(m.deliveryTag(), false);
 } catch (RetryableException e) {
-  channel.basicNack(m.deliveryTag(), false, false); // 交由明确的重试策略处理
+  channel.basicNack(m.deliveryTag(), false, false); // 需已配置 DLX；否则消息会被丢弃
 }
 ```
 
+### 课程笔记中的消息模型与版本
+
+0918 的 RabbitMQ 课程覆盖 Direct、Fanout、Topic 路由、同步/异步 publisher confirms、consumer acknowledgements，以及原生 Java 客户端和 Spring Boot AMQP。课程记录的 RabbitMQ 版本是 3.7.2，安装环境与客户端 API 较旧；复用配置或命令前应核对目标 RabbitMQ/Erlang 与 Java 客户端版本。
+
+生产确认与消费确认处在不同边界：publisher confirm 表示 broker 对发布的确认；consumer ack 表示消费者确认处理完成。交换机和队列持久化也不等价于“消息一定不会丢”，要同时核对消息持久化、路由是否命中、broker 确认和消费确认。参见 [RabbitMQ confirms 文档](https://www.rabbitmq.com/docs/confirms)。
+
 ### 源码与机制观察
 
-通过 RabbitMQ 官方确认指南分别追 publisher confirms 和 consumer acknowledgements。再观察连接中断、消费者崩溃和 nack/requeue 情况，理解确认语义与本地数据库提交之间的空隙。
+通过 RabbitMQ 官方确认指南分别追 publisher confirms 和 consumer acknowledgements。再观察连接中断、消费者崩溃和 nack/requeue 情况，理解确认语义与本地数据库提交之间的空隙。`basicNack(..., requeue=false)` 本身不会自动重试；只有配置了 dead-letter exchange 等路由时，消息才会进入后续处理，否则 broker 会丢弃它。
 
 消息可能重复投递，因此消费者不能假设 exactly-once。自动确认会让消息在业务处理前就被视为完成；手动确认要确保 ack 只发生在业务结果可靠后。prefetch 控制未确认消息数量，影响并发与公平性。
 

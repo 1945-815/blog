@@ -38,6 +38,27 @@ Client -> Gateway -> document-service
                          -> Feign -> auth-service
 ```
 
+### 与本地课程资料对照
+
+0901 的微服务课用 Nacos 服务发现、LoadBalancer 与 OpenFeign 演示服务间调用；0903 的 Gateway 课则把外部入口路由、全局认证过滤器、局部过滤器、耗时统计、Sentinel 网关限流和 Sleuth/Zipkin 链路追踪串起来。课程示例中的服务名与依赖版本仅适用于当时的工程。
+
+例如课程路由按 `/p/**` 转发到 `product` 服务，并去掉第一段前缀：
+
+```yaml
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: product_route
+          uri: lb://product
+          predicates:
+            - Path=/p/**
+          filters:
+            - StripPrefix=1
+```
+
+`lb://` 表示通过服务名交给负载均衡机制选择实例；这条外部路由和业务服务内部的 Feign 调用是两段不同链路。`GlobalFilter` 可处理全局入口策略，自定义 `AbstractGatewayFilterFactory` 则面向指定路由。课程用到的 Sentinel Gateway adapter `1.8.5`、Spring Cloud Alibaba `2021.0.4.0` 及 Sleuth/Zipkin 配置是旧版组合示例，迁移时需按所选 Spring Cloud 发布列车核对兼容性。
+
 ### 源码与机制观察
 
 从 Gateway RouteDefinition 与 GlobalFilter/局部过滤器观察入口处理，从 Feign 客户端代理和负载均衡配置观察内部调用。官方文档版本随 Spring Cloud 发布列车变化，先核对项目依赖兼容表。

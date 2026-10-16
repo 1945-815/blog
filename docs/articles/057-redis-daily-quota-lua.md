@@ -12,9 +12,9 @@ phase: "Java 后端实习与业务实践"
 
 ## 一、为什么学习这个技术
 
-本地旅游攻略项目笔记记录了一个具体规则：同一用户对同一攻略每天最多点赞五次，第二天重置。它看起来只是计数，但把“读取次数、判断上限、增加次数”分成多次 Redis 请求时，并发请求可能同时读到 4，然后都判断未超限，最后接受多次操作。
+本地旅游攻略项目笔记记录了一个具体规则：同一用户对同一攻略每天最多点赞五次，第二天重置。课程实现用普通 String key 保存当天次数，先初始化过期时间，再执行 `INCR`；`ret > 5` 时不增加攻略统计 Hash 中的 `thumbsupnum`，否则才加一。下面的 Lua 脚本是把这套规则改写成单次原子执行的方案，**并非课程笔记记录的原始实现**。
 
-这个问题与验证码 TTL、缓存数据结构和分布式锁都相关，但目标不同：这里要实现的是一个有时间边界的原子状态转移。前端按钮禁用只能改善交互，不能保护后端；Java synchronized 只限制单进程；Redis 的 INCR 是原子命令，但“检查上限再加一”由多条命令组成，仍需要把整段逻辑作为一个原子操作执行。
+课程实现把计数、判断和统计更新分成多条 Redis 命令。每条命令本身有原子性，但命令序列之间可能被其他请求穿插；并发超限请求可能让配额计数短时大于 5，尽管只有前五次通过判断增加攻略点赞数。若业务要求配额状态与统计更新不可分割，可以评估 Lua 或其他原子方案。前端按钮禁用不能保护后端，Java `synchronized` 也只覆盖单进程。
 
 ## 二、核心概念
 
@@ -22,7 +22,7 @@ phase: "Java 后端实习与业务实践"
 
 Redis Lua 脚本可以将读、条件判断、INCR、设置过期和统计加一组合成一次服务端执行。脚本执行期间 Redis 不会穿插其他命令，因此两个请求不会同时基于同一个旧计数通过检查。脚本要短小，不要在里面扫描大 key 或调用耗时外部逻辑。
 
-配额计数与攻略总点赞数也是两个口径：前者按用户和日期限制行为，后者是所有已接受点赞的汇总。若脚本同时更新两者，就要让它们在同一次操作中成功或失败；Redis Cluster 下，多 key 脚本要求 key 落在相同 hash slot，可以使用攻略 ID 作为 hash tag。
+配额计数与攻略总点赞数也是两个口径：前者按用户和日期限制行为，后者是所有已接受点赞的汇总。Lua 脚本执行期间不会有其他客户端命令插入，但这不等同于数据库式回滚：运行时错误发生在某条写命令之后时，之前已经执行的写入可能保留。脚本应先校验 key 类型、参数和前置条件，再尽量减少写入后的失败点；若出现部分状态，仍需设计告警和修复方式。Redis Cluster 下，多 key 脚本要求 key 落在相同 hash slot，可以使用攻略 ID 作为 hash tag。
 
 限额脚本还应定义重复请求语义。如果客户端超时后重发同一个请求，脚本会把它视为又一次点赞；若业务要求网络重试不重复计数，需要额外引入 requestId 幂等键，并在 Redis 或持久化事件中记录处理结果。单纯限制每天最多五次并不等价于“每个点赞请求最多执行一次”。
 
@@ -34,17 +34,44 @@ Lua 运行在 Redis 服务端。客户端把 key 和参数传给脚本，脚本�
 
 ## 四、代码案例
 
-下面脚本在检查通过后增加每日配额和总统计；达到上限时不会改变任何一个 key。参数里的 expireAt 是下一个上海自然日零点的 Unix 秒时间戳。
+下面是独立设计的 Lua 改造示例：先校验两把 key 的类型、参数和已有计数字段格式，再将配额检查、计数和统计更新放进一次服务端脚本执行，以避免其他客户端命令在中间插入。它与课程原实现不同。Redis 脚本提供隔离执行，但不提供写入回滚；如果发生 OOM 等运行时错误，不能据此假设此前的写入已撤销。该示例仍需根据部署的 Redis 版本、错误策略和数据恢复要求验证。参数里的 expireAt 是下一个业务日零点的 Unix 秒时间戳。
 
 ~~~lua
-local used = tonumber(redis.call('GET', KEYS[1]) or '0')
+-- 在任何写入前检查 key 类型，避免常见的 WRONGTYPE 部分更新。
+local quotaType = redis.call('TYPE', KEYS[1]).ok
+local statsType = redis.call('TYPE', KEYS[2]).ok
+if quotaType ~= 'none' and quotaType ~= 'string' then
+  return redis.error_reply('quota key must be a string')
+end
+if statsType ~= 'none' and statsType ~= 'hash' then
+  return redis.error_reply('stats key must be a hash')
+end
+
 local limit = tonumber(ARGV[1])
+local expireAt = tonumber(ARGV[2])
+if not limit or limit < 1 or limit % 1 ~= 0 then
+  return redis.error_reply('limit must be a positive integer')
+end
+if not expireAt or expireAt % 1 ~= 0 then
+  return redis.error_reply('expireAt must be an integer timestamp')
+end
+
+local rawUsed = redis.call('GET', KEYS[1])
+local used = tonumber(rawUsed or '0')
+if rawUsed and not string.match(rawUsed, '^%-?%d+$') then
+  return redis.error_reply('quota value must be an integer')
+end
+local rawStats = redis.call('HGET', KEYS[2], 'thumbsupnum')
+if rawStats and not string.match(rawStats, '^%-?%d+$') then
+  return redis.error_reply('thumbsupnum must be an integer')
+end
+
 if used >= limit then
   return -1
 end
 local current = redis.call('INCR', KEYS[1])
 if current == 1 then
-  redis.call('EXPIREAT', KEYS[1], tonumber(ARGV[2]))
+  redis.call('EXPIREAT', KEYS[1], expireAt)
 end
 redis.call('HINCRBY', KEYS[2], 'thumbsupnum', 1)
 return current
@@ -93,13 +120,11 @@ WHERE id = #{strategyId};
 
 实际调用示例：POST /api/strategies/42/thumbsup，用户 ID 从已验证的登录上下文获取，不接受客户端任意传入。达到上限返回业务码 DAILY_LIMIT_REACHED；成功后返回当天已使用次数。SQL 同步任务要记录处理进度并监控延迟；若要求更强的故障恢复能力，可增加可靠事件记录和幂等消费，不能把 Redis Lua 当成跨库事务。
 
-## 五、项目真实落地
+## 五、课程实现与 Lua 改造的边界
 
-在企业项目中，我们通常会先确认配额的业务口径：按用户还是设备、按自然日还是滚动 24 小时、是否允许撤销、切换时区是否影响计数。教学项目的攻略点赞适合作为可复现案例，但不能据此声称个人已经把方案部署到生产环境。
+0914 课程笔记记录的完整流程是：统计 Hash 缺失时从 `ta_strategy` 初始化；每篇攻略的计数放在 Hash 中；用户当天的点赞次数用“点赞前缀 + 攻略 ID + 用户 ID”组成的 String key 保存，过期到当天 23:59:59；每次 `INCR` 后判断是否超过 5，只有通过的请求才对统计 Hash 的 `thumbsupnum` 加一。job 服务周期性通知攻略服务遍历统计 key，并用 Hash 中的 `id` 将统计字段覆盖写回 MySQL。
 
-高并发计数还要评估 key 数量、Redis 内存淘汰策略、持久化和主从切换。若配额 key 被淘汰，用户可能再次获得额度；如果策略 Hash 丢失，已经返回成功的统计可能无法回写。需要按数据价值决定 Redis 持久化、数据库事件或其他可靠存储方案。脚本最好固定版本并纳入代码审查，避免运行时拼接不同脚本文本。
-
-定时同步时还要防止多个刷新任务并行覆盖：旧快照晚于新快照写入数据库，会造成短暂回退。可以保证同一攻略的刷新串行，或者给快照分配递增版本并在数据库侧只接受更新版本。任务需要记录最后成功游标、失败数量和延迟，恢复时重新处理未确认部分。Redis 的 HINCRBY 适合在线累加，但若以快照覆盖 MySQL，数据库更新要使用快照绝对值，不能把同一快照重复累加。
+课程笔记没有记录 Lua 脚本、Redis Cluster hash tag 或 requestId 幂等键。本文脚本、集群同槽设计和幂等键属于后续可选设计，不应当描述成课程已经实现的内容。课程笔记里的定时回写采用 `KEYS` 搜索并周期性全量覆盖；这适合复盘教学流程，不应直接作为大规模生产扫描方案。若改为生产设计，应先验证扫描方式、任务并发、快照新旧顺序、Redis 丢失恢复与 MySQL 写入幂等性。
 
 ## 六、常见面试问题
 
@@ -109,11 +134,13 @@ WHERE id = #{strategyId};
 
 **项目：如何处理 Redis 统计写回 MySQL 的一致性？** 先说清楚这是最终一致还是要求强一致，再说明快照/事件来源、幂等方式、失败重试和恢复流程。Redis 原子不等于 Redis 与 MySQL 原子。
 
-## 七、个人总结
+## 七、总结
 
-作为 2027 届 Java 后端实习生，我从这个点赞例子里学到，业务规则的原子边界比“调用了 Redis”更重要。把时间口径、并发判断、统计更新和后续持久化分别讲清楚，才能判断 Lua 是否合适，也能解释方案在 Redis 故障时会留下什么影响。
+这个课程例子提醒我先划清业务规则的原子边界：配额按什么时区和日期重置，超过上限时哪些状态不能改变，Redis 统计如何回写 MySQL。课程实现与 Lua 改造方案应分开陈述；选择 Lua 的理由是把 Redis 内多步状态更新合并执行，不代表跨库强一致。
 
 ## 参考资料
 
 - [Redis INCR 命令与计数器模式](https://redis.io/docs/latest/commands/incr/)
+- [Redis Lua 脚本执行说明](https://redis.io/docs/latest/develop/programmability/eval-intro/)
+- [Redis 对事务回滚的说明](https://redis.io/blog/you-dont-need-transaction-rollbacks-in-redis/)
 - [Redis Lua 脚本执行语义](https://redis.io/docs/latest/develop/programmability/eval-intro/)

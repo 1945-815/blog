@@ -48,7 +48,7 @@ GET verify:login:user-42
 
 ## 四、真实项目落地
 
-简历提到登录验证码及 Redis TTL。这里用临时键演示写入、过期和一次性消费，具体键名与值均为示例。
+旅游项目课程笔记记录了 `VERIFY_CODE("verify_code", 180)`，发送验证码时通过 `RedisService.setCacheObject` 保存字符串，key 由前缀和手机号拼接，TTL 为 180 秒。注册请求再经过认证服务校验验证码并处理用户注册。课程中的 key 使用手机号；在实际系统里应评估 Redis key 是否会进入监控或日志，并优先使用内部标识或不可逆标识，避免暴露手机号。本文的 `StringRedisTemplate` 代码是独立的通用示例，不是课程项目原代码。
 
 ## 五、遇到的问题
 

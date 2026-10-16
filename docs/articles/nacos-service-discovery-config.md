@@ -42,6 +42,12 @@ spring:
         namespace: ${NACOS_NAMESPACE:local}
 ```
 
+### 与本地课程资料对照
+
+0901 的课程笔记依次覆盖服务注册、通过 `DiscoveryClient` 获取实例、结合 `RestTemplate` 和 LoadBalancer 调用，以及 OpenFeign 声明式调用。0904 的配置中心笔记使用 Nacos 配置、`bootstrap.yml`、按应用名和 profile 组织 Data ID，并演示动态刷新与共享配置。这里的配置方式属于课程依赖组合下的学习记录。
+
+当前 Spring Cloud Alibaba 文档已说明版本边界：SCA 2025.1.x 不再支持旧 Bootstrap 配置加载方式，需改用 `spring.config.import`；`shared-configs` / `extension-configs` 从 2023.0.1.3 起已弃用。升级时应按 Spring Boot、Spring Cloud 与 SCA 的兼容矩阵迁移，不能把课程里的 `bootstrap.yml` 当作当前通用模板。详见[Spring Cloud Alibaba Nacos 配置指南](https://sca.aliyun.com/en/docs/2025.x/user-guide/nacos/quick-start/)。
+
 ### 源码与机制观察
 
 阅读 Nacos 命名服务的注册、发现、健康实例流程，再读配置订阅机制。排查时分别检查服务端控制台、客户端日志、namespace/group/dataId 是否匹配，不把“服务能启动”当成注册发现已正确。

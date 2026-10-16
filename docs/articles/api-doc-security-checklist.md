@@ -43,9 +43,25 @@ GET /documents?page=1&size=20
 401：未认证；403：已认证但无权访问
 ```
 
-## 四、真实项目落地
+## 四、0924 课程接口安全练习与实现边界
 
-结合简历中接口开发与联调的经历，选择一个脱敏接口编写字段、权限和失败响应说明；用合成请求验证文档与实际契约一致。
+0924 资料记录了一个 Gateway `GlobalFilter` 学习练习，按威胁拆成防刷、参数篡改、防重放和传输保密：
+
+| 练习点 | 课程记录的做法 | 必须说明的边界 |
+| --- | --- | --- |
+| 防刷 | Redis 固定 60 秒窗口，key 按请求路径与 IP 组合，首次 `SET NX` 写入 0 并设 TTL，再 `INCR`；计数大于 20 时拒绝 | 课程阈值是演示值；代理后的真实客户端 IP 需要可信代理配置，窗口也不是滑动窗口 |
+| 参数篡改演示 | 前端参数排序、拼接后计算大写 MD5，网关排除 `sign` 后按同规则重算 | MD5 是公开摘要；浏览器代码中的固定“盐”可被提取，不能当作机密密钥或生产级身份认证 |
+| 时间窗演示 | 毫秒时间戳参与签名，网关检查服务器时间减客户端时间是否超过 30 秒 | 课程代码使用单向差值，未来时间戳也应拒绝；时间窗本身不能阻止窗口内的重复请求 |
+| 一次性重放防护 | 资料将 nonce + Redis `SET NX` 作为扩展方案 | 视频实际没有实现 nonce 去重；不能把它写成课程已完成的代码 |
+| 保密 | 讲解 HTTPS 与应用层加密的作用 | 课程没有完成 AES/RSA 工具实现；HTTPS 仍是 API 传输保护的基础 |
+
+课程代码还留有“请求没有 sign 就放行”的联调分支，资料明确标为发布前必须移除。它只能用来讲解调试过程，不能当成安全过滤器的默认逻辑。本地来源：`0924 接口安全 / 接口安全学习笔记.md`。
+
+### 面向真实接口的安全边界
+
+浏览器客户端无法保守长期共享密钥，因此不要把固定 MD5 盐或 HMAC 密钥写进 JavaScript 并称为防伪。先用 HTTPS、身份认证、逐接口授权、服务端限流和输入校验建立基本边界。服务到服务或 webhook 等确实能安全配置密钥的场景，可用 HMAC-SHA-256 对明确的请求方法、路径、主体摘要、时间戳和事件 ID 做签名；服务端验证签名后，再用短 TTL 的一次性 nonce/事件 ID 去重。nonce 校验需要原子写入，重复值拒绝；业务幂等键解决重复提交的业务效果，两者目的不同。
+
+客户端时间必须限制在服务器允许的前后窗口内，例如检查 `serverTime - window <= clientTime <= serverTime + window`，而不是只检查一个方向。时间窗负责拒绝过旧或过新的请求，一次性 nonce 才负责拒绝窗口内的重放。外部请求签名不能替代权限检查，也不能替代 HTTPS。
 
 ## 五、遇到的问题
 
@@ -76,4 +92,6 @@ GET /documents?page=1&size=20
 ## 参考资料
 
 - [OWASP API Security Top 10](https://owasp.org/API-Security/)
+- [OWASP REST Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html)
+- [OWASP Webhook Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Webhook_Security_Cheat_Sheet.html)
 - [Spring Security Reference](https://docs.spring.io/spring-security/reference/)

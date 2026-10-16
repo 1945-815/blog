@@ -50,6 +50,12 @@ PUT documents-v1
 
 写入时 analyzer 将文本转换为 token 并建立倒排索引；查询使用相应分析器将用户输入转换为检索词，再计算相关性。mapping 一旦与字段类型冲突通常不能直接原地更改，需要重建索引并迁移数据。
 
+### 本地课程中的映射与客户端版本
+
+0915/0916 的资料从 IK 分词和 `text`/`keyword` 映射讲起。课程示例使用 `ik_max_word` 分析索引文本、`ik_smart` 分析查询文本；这只是该课程索引配置，需要拿代表性文本检查切词效果。不要把某个 analyzer 名称当作所有集群都已安装的前提。
+
+0916 的练习分成两种环境：`es8-74` 基础项目使用 Spring Boot 3.5.10、Java 17 与 Elasticsearch 8；后续旅游微服务搜索服务在课程记录中因依赖兼容考虑采用 `elasticsearch-java` 8.18.8 原生客户端。客户端与服务端、Spring Boot、Spring Data Elasticsearch 的组合要按具体版本矩阵验证，不能把课程中的版本结论套到其他工程。组合查询、高亮与“ES 搜 ID、MySQL 回查”的流程见[bool 查询与高亮](./064-elasticsearch-bool-highlight.md)。
+
 ## 四、真实项目落地
 
 以公开或自造文档建立小索引，分别查询标题和正文，并用分词分析接口检查检索词的处理结果。

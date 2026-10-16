@@ -46,9 +46,15 @@ switch (event.type()) {
 
 MySQL 提交事务后写入 binlog；Canal 获取变更并交给客户端消费。消费位点与 ES 写入的确认顺序决定崩溃时可能重放或遗漏，通常需要接受至少一次投递并让消费端幂等。跨系统不存在普通数据库事务。
 
-## 四、真实项目落地
+## 四、课程案例与工程边界
 
-简历列出 Canal 与搜索同步相关协作。本文通过通用变更事件说明幂等更新、删除和对账，不披露真实订阅规则。
+921 的课程笔记以 wolf2w 旅游项目为例，记录的主链路是 `ta_strategy` INSERT → Canal 监听 binlog → `StrategyListener` 将消息写入 Redis ZSet → RabbitMQ `strategyExchange` → 搜索服务消费者写入 ES → 成功后从 ZSet 删除该消息。课程的 Canal 演示重点是 INSERT；把这条流程扩展到 UPDATE/DELETE 时，还要分别定义事件字段、删除语义和乱序保护，不能据此声称课程已经覆盖了所有变更类型。
+
+ZSet 中暂存的成员是消息内容，score 使用课程对象的创建时间戳。定时任务按当前时间减 10 秒查询超时成员并再次发布；10 秒是课程示例阈值，不是可靠性保证。RabbitMQ 消费成功写入 ES 后才从 ZSet 删除，因此“ES 已写入、ZSet 尚未删除”时崩溃会造成重复消息。课程用业务主键作为 ES 文档 ID，重复写同一版本可覆盖文档，但若将来支持更新，乱序的旧事件仍可能覆盖新数据，需要加版本或重新读取当前数据库状态。
+
+这套 ZSet 补偿逻辑是课程练习中的应用层重发机制，不等同 broker publisher confirms、consumer ack 或严格的 exactly-once。更完整的失败路径要处理重复投递、发送与 ZSet 写入失败、重试风暴、消息保留时长和 ZSet 清理。确认机制见[RabbitMQ 消费者边界](./rabbitmq-consumer-boundary.md)。本地资料来源：`921 Canal与Swagger全套学习 / Canal与Swagger全套学习笔记.md`。
+
+
 
 ## 五、遇到的问题
 
