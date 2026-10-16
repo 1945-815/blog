@@ -61,7 +61,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/blog_demo?useUnicode=true&characterEncoding=utf8
     username: blog_app
-    password: local_dev_only
+    password: "此处写数据库密码"
 ~~~
 
 Compose 中应用连接数据库容器时要改用服务名 db：
@@ -76,7 +76,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/blog_demo?useUnicode=true&characterEncoding=utf8
       SPRING_DATASOURCE_USERNAME: blog_app
-      SPRING_DATASOURCE_PASSWORD: local_dev_only
+      SPRING_DATASOURCE_PASSWORD: "此处写数据库密码"
     depends_on:
       - db
   db:
@@ -84,15 +84,15 @@ services:
     environment:
       MYSQL_DATABASE: blog_demo
       MYSQL_USER: blog_app
-      MYSQL_PASSWORD: local_dev_only
-      MYSQL_ROOT_PASSWORD: local_root_only
+      MYSQL_PASSWORD: "此处写数据库密码"
+      MYSQL_ROOT_PASSWORD: "此处写MySQL管理员密码"
     volumes:
       - mysql-data:/var/lib/mysql
 volumes:
   mysql-data:
 ~~~
 
-这些明文口令只用于本机演示，真实部署应从密钥管理系统注入，并将本地 Compose 凭据文件排除在 Git 外。数据库表与查询示例：
+上述密码值均为占位文字，不是可用凭据。运行前应在本机提供实际密码；真实部署应从密钥管理系统注入，并将本地 Compose 凭据文件排除在 Git 外。数据库表与查询示例：
 
 ~~~sql
 CREATE TABLE ta_strategy (
