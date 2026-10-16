@@ -32,6 +32,14 @@ RBAC 即基于角色的访问控制。它把用户与权限之间的关系通过
 
 权限表模型应保持关联约束和唯一键，避免同一用户重复绑定相同角色或角色重复授予同一权限。逻辑删除和状态字段必须在授权查询中生效。前端根据权限隐藏菜单是体验优化；后端方法、过滤器或拦截器才是实际安全边界。数据权限还可能要求在 SQL 查询中附加组织、所有者或租户条件，单纯验证菜单权限不够。
 
+### 与本地若依源码的对照
+
+指定资料中有 RuoYi Vue 脚手架讲义、代码和课程项目源码。以 `04-脚手架/RuoYi-Vue-springboot2` 这份本地副本为例，`SysPermissionService.getMenuPermission` 汇总有效角色的菜单权限，`SysMenuServiceImpl.selectMenuPermsByUserId` 通过 Mapper 查询用户权限；接口侧可由 Spring Security 权限表达式执行服务端校验。前端 `src/permission.js` 在带令牌后获取用户信息并生成路由，`src/store/modules/permission.js` 调用 `/getRouters` 数据构建动态路由，`src/utils/request.js` 为请求附加 `Authorization` 令牌。
+
+这能把 RBAC 的“角色到权限”模型对应到一条可读的代码链路：登录态提供当前身份，菜单接口返回当前用户可见的路由，前端据此组织界面；后端仍通过接口授权规则验证实际请求。前端路由或按钮隐藏只负责界面体验，不是安全边界。
+
+示例 SQL 是为了讲解关系而简化的教学表，并非若依原始建表脚本。本地脚手架使用 `sys_user`、`sys_role`、`sys_menu` 及 `sys_user_role`、`sys_role_menu` 等表/实体，真实字段和查询以相应版本 SQL、`SysUser`/`SysRole`/`SysMenu` 和 Mapper 为准。扫描到的副本版本并不完全一致：有 RuoYi 3.8.3，也有 3.9.2；`vehicle-cove` 是课程项目中的 RuoYi 派生代码，其 Java 目标与独立脚手架副本也不同。本文的源码对应关系只描述所列文件，不代表所有 RuoYi 版本实现完全相同，也不声称本人部署过企业生产权限系统。
+
 ## 四、代码案例
 
 下面以常见的 sys_user、sys_role、sys_menu 命名描述最小关系模型：
@@ -76,7 +84,7 @@ public class PermissionService {
     }
 
     public boolean hasPermission(long userId, String permissionCode) {
-        if (permissionCode == null || permissionCode.isBlank()) return false;
+        if (permissionCode == null || permissionCode.trim().isEmpty()) return false;
         return repository.findEnabledCodesByUserId(userId).contains(permissionCode);
     }
 
@@ -107,7 +115,7 @@ curl -H "Authorization: Bearer $ACCESS_TOKEN" "http://localhost:8080/api/users?p
 
 ## 五、项目真实落地
 
-在企业项目中，我们通常把权限设计落实到接口清单：每个受保护操作有稳定权限码，接口文档标明认证要求，后端统一执行授权，前端再根据权限结果决定菜单和按钮展示。角色变化需要审计；涉及用户、租户或组织隔离的数据，还要在查询层落实数据范围。
+一种常见的权限设计方式是先把授权落实到接口清单：每个受保护操作有稳定权限码，接口文档标明认证要求，后端统一执行授权，前端再根据权限结果决定菜单和按钮展示。角色变化需要审计；涉及用户、租户或组织隔离的数据，还要在查询层落实数据范围。
 
 若使用 Spring Security 方法级注解，不能假设没有注解的方法就会自动受到保护；还应为 HTTP 请求配置明确的兜底规则，并测试未匹配路由的默认行为。控制器入口与服务方法的授权粒度可以不同：前者适合粗粒度路由限制，后者能贴近业务操作和资源对象。
 

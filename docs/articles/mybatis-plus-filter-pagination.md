@@ -50,7 +50,82 @@ query.eq(categoryId != null, Document::getCategoryId, categoryId)
 IPage<Document> result = mapper.selectPage(page, query);
 ```
 
-## 四、真实项目落地
+### 补充：BaseMapper CRUD 与分页插件
+
+本地《MyBatis-Plus.md》从 `department`、`employee` 表讲解通用 Mapper、实体映射、Wrapper 和分页。下面保留 `department` 示例的字段含义，DDL 写成精简的 MySQL 形式：
+
+```sql
+CREATE TABLE department (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(14),
+  sn VARCHAR(13),
+  PRIMARY KEY (id)
+);
+```
+
+实体和 Mapper 只需声明表映射与主键策略，就能调用 `BaseMapper` 提供的单表方法：
+
+```java
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+
+@TableName("department")
+public class Department {
+    @TableId(type = IdType.AUTO)
+    private Long id;
+    private String name;
+    private String sn;
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public String getSn() { return sn; }
+    public void setSn(String sn) { this.sn = sn; }
+}
+
+@Mapper
+public interface DepartmentMapper extends BaseMapper<Department> {
+}
+
+// 在 Spring 管理的 Service 中注入 DepartmentMapper mapper 后：
+Department department = mapper.selectById(1L);
+Department added = new Department();
+added.setName("财务部");
+added.setSn("cwb");
+mapper.insert(added);
+```
+
+“通用 CRUD 不用手写 SQL”仅适用于框架已覆盖的单表操作；复杂联表、聚合、锁定或有特殊执行计划要求时，仍应编写并审查明确 SQL。`updateById` 的字段更新策略也要与“字段未传”和“清空字段”语义匹配。
+
+分页示例还需要在 MyBatis-Plus 中注册分页拦截器，单靠 `Page` 参数并不会自动启用分页。下面是当前官方文档的 MySQL 配置形式：
+
+```java
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MybatisPlusConfig {
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(
+            new PaginationInnerInterceptor(DbType.MYSQL)
+        );
+        return interceptor;
+    }
+}
+```
+
+使用多个内置拦截器时，分页拦截器按官方说明放在最后。当前官网说明自 MyBatis-Plus 3.5.9 起，分页插件拆分为单独的 `mybatis-plus-jsqlparser` 依赖；本地讲义没有记录依赖版本，因此这里不把版本猜作课程环境。复制配置前应先对照项目的 `pom.xml` 或锁定版本文档确认 artifact 和插件包名。
+
+## 四、列表查询的落地检查
 
 使用合成文档数据完成分类、状态和分页筛选，分别检查空条件、越界页码以及排序字段被拒绝的情况。
 
@@ -88,5 +163,5 @@ count 查询需要评估过滤条件、索引和数据规模；某些业务可�
 
 ## 参考资料
 
-- [MyBatis-Plus 分页插件](https://baomidou.com/plugins/pagination/)
+- [MyBatis-Plus 分页插件](https://baomidou.com/plugins/pagination/)（配置与拆分依赖按当前文档标明版本核对）
 - [MyBatis Dynamic SQL](https://mybatis.org/mybatis-3/dynamic-sql.html)

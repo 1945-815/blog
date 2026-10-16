@@ -46,9 +46,48 @@ List<Task> tasks = taskService.createTaskQuery()
 
 运行时服务负责启动实例、查询活动任务和完成任务；历史服务可用于回顾已结束实例和活动。调用 API 前核对用户任务候选人、办理人和流程变量语义。引擎状态与业务状态更新若分属不同操作，要设计事务边界与失败补偿。
 
-## 四、真实项目落地
+### 补充：BusinessKey、变量与任务领取
 
-简历包含评论、举报和内部审批相关开发。可用自造审核记录演示流程启动、查询待办和任务完成，不使用公司流程定义。
+本地《Activiti7进阶学习笔记》重点记录了流程定义版本、BusinessKey、挂起/激活、候选人、流程变量和网关。把这些点连起来看，业务侧通常先保存业务记录，再以稳定业务主键启动流程；BusinessKey 只是引擎实例上的关联值，业务服务仍需负责校验记录存在、控制重复发起，并维护自己的业务状态。
+
+下面是按 Activiti Java Service API 写的教学片段。讲义没有锁定 Maven 依赖版本，不同 Activiti 7 与 Spring Boot 集成组合应先核对项目依赖和对应 Javadoc：
+
+```java
+Map<String, Object> variables = new HashMap<>();
+variables.put("leaveDays", 3);
+
+ProcessInstance instance = runtimeService.startProcessInstanceByKey(
+    "leaveProcess",
+    String.valueOf(leaveId), // 业务表主键作为 businessKey
+    variables
+);
+```
+
+流程定义中的排他网关可以按 `leaveDays` 这样的流程变量选择后续路径。变量只放流程路由或节点表达式需要的数据；业务单据的完整字段仍从业务表读取，避免把引擎变量当作业务数据的唯一存储。
+
+候选任务和已分配任务也有区别。候选组成员可查询组待办；具体办理人领取后，任务成为该办理人的待办：
+
+```java
+Task task = taskService.createTaskQuery()
+    .taskCandidateGroup("manager")
+    .taskId(taskId) // taskId 来自当前待办请求
+    .singleResult();
+
+if (task == null) {
+    throw new IllegalStateException("待办不存在或当前用户不在候选组");
+}
+taskService.claim(task.getId(), reviewerId);
+taskService.addComment(task.getId(), task.getProcessInstanceId(), "同意");
+taskService.complete(task.getId());
+```
+
+这个片段仅演示 API 顺序；实际页面还要处理无待办、已被他人领取、重复提交、当前用户是否有权办理及业务状态并发更新。审批意见可使用任务评论或单独的业务审计表，需按保留与查询需求选择。流程运行数据和历史数据用途不同；不要绕过引擎直接更新 `ACT_*` 表，也不要在保留历史/运行实例的场景随意级联删除整个部署。
+
+资料中的流程定义版本笔记还提醒：同一个流程 Key 再次部署会产生新版本；新发起的流程使用适用的新定义，已运行实例应结合实际版本验证其后续行为。发布流程模型时要记录部署版本，避免只凭流程名称判断实例使用哪一份定义。
+
+## 四、业务系统中的落地边界
+
+本地资料能够支持的范围是 Activiti 学习和课程项目流程示例。博客原有关于简历中的评论、举报及内部审批开发的表述，无法由本次指定目录核验，暂保留待作者确认；下文不把它们当作本地资料结论。
 
 ## 五、遇到的问题
 
@@ -84,5 +123,5 @@ Activiti 负责流程编排与任务生命周期，业务服务负责领域规�
 
 ## 参考资料
 
-- [Activiti User Guide](https://www.activiti.org/userguide/)
+- [Activiti User Guide](https://www.activiti.org/userguide/)（不同发行版的 API/集成版本应与项目依赖核对）
 - [BPMN 2.0 规范入口](https://www.omg.org/spec/BPMN/2.0/)
