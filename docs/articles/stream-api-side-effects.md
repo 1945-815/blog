@@ -53,6 +53,8 @@ System.out.println(phones); // [苹果手机, 华为手机]
 
 上段需要导入 `java.util.Arrays`、`java.util.List` 和 `java.util.stream.Collectors`。`Stream.toList()` 是 Java 16 才加入的终止操作；面向本地资料的 JDK 8 练习应使用 `collect(Collectors.toList())`。两者返回列表的可修改性也不能想当然地视为相同。
 
+若还不熟悉 `product -> ...` 与 `Product::getName` 的写法，先看 [Lambda、函数式接口与方法引用](/articles/java-lambda-functional-interface)，再回到这条 Stream 流水线。
+
 课堂笔记还练习了 `partitioningBy` 与 `groupingBy`：前者依据一个布尔条件分为两组，后者依据品牌等键分成多组。例如商品对象已定义 `getBrand()` 和 `getPrice()` 时，可以写成 `products.stream().collect(Collectors.groupingBy(Product::getBrand, Collectors.counting()))`，得到每个品牌的商品数。若统计金额，先明确单价是否需要乘数量，再选择 `BigDecimal` 汇总，不能把单价之和直接称为销售额。
 
 ## 四、真实项目落地

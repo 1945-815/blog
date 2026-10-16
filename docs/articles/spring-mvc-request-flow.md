@@ -22,6 +22,8 @@ phase: "数据库与 Spring 基础"
 
 典型链路由 Servlet 容器接收请求，DispatcherServlet 作为前端控制器协调 HandlerMapping、HandlerAdapter、参数解析器、消息转换器和异常解析器。REST 接口通常通过消息转换器读写 JSON。
 
+传统 Servlet 的 URL 映射与生命周期见 [Tomcat 与 Servlet](/articles/servlet-tomcat-lifecycle)；资源路径与 HTTP 方法的设计练习见 [REST 员工接口](/articles/restful-employee-api-design)。
+
 ## 三、核心代码实现
 
 用一个带 DTO 参数的接口观察请求映射、参数绑定、校验、方法调用和响应序列化。断点可以放在 Controller、拦截器、全局异常处理器；通过日志记录路径、状态码和 request id，而不是记录整个敏感请求体。
