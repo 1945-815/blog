@@ -646,5 +646,61 @@
     "stageName": "Web 基础",
     "slug": "javascript-dom-events-notes",
     "title": "JavaScript 基础与 DOM：用事件更新页面"
+  },
+  {
+    "id": 82,
+    "planDate": "2026-10-16",
+    "stage": 1,
+    "stageName": "Java 基础与数据结构",
+    "slug": "java-lambda-functional-interface",
+    "title": "从商品筛选理解 Lambda、函数式接口与方法引用"
+  },
+  {
+    "id": 83,
+    "planDate": "2026-10-16",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "mybatis-session-mapper-basics",
+    "title": "MyBatis 入门：从商品 Mapper 到 SqlSession 的一次工作单元"
+  },
+  {
+    "id": 84,
+    "planDate": "2026-10-16",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "mybatis-association-mapping",
+    "title": "MyBatis 关联映射：部门员工的一对多与学生教师的多对多"
+  },
+  {
+    "id": 85,
+    "planDate": "2026-10-16",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "servlet-tomcat-lifecycle",
+    "title": "Tomcat 与 Servlet：从 URL 映射到生命周期"
+  },
+  {
+    "id": 86,
+    "planDate": "2026-10-16",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "servlet-jsp-webcrud-classroom",
+    "title": "Servlet Web 组件练习：请求、转发、JSP 与商品列表"
+  },
+  {
+    "id": 87,
+    "planDate": "2026-10-16",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "restful-employee-api-design",
+    "title": "用员工资源练习 REST 接口：路径、方法与状态码"
+  },
+  {
+    "id": 88,
+    "planDate": "2026-10-16",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "git-version-control-classroom",
+    "title": "Git 课堂笔记整理：暂存、提交、分支与冲突处理"
   }
 ]

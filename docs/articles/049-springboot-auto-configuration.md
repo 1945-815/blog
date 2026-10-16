@@ -89,6 +89,8 @@ CREATE TABLE startup_check (
 
 表结构只是数据库连通性示例，与自动配置自身无关。启动后可通过 `curl -i http://localhost:8080/actuator/health` 检查健康端点；该端点需要相应 actuator 依赖和暴露配置，不能默认认为所有项目都已启用。排查自动配置可在本地启动参数中增加 `--debug`，查看条件评估报告；也可以在断点中检查 Environment 和容器 Bean。
 
+本地 `0727SpringBoot底层原理` 还演示了配置覆盖。排查时先列出“值从哪里来”：JAR 内配置、JAR 外配置、激活 profile 的配置、环境变量、JVM 系统属性与命令行选项都可能参与。Spring Boot 的配置源是有顺序的，后加入的源可覆盖前面的值；命令行 `--server.port=9090` 默认会覆盖配置文件中的端口。同一目录同时放 `application.properties` 和 YAML 时，properties 优先，但不能把 `.yaml < .yml < .properties < 系统属性 < 命令行` 当作不区分目录与 profile 的万能优先级表。调试时记录生效属性与来源，并避免在日志中输出密码。
+
 ## 五、项目真实落地
 
 在企业项目中，我们通常先从错误栈确认失败发生在配置解析、Bean 创建、数据库连接还是 Web 容器启动阶段。然后检查依赖树、启动类包路径、配置源和条件报告。生产服务不应为了方便暴露全部诊断端点；诊断信息应按环境和权限控制。
@@ -119,3 +121,4 @@ CREATE TABLE startup_check (
 
 - [Spring Boot：Auto-configuration](https://docs.spring.io/spring-boot/reference/using/auto-configuration.html)
 - [Spring Boot：Using the @SpringBootApplication Annotation](https://docs.spring.io/spring-boot/reference/using/using-the-springbootapplication-annotation.html)
+- [Spring Boot：Externalized Configuration](https://docs.spring.io/spring-boot/reference/features/external-config.html)

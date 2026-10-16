@@ -65,6 +65,23 @@ LIMIT ? OFFSET ?;
 
 这个查询中，状态和支付时间先筛明细，分组后才知道一个分类的订单量，因此订单量门槛要放在 HAVING。展示“分类名称”时应将分类表关联进来，并确保关联关系是一对一，避免 JOIN 把明细重复放大。
 
+本地 MySQL 笔记写过“`GROUP BY` 默认升序”，这只符合部分旧版本的观察结果。MySQL 8.0 起分组不再隐式保证排序；上面的 `ORDER BY total_amount DESC` 是报表顺序的必要约束。如果要按分类编号展示，显式写 `ORDER BY category_id ASC`，不能依靠偶然的执行计划。
+
+当一个查询结果要充当另一个查询的条件时，可以使用子查询。下面用已支付订单明细查出金额合计至少达到门槛的用户，`HAVING` 判断每组汇总值，外层只读取对应用户的明细。此例用于练习子查询语法，实际报表仍需先确认“金额合计”是按商品行还是订单计算。
+
+~~~sql
+SELECT id, order_id, user_id, amount
+FROM order_item
+WHERE user_id IN (
+    SELECT user_id
+    FROM order_item
+    WHERE status = 'PAID'
+    GROUP BY user_id
+    HAVING SUM(amount) >= ?
+)
+ORDER BY user_id, id;
+~~~
+
 Java 层只负责接收参数、校验日期范围并调用 Mapper，不把金额聚合逻辑搬到内存。MyBatis 配置示例如下：
 
 ~~~yaml
@@ -147,3 +164,4 @@ WHERE 过滤参与分组的明细行；HAVING 过滤聚合后的分组，通常�
 
 - [MySQL 8.4 GROUP BY Handling](https://dev.mysql.com/doc/refman/8.4/en/group-by-handling.html)
 - [MySQL 8.4 GROUP BY Modifiers](https://dev.mysql.com/doc/refman/8.4/en/group-by-modifiers.html)
+- [MySQL 8.0 ORDER BY Optimization](https://dev.mysql.com/doc/refman/8.0/en/order-by-optimization.html)

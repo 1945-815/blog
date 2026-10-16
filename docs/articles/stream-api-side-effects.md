@@ -43,11 +43,19 @@ Stream 描述数据处理流水线：中间操作通常惰性执行，终止操�
 **源码观察：**可以从 AbstractPipeline、中间阶段的 Sink 包装和终止操作入口观察惰性执行。阅读源码时关注“何时遍历源”和“结果如何传递”，不要把某个版本的内部类结构当成 API 保证。
 
 ```java
-List<String> names = users.stream()
-    .filter(User::isActive)
-    .map(User::getName)
-    .toList();
+// JDK 8：课堂商品筛选中的“手机”条件
+List<String> names = Arrays.asList("苹果手机", "苹果电脑", "华为手机");
+List<String> phones = names.stream()
+    .filter(name -> name.contains("手机"))
+    .collect(Collectors.toList());
+System.out.println(phones); // [苹果手机, 华为手机]
 ```
+
+上段需要导入 `java.util.Arrays`、`java.util.List` 和 `java.util.stream.Collectors`。`Stream.toList()` 是 Java 16 才加入的终止操作；面向本地资料的 JDK 8 练习应使用 `collect(Collectors.toList())`。两者返回列表的可修改性也不能想当然地视为相同。
+
+若还不熟悉 `product -> ...` 与 `Product::getName` 的写法，先看 [Lambda、函数式接口与方法引用](/articles/java-lambda-functional-interface)，再回到这条 Stream 流水线。
+
+课堂笔记还练习了 `partitioningBy` 与 `groupingBy`：前者依据一个布尔条件分为两组，后者依据品牌等键分成多组。例如商品对象已定义 `getBrand()` 和 `getPrice()` 时，可以写成 `products.stream().collect(Collectors.groupingBy(Product::getBrand, Collectors.counting()))`，得到每个品牌的商品数。若统计金额，先明确单价是否需要乘数量，再选择 `BigDecimal` 汇总，不能把单价之和直接称为销售额。
 
 ## 四、真实项目落地
 
@@ -88,4 +96,5 @@ List<String> names = users.stream()
 ## 参考资料
 
 - [Java Stream API](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/package-summary.html)
+- [Java 8 Collectors](https://docs.oracle.com/javase/8/docs/api/java/util/stream/Collectors.html)
 - [Stream 接口文档](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/Stream.html)
