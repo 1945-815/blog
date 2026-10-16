@@ -128,6 +128,28 @@ length 统计 UTF-16 code unit。若边界正好切开代理对，结果会含�
 
 作为一名 2027 届 Java 后端实习生，我从这部分基础知识里学到的不是“加号慢、Builder 快”这句口诀，而是先看字符串是否被重复构造、输入是否有上限、并发边界在哪里，以及字符长度如何定义。先把规则讲清楚，再优化可测量的热点，代码会比机械套用技巧更可靠。
 
+## 补充：正则校验与 `StringBuffer` 边界
+
+本地 3 月 11–12 日笔记还安排了正则表达式练习。正则适合校验**语法形状**，不能代替业务规则。例如下面只接受 6–12 个 ASCII 字母或数字，不声称它就是安全密码策略；真实账户还需要长度、泄漏口令检查和服务端策略。
+
+~~~java
+import java.util.regex.Pattern;
+
+public class RegexDemo {
+    private static final Pattern ACCOUNT = Pattern.compile("[A-Za-z0-9]{6,12}");
+
+    public static void main(String[] args) {
+        System.out.println(ACCOUNT.matcher("User123").matches()); // true
+        System.out.println(ACCOUNT.matcher("张三123").matches());   // false
+        StringBuilder local = new StringBuilder();
+        local.append("User").append(123);
+        System.out.println(local.toString());
+    }
+}
+~~~
+
+`matches()` 要求整个输入符合表达式，查找局部片段才考虑 `find()`。`Pattern` 可以复用，但不要把用户随意输入的复杂正则直接用于大文本匹配，避免难以控制的匹配成本。`StringBuffer` 的单个方法有同步措施，却不能自动保证“检查后追加”等多个调用组成的操作整体原子；方法内部局部拼接仍通常用 `StringBuilder`。本地笔记里介绍两者，选择时应看对象是否共享及真正的并发边界。
+
 ## 参考资料
 
 - [Java SE 17：String API](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html)

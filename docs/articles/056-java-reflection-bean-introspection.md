@@ -117,6 +117,46 @@ LIMIT #{pageSize} OFFSET #{offset};
 
 作为 2027 届 Java 后端实习生，我以前容易把反射记成几个 API。把它和 JavaBean、注解读取、框架初始化放到一起后，我更清楚它解决的是“代码编写时未知、运行时按约定发现”的问题。后面读 Spring 或 ORM 源码时，我会先找元数据从哪里来、访问边界在哪里，再看框架如何缓存和调用。
 
+## 补充：`Introspector` 与属性描述符
+
+本地 6 月 7 日笔记的内省部分通过 `BeanInfo` 获取属性，再读取 `PropertyDescriptor`。下面只枚举公开的 JavaBean 属性；`Object.class` 作为停止类可排除 `getClass` 对应的 `class` 属性。它不尝试突破私有字段访问规则，也不把外部输入当类名加载。
+
+~~~java
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.util.HashMap;
+import java.util.Map;
+
+public class BeanPropertyDemo {
+    public static class Person {
+        private String name;
+        public Person() { }
+        public String getName() { return name; }
+        public void setName(String name) { this.name = name; }
+    }
+
+    public static void main(String[] args) throws Exception {
+        Person person = new Person();
+        Map<String, String> input = new HashMap<>();
+        input.put("name", "课堂练习");
+        BeanInfo info = Introspector.getBeanInfo(Person.class, Object.class);
+        for (PropertyDescriptor property : info.getPropertyDescriptors()) {
+            // 课堂 Map → Bean 思路：只允许预先确定的 name 属性。
+            if (property.getName().equals("name") &&
+                    property.getWriteMethod() != null) {
+                property.getWriteMethod().invoke(person, input.get("name"));
+            }
+            if (property.getReadMethod() == null) continue;
+            Object value = property.getReadMethod().invoke(person);
+            System.out.println(property.getName() + "=" + value);
+        }
+    }
+}
+~~~
+
+保存为 `BeanPropertyDemo.java`，JDK 8+ 可运行。这里的 Map 转换只允许 `name`，值也恰好是 `String`。更通用的转换还要限定可写属性清单、检查 `getWriteMethod()`、转换值类型并处理缺项；不能把任意 Map 键直接映射成私有字段。反射的一般用法不要求目标类符合 JavaBean 约定，只有按属性访问的内省路径依赖 getter/setter 规则。注解是否可在运行时读取还取决于 `@Retention(RUNTIME)`。
+
 ## 参考资料
 
 - [Java SE 17 Reflection API](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/reflect/package-summary.html)

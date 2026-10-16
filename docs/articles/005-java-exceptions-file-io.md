@@ -115,6 +115,41 @@ public class FileCopyDemo {
 
 受检异常要求调用方捕获或声明；运行时异常不受这项编译期检查。选择异常类型时还要看调用方是否有合理恢复动作。
 
+## 补充：自定义异常与二进制文件复制
+
+本地 3 月 12–13 日笔记还练习了自定义异常、字节流与字符流。异常类型应传达调用方可以采取的动作，不能为了“自定义”而给每个错误都造一个类。下面的课堂练习用一个受检异常区分源文件不合法，并让实际读写失败继续以 `IOException` 传播。`Files.copy` 按字节复制，适用于图片等二进制内容；与上文逐行文本复制的换行处理不同。
+
+~~~java
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class BinaryCopyDemo {
+    static class InvalidSourceFileException extends IOException {
+        InvalidSourceFileException(String message) { super(message); }
+    }
+
+    public static void main(String[] args) throws IOException {
+        if (args.length != 2) {
+            throw new IllegalArgumentException("用法：java BinaryCopyDemo <源文件> <目标文件>");
+        }
+        Path source = Paths.get(args[0]).toAbsolutePath().normalize();
+        Path target = Paths.get(args[1]).toAbsolutePath().normalize();
+        if (!Files.isRegularFile(source)) {
+            throw new InvalidSourceFileException("源文件不存在或不是普通文件：" + source);
+        }
+        if (source.equals(target)) {
+            throw new IllegalArgumentException("源文件与目标文件不能相同");
+        }
+        Files.copy(source, target); // 目标已存在时抛 FileAlreadyExistsException
+        System.out.println("已复制到：" + target);
+    }
+}
+~~~
+
+保存为 `BinaryCopyDemo.java`，JDK 8+ 可编译。若程序要处理符号链接、并发改名、覆盖已有文件或跨文件系统复制，还需要明确这些策略；路径规范化检查只解决普通示例的明显同路径情况，不应作为强安全边界。异常捕获处不要吞掉原始原因。
+
 ## 参考资料
 
 - [Oracle Java Tutorial：Exceptions](https://docs.oracle.com/javase/tutorial/essential/exceptions/)

@@ -598,5 +598,53 @@
     "stageName": "AI 应用探索",
     "slug": "045-agent-tool-boundaries",
     "title": "Agent 工具调用：输入校验、权限边界与失败处理"
+  },
+  {
+    "id": 76,
+    "planDate": "2026-10-16",
+    "stage": 1,
+    "stageName": "Java 基础与数据结构",
+    "slug": "java-syntax-control-flow-notes",
+    "title": "Java 基础语法练习：变量、输入与流程控制"
+  },
+  {
+    "id": 77,
+    "planDate": "2026-10-16",
+    "stage": 1,
+    "stageName": "Java 基础与数据结构",
+    "slug": "java-object-wrapper-notes",
+    "title": "Object 与包装类：判等、装箱和类型转换"
+  },
+  {
+    "id": 78,
+    "planDate": "2026-10-16",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "mysql-basic-crud-notes",
+    "title": "MySQL 基础 SQL：从建表到单表查询"
+  },
+  {
+    "id": 79,
+    "planDate": "2026-10-16",
+    "stage": 2,
+    "stageName": "数据库与 Spring 基础",
+    "slug": "jdbc-employee-classroom-case",
+    "title": "员工信息管理：原生 JDBC 课堂案例的分层与边界"
+  },
+  {
+    "id": 80,
+    "planDate": "2026-10-16",
+    "stage": 6,
+    "stageName": "Web 基础",
+    "slug": "html-css-form-notes",
+    "title": "HTML 与 CSS 入门：表格、表单和提交方式"
+  },
+  {
+    "id": 81,
+    "planDate": "2026-10-16",
+    "stage": 6,
+    "stageName": "Web 基础",
+    "slug": "javascript-dom-events-notes",
+    "title": "JavaScript 基础与 DOM：用事件更新页面"
   }
 ]

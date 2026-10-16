@@ -135,6 +135,37 @@ public class DataStructuresDemo {
 
 常见情况下查找接近常数时间，但结果受哈希分布、冲突和具体实现影响，复杂度结论应说明前提。
 
+## 补充：数组复制与冒泡排序练习
+
+本地 3 月 5–6 日笔记从声明数组、下标遍历走到备份和冒泡排序。数组长度创建后固定；有效下标是 `0` 到 `length - 1`，越界访问会抛出 `ArrayIndexOutOfBoundsException`。`Arrays.copyOf` 生成新数组；直接把数组变量赋给另一个变量只会共享同一个数组对象。下面是 JDK 8+ 可运行的课堂练习，保存为 `ArrayCopySortDemo.java`：
+
+~~~java
+import java.util.Arrays;
+
+public class ArrayCopySortDemo {
+    public static void main(String[] args) {
+        int[] source = {5, 2, 4, 1};
+        int[] copy = Arrays.copyOf(source, source.length);
+        for (int end = copy.length - 1; end > 0; end--) {
+            boolean swapped = false;
+            for (int i = 0; i < end; i++) {
+                if (copy[i] > copy[i + 1]) {
+                    int temp = copy[i];
+                    copy[i] = copy[i + 1];
+                    copy[i + 1] = temp;
+                    swapped = true;
+                }
+            }
+            if (!swapped) break;
+        }
+        System.out.println(Arrays.toString(source)); // [5, 2, 4, 1]
+        System.out.println(Arrays.toString(copy));   // [1, 2, 4, 5]
+    }
+}
+~~~
+
+冒泡排序用相邻比较理解元素交换；一般场景可直接用 `Arrays.sort`。上例内层比较次数随数组长度平方增长，提前结束只改善已经有序等输入，不能改变最坏情况下的 O(n²)。
+
 ## 参考资料
 
 - [Java Collections Framework](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/package-summary.html)

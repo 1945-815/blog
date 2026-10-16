@@ -84,6 +84,44 @@ Map<Long, Document> byId = documents.stream()
 
 **回答思路：**先限定本人实际负责范围，再讲接口边界、数据流、异常路径和验证方法。若内容来自独立 Demo，应直接说明是个人练习，不借用公司项目表述。
 
+## 补充：从数组升级到集合的可运行练习
+
+本地 3 月 13、16 日笔记从定长数组走到 `ArrayList`、`LinkedList`、`HashSet` 和 `HashMap`。下面的练习按“保存顺序—去重—按键查找”推进，保存为 `CollectionChoiceDemo.java`，JDK 8+ 可运行：
+
+~~~java
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+public class CollectionChoiceDemo {
+    public static void main(String[] args) {
+        List<String> plates = new ArrayList<>();
+        plates.add("A123");
+        plates.add("B456");
+        plates.add("A123");
+        System.out.println(plates.get(1));       // B456
+
+        Set<String> distinct = new HashSet<>(plates);
+        System.out.println(distinct.size());     // 2，不依赖遍历顺序
+
+        Map<String, Integer> visits = new HashMap<>();
+        for (String plate : plates) {
+            visits.merge(plate, 1, Integer::sum);
+        }
+        System.out.println(visits.get("A123")); // 2
+
+        LinkedList<String> waiting = new LinkedList<>(plates);
+        System.out.println(waiting.removeFirst());
+    }
+}
+~~~
+
+数组读长度用 `length`，字符串长度用 `length()`，集合元素数用 `size()`。`ArrayList` 按下标访问直接，但中间插入可能搬移元素；`LinkedList` 在已知节点处增删可改链接，但按下标找位置仍需遍历。不要把“LinkedList 增删一定快”当成无条件结论。`HashSet` 的唯一性依赖 `equals`/`hashCode`，`HashMap` 的键也一样；需要输出稳定顺序时选有序实现或排序。泛型的类型擦除细节另见 [泛型文章](./071-java-generics-type-erasure.md)。
+
 ## 参考资料
 
 - [Java Collections Framework](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/package-summary.html)
