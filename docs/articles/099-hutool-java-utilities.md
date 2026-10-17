@@ -3,20 +3,15 @@ title: "Hutool 常用工具类：字符串、标识符与 JSON"
 date: "2026-10-17"
 categories: ["Java 基础"]
 tags: ["Java", "Hutool", "工具类", "JSON"]
-description: "按本地工具类思维导图整理 Hutool 常用 API、依赖版本和不应交给工具类的业务判断。"
+description: "整理 Hutool 常用 API、依赖版本和不应交给工具类的业务判断。"
 plan_date: "2026-10-17"
 phase: "AI 应用探索"
 ---
 
 # Hutool 常用工具类：字符串、标识符与 JSON
 
-### 文章定位
-
-本地 `05 HuTool.mmap` 按字符串、ID、集合、日期、Bean、转换、Map、JSON 和 Spring 工具类整理了 Hutool API。另一个 MCP 示例归档的父 POM 使用 `cn.hutool:hutool-all:5.8.34`，天气服务源码还引用 `HttpUtil` 和 `JSONUtil`。这能证明资料中出现过该依赖与 API，不代表它已经用于本人维护的生产系统。
-
 ## 一、引入依赖
 
-如果要复现本地归档中的版本，可在 Maven 工程中引入：
 
 ~~~xml
 <dependency>
@@ -26,7 +21,7 @@ phase: "AI 应用探索"
 </dependency>
 ~~~
 
-5.8.34 是本地 MCP 工程的依赖版本。新项目应使用项目统一管理的版本，并核对对应 API 文档、Java 版本要求和安全更新；不要因为示例中出现某个版本就直接复制到所有工程。
+示例使用 Hutool 5.8.34。新项目应使用项目统一管理的版本，并核对对应 API 文档、Java 版本要求和安全更新；不要因为示例中出现某个版本就直接复制到所有工程。
 
 ## 二、把常见工具放到一次输入处理中
 
@@ -73,7 +68,7 @@ public class HutoolLogExample {
 
 ## 四、在 Spring AI 辅助代码中的位置
 
-本地 MCP server 示例的 `WeatherService` 用 `HttpUtil` 请求外部天气服务，再用 `JSONUtil` 读取响应并组装 `WeatherDTO`。工具类减少重复的 HTTP/JSON 操作，但不会替代超时、状态码检查、响应字段校验、异常映射和密钥保护。对外服务调用仍应使用连接超时和读取超时，并且只把必要字段返回给模型。
+天气查询工具可以用 `HttpUtil` 请求外部服务，再用 `JSONUtil` 读取响应并组装 `WeatherDTO`。工具类减少重复的 HTTP/JSON 操作，但不会替代超时、状态码检查、响应字段校验、异常映射和密钥保护。对外服务调用仍应使用连接超时和读取超时，并且只把必要字段返回给模型。
 
 当工具由 `@Tool` 暴露给模型时，调用参数仍然不可信：先校验城市 id，再访问服务端；结果应脱敏并限制大小。工具类的便捷 API 不能把这个安全边界自动补上。
 
@@ -101,8 +96,6 @@ Hutool 把字符串、集合、日期、ID、Bean 和 JSON 的常见操作放进
 
 ## 参考资料
 
-- 本地课程资料：`05 HuTool.mmap`
-- 本地依赖记录：`my-spring-ai-mcp-73魔改.rar`（Maven 依赖版本 5.8.34）
 - [Hutool StrUtil 文档](https://doc.hutool.cn/pages/StrUtil/)
 - [Hutool IdUtil 文档](https://doc.hutool.cn/pages/IdUtil/)
 - [Hutool JSONUtil API](https://plus.hutool.cn/apidocs/cn/hutool/json/JSONUtil.html)

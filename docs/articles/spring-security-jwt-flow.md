@@ -10,10 +10,6 @@ phase: "企业开发技术学习"
 
 # Spring Security 与 JWT 的认证授权流程
 
-### 文章定位
-
-这篇文章对应路线图中的 安全认证 主题，文章使用可复现的技术链路解释问题；涉及实习内容时只描述简历能够支撑的职责，不补充未确认的实现细节或效果数据。
-
 ### 学习目标
 
 - 理解关键组件的职责与边界。
@@ -46,7 +42,7 @@ SecurityContextHolder.getContext().setAuthentication(
 
 Spring Security 的 Servlet 集成通过过滤器链处理认证和授权。Authentication 表示认证结果，SecurityContext 保存当前请求的身份上下文。JWT 验证过滤器必须在适当的过滤器位置执行；无效令牌应进入一致的未认证响应路径。
 
-本地登录笔记先比较了 Cookie、Session 与 Token：Cookie 是客户端保存并随请求发送的数据机制，Session 状态通常存于服务端，JWT 是一种令牌格式。移动端 HTTP 客户端也能保存和发送 Cookie，只是实现方式与浏览器不同；多实例应用使用 Session 时需要共享会话存储或其他会话保持方案。选 JWT 时仍要考虑失效、权限变更和泄露后的撤销。课堂笔记没有提供 Spring Security 配置代码，因此本文的 Security 过滤链仍属于独立技术示例，不能写成已经在该课堂项目中集成。
+移动端 HTTP 客户端也能保存和发送 Cookie，只是实现方式与浏览器不同；多实例应用使用 Session 时需要共享会话存储或其他会话保持方案。选 JWT 时仍要考虑失效、权限变更和泄露后的撤销。
 
 ## 四、真实项目落地
 

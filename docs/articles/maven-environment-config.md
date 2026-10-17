@@ -39,7 +39,7 @@ Maven 解析项目模型、依赖图与插件执行计划后运行生命周期�
 </profiles>
 ```
 
-本地 Maven 笔记还区分了依赖范围和构建生命周期。`compile` 是默认范围，编译与运行都可用；`provided` 在编译时可用，但运行时预期由容器提供，传统 WAR 的 Servlet API 是典型例子；`runtime` 用于编译不直接需要、运行时需要的依赖；`test` 仅用于测试代码。范围选错会造成“IDE 能编译，打包后缺类”或把容器已有库重复打包。
+`compile` 是默认范围，编译与运行都可用；`provided` 在编译时可用，但运行时预期由容器提供，传统 WAR 的 Servlet API 是典型例子；`runtime` 用于编译不直接需要、运行时需要的依赖；`test` 仅用于测试代码。范围选错会造成“IDE 能编译，打包后缺类”或把容器已有库重复打包。
 
 `mvn test` 会执行直到测试阶段，`mvn package` 会继续打包，`mvn verify` 还会执行配置在验证阶段的检查。`clean` 属于另一个生命周期，所以 `mvn clean verify` 先清理再构建。若本机可运行而 CI 缺类，先运行 `mvn dependency:tree` 查实际依赖来源，再核对 `settings.xml` 的仓库配置及凭据；不要直接删除依赖缓存来代替定位。
 

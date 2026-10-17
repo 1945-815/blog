@@ -3,14 +3,14 @@ title: "软件项目开发流程笔记：从需求评审到 Scrum 迭代"
 date: "2026-10-16"
 categories: ["工程协作"]
 tags: ["软件开发流程", "Scrum", "敏捷开发", "瀑布模型"]
-description: "整理课程资料中的团队角色、开发阶段、环境流转和 Scrum 术语，并对照 Scrum Guide 2020 校正定义。"
+description: "梳理软件岗位、开发流程、环境流转和 Scrum 术语，并对照 Scrum Guide 2020 校正定义。"
 plan_date: "2026-10-16"
 phase: "企业开发技术学习"
 ---
 
 # 软件项目开发流程笔记：从需求评审到 Scrum 迭代
 
-本文依据 `企业开发流程讲义.md` 和配套 PDF 整理。这些材料介绍软件岗位、瀑布式流程、敏捷/Scrum、原型和开发/测试/生产环境。讲义中的岗位流程是课堂上介绍的一种常见组织方式，不是每个团队都必须遵循的固定流程；下面的 Scrum 术语按 2020 年官方 Scrum Guide 校准。
+软件开发流程涉及岗位协作、瀑布式流程、敏捷/Scrum、原型和开发/测试/生产环境。岗位流程会随组织与项目变化，不是每个团队都必须遵循的固定模板；下面的 Scrum 术语按 2020 年官方 Scrum Guide 校准。
 
 ## 一、需求到发布：把协作环节串起来
 
@@ -38,18 +38,17 @@ Scrum Guide 2020 定义了三种问责角色：Product Owner、Scrum Master 和 
 
 一个 Sprint 包含计划、开发、Daily Scrum、Sprint Review 和 Sprint Retrospective。Sprint 长度为一个月或更短；Daily Scrum 是 Developers 面向 Sprint Goal 的 15 分钟事件，团队可自行选择具体形式。Review 检查结果并与利益相关者讨论下一步；Retrospective 检查协作和质量方式，选出可执行的改进。
 
-课堂笔记写到 PO、Scrum Master、团队、产品待办、冲刺待办、每日站会、评审和回顾，整体结构与 Scrum 迭代相符。使用当前术语时还应补上 Sprint Goal、Product Goal 和 Definition of Done，并把“按成员轮流汇报昨天/今天”视作一种旧课堂组织方式，而非 Daily Scrum 唯一允许的形式。
+使用当前术语时还应补上 Sprint Goal、Product Goal 和 Definition of Done，并把“按成员轮流汇报昨天/今天”视作一种旧课堂组织方式，而非 Daily Scrum 唯一允许的形式。
 
 ## 四、一个教学练习：拆解审批待办能力
 
-本地另有 Activiti 工作流学习资料。可以把“让审批人查看待办、定位业务记录并提交处理意见”作为产品练习题，练习拆分工作，而不声称这个功能曾按 Scrum 在真实团队交付：
+可以把“让审批人查看待办、定位业务记录并提交处理意见”作为产品练习题，练习拆分工作，而不声称这个功能曾按 Scrum 在真实团队交付：
 
 1. Product Owner 整理待办列表、业务详情和提交意见的需求，明确用户价值与验收条件。
 2. Sprint Planning 讨论一个可验证的 Sprint Goal，例如“审批人能找到并处理一条待办”。团队据此挑选和拆分工作项，形成 Sprint Backlog。
 3. 开发和测试围绕同一增量协作：先完成接口/页面约定，再检查正常提交、无权访问、已被处理和失败提示等情形。
 4. Review 演示可工作的增量并收集反馈；Retrospective 记录一项下一轮可验证的协作改进。
 
-这里的功能范围来自流程学习主题，拆分和验收条件是说明方法的教学示例，不代表本地课程项目真实采用了 Scrum。
 
 ## 五、常见误解与检查点
 
@@ -78,9 +77,7 @@ Review 面向产品结果和下一步方向，与利益相关者检查增量；R
 
 Scrum Guide 规定 Scrum Team 的三种问责角色，没有把项目经理列为框架角色。组织中仍可能有项目管理岗位，但应说明其工作与 Product Owner、Scrum Master 和团队的职责如何协作。
 
-## 本地资料与参考
+## 参考资料
 
-- 本地讲义：`企业开发流程讲义.md`。
-- 本地配套课件：`企业开发流程.pdf`。
-- 工作流延伸：本地 `Activiti7工作流讲义.md`；博客 [Activiti 7 审批流程](/articles/activiti7-approval-flow)。
+博客 [Activiti 7 审批流程](/articles/activiti7-approval-flow)。
 - [The Scrum Guide (2020)](https://scrumguides.org/scrum-guide.html)

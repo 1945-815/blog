@@ -3,14 +3,14 @@ title: "MyBatis 关联映射：部门员工的一对多与学生教师的多对�
 date: "2026-10-16"
 categories: ["持久层"]
 tags: ["MyBatis", "MySQL", "关联映射"]
-description: "用本地课堂关系练习 resultMap、collection 和关系表，先确认查询结果的粒度再映射对象。"
+description: "用关系练习理解 resultMap、collection 和关系表，先确认查询结果的粒度再映射对象。"
 plan_date: "2026-10-16"
 phase: "数据库与 Spring 基础"
 ---
 
 # MyBatis 关联映射：部门员工的一对多与学生教师的多对多
 
-本地 `0717MyBatis加强` 从对象关联讲到一对一、一对多和多对多，课堂案例分别用了部门/员工与学生/教师。关系映射前先问：SQL 的一行表示一个员工，还是一个部门？MyBatis 不能替我们纠正错误的连接关系或重复数据。
+关系映射前先问：SQL 的一行表示一个员工，还是一个部门？MyBatis 不能替我们纠正错误的连接关系或重复数据。
 
 ## 一对多：一个部门和它的员工
 
@@ -99,7 +99,7 @@ public interface DepartmentMapper {
 
 ## 多对多：关系属于中间表
 
-课堂笔记中两个学生都听过两位老师的课。关系不适合塞进 `student` 或 `teacher` 的单个外键字段，应由 `student_teacher(student_id, teacher_id)` 承载，并以联合主键阻止同一关系重复写入。查询某学生的老师时先连接关系表，再连接老师表；删除学生前需要按外键规则处理关系行。
+关系不适合塞进 `student` 或 `teacher` 的单个外键字段，应由 `student_teacher(student_id, teacher_id)` 承载，并以联合主键阻止同一关系重复写入。查询某学生的老师时先连接关系表，再连接老师表；删除学生前需要按外键规则处理关系行。
 
 ```sql
 CREATE TABLE student (
@@ -129,4 +129,4 @@ ORDER BY t.id;
 
 一对一可以用唯一外键表示，再用 `<association>` 映射单个对象；它与 `<collection>` 的区别是属性基数。选择嵌套连接结果还是分步查询时，要注意列表查询的 N+1 风险，不因对象模型方便而忽略 SQL 次数。相关性能边界见 [MyBatis 查询与批量写入性能](/articles/047-mybatis-query-batch-performance)。
 
-资料依据：本地 `MyBatis加强.md` 的部门/员工及学生/教师课堂关系、关联查询和删除顺序。XML 映射行为参考 [MyBatis Mapper XML 官方文档](https://mybatis.org/mybatis-3/sqlmap-xml.html)。
+XML 映射行为参考 [MyBatis Mapper XML 官方文档](https://mybatis.org/mybatis-3/sqlmap-xml.html)。

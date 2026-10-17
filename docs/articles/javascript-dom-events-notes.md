@@ -3,18 +3,18 @@ title: "JavaScript 基础与 DOM：用事件更新页面"
 date: "2026-10-16"
 categories: ["前端技术"]
 tags: ["JavaScript", "DOM", "事件"]
-description: "依据本地 JavaScript 课堂笔记，串联变量、数组、函数、DOM 查询和事件监听，并区分浏览器与 Node.js 环境。"
+description: "串联 JavaScript 变量、数组、函数、DOM 查询和事件监听，并区分浏览器与 Node.js 环境。"
 plan_date: "2026-10-16"
 phase: "Web 基础"
 ---
 
 # JavaScript 基础与 DOM：用事件更新页面
 
-本篇依据 2026 年 3 月 25–27 日的 JavaScript 课堂笔记。笔记从变量、运算符、数组、函数走到 `document` 查找元素、修改内容以及点击/表单事件。下例只在浏览器中运行，是静态页面练习。
+笔记从变量、运算符、数组、函数走到 `document` 查找元素、修改内容以及点击/表单事件。下例只在浏览器中运行，是静态页面练习。
 
 ## 语言与运行环境
 
-`let` 定义可重新赋值的块级变量，`const` 定义不可重新赋值的绑定；数组可用 `push` 添加元素，函数把重复操作封装起来。优先使用 `===` 避免隐式类型转换。JavaScript 语言可以运行在浏览器，也可以运行在 Node.js 等环境；`document`、DOM 和页面事件是浏览器提供的 API，普通 Node.js 进程没有浏览器 DOM。本地笔记中“JS 必须依附 HTML 才能运行”只适用于其中的浏览器页面练习，不是语言本身的限制。
+`let` 定义可重新赋值的块级变量，`const` 定义不可重新赋值的绑定；数组可用 `push` 添加元素，函数把重复操作封装起来。优先使用 `===` 避免隐式类型转换。JavaScript 语言可以运行在浏览器，也可以运行在 Node.js 等环境；`document`、DOM 和页面事件是浏览器提供的 API，普通 Node.js 进程没有浏览器 DOM。
 
 ## 一个完整的 DOM 与事件练习
 
@@ -86,6 +86,5 @@ phase: "Web 基础"
 
 ## 资料与参考
 
-- 本地资料：`day19 Web开发 -- JavaScript基础.md`、`day20 Web开发 -- JavaScript进阶.md` 中的变量、数组、函数、DOM 和事件练习。
 - [Node.js 官方入门](https://nodejs.org/learn/getting-started/introduction-to-nodejs)
 - [MDN：EventTarget.addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)

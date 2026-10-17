@@ -12,9 +12,9 @@ phase: "Java 后端实习与业务实践"
 
 ## 一、为什么学习这个技术
 
-已有的 Docker 本地环境文章讨论的是如何用容器启动 MySQL、Redis 等依赖。把 Spring Boot 自身打成镜像解决的是另一个问题：如何把应用运行时、可执行 JAR、启动命令和端口约定交付给部署环境，减少“本地能运行、服务器缺少对应 JDK 或目录”的差异。
+现有 Docker 开发环境文章讨论如何用容器启动 MySQL、Redis 等依赖。把 Spring Boot 自身打成镜像解决的是另一个问题：如何把应用运行时、可执行 JAR、启动命令和端口约定交付给部署环境，减少“本地能运行、服务器缺少对应 JDK 或目录”的差异。
 
-课程笔记中的发布链路是 Maven 打包、在本机用 java -jar 验证、编写 Dockerfile、构建镜像，再以端口映射运行。面向微服务时，还需要考虑镜像可重复构建、运行配置外置、数据库服务发现、日志输出和失败排查。容器化不会自动带来高可用，也不会替代应用的连接重试和数据备份。
+面向微服务时，还需要考虑镜像可重复构建、运行配置外置、数据库服务发现、日志输出和失败排查。容器化不会自动带来高可用，也不会替代应用的连接重试和数据备份。
 
 ## 二、核心概念
 
@@ -111,11 +111,10 @@ WHERE id = ? AND status = 1;
 
 ## 五、项目真实落地
 
-### 课堂资料版本快照
 
-本地 `10.8 Docker入门` 笔记记录的课堂主机为 Docker CE 20.10.9；`10.10 Docker 从入门到微服务部署` 记录了 OpenJDK 17.0.2、Nginx 1.17.6、单阶段 Dockerfile 和单机 Compose 编排。配套 `docker-compose.yml` 中的 `version: '2.1'` 是该 YAML 使用的旧版 Compose 文件格式标记，示例包含 `nginx-1`、`nginx-2`、`boot-1`、`boot-2` 四个服务。它是课程快照，不是当前 Compose 的格式建议。
+`10.10 Docker 从入门到微服务部署` 记录了 OpenJDK 17.0.2、Nginx 1.17.6、单阶段 Dockerfile 和单机 Compose 编排。配套 `docker-compose.yml` 中的 `version: '2.1'` 是该 YAML 使用的旧版 Compose 文件格式标记，示例包含 `nginx-1`、`nginx-2`、`boot-1`、`boot-2` 四个服务。它是课程快照，不是当前 Compose 的格式建议。
 
-归档中的 Java demo Dockerfile 采用 OpenJDK 17.0.2、`VOLUME /tmp`、`ADD target/*.jar app.jar`、exec form 的 `ENTRYPOINT` 和 `EXPOSE 9008`。下面保留其启动结构供对照；底层镜像地址和维护者字段来自课程环境，已省略。普通 JAR 文件通常用 `COPY` 表达复制意图更清晰。
+使用 `ENTRYPOINT` 的 exec form 启动 JAR。普通 JAR 文件通常用 `COPY` 表达复制意图更清晰；生产镜像还应固定并维护基础镜像版本。
 
 ~~~dockerfile
 FROM openjdk:17.0.2

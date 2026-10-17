@@ -3,7 +3,7 @@ title: "布隆过滤器入门：用概率结构拦截不存在的数据"
 date: "2026-10-16"
 categories: ["Redis"]
 tags: ["布隆过滤器", "Guava", "Redis", "缓存"]
-description: "从本地课程 PDF 整理布隆过滤器的误判、容量与删除边界，并对照 Guava 和 Redis Bloom。"
+description: "说明布隆过滤器的误判、容量与删除边界，并对照 Guava 和 Redis Bloom。"
 plan_date: "2026-10-16"
 phase: "企业开发技术学习"
 ---
@@ -12,7 +12,7 @@ phase: "企业开发技术学习"
 
 ## 学习来源与目标
 
-本地 `布隆过滤器.pdf` 介绍位数组、多组哈希、误判、Guava 和 Redis Bloom。本文不照搬 PDF 中的手写哈希实现，而是说明概率结构的边界，并用成熟 API 演示。
+布隆过滤器用位数组和多个哈希函数表示集合，允许假阳性但不应产生假阴性。本文重点说明容量、误判和删除的边界，并用成熟 API 演示。
 
 布隆过滤器回答的是“这个元素一定不在集合里吗？”它可以快速排除确定不存在的数据，常见设计场景包括缓存穿透防护和大集合存在性预筛查。它不保存原始对象，也不能替代数据库中的最终查询。
 
@@ -87,8 +87,6 @@ BF.EXISTS users:bf user-2002
 
 **标准 Bloom filter 能否删除元素？** 不能安全删除单个元素；清位可能影响其他元素的判断。
 
-## 资料来源
 
-- 本地 `布隆过滤器.pdf`
 - [Redis Bloom filter 文档](https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/)
 - [Guava BloomFilter API](https://guava.dev/releases/20.0/api/docs/com/google/common/hash/BloomFilter.html)

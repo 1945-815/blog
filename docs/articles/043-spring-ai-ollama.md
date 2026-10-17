@@ -8,16 +8,12 @@ tags: [
   "大模型应用",
   "Ollama"
 ]
-description: "复盘 Spring Boot 连接本地 Ollama 模型的配置、ChatClient 调用和首轮排查。"
+description: "梳理 Spring Boot 连接 Ollama 模型的配置、ChatClient 调用和首轮排查。"
 plan_date: "2026-11-20"
 phase: "AI 应用探索"
 ---
 
 # 用 Spring AI 和 Ollama 完成第一次本地模型调用
-
-### 文章定位
-
-我的学习资料记录了 2026 年 10 月 12 日搭建 Spring AI 环境，以及 10 月 13 日使用 Ollama 和 Spring Boot 调用本地模型。本文把这次入门过程整理成一个小接口，使用 qwen3:1.7b 作为本地模型示例；它是学习环境，不是线上 AI 服务。
 
 ### 学习目标
 
@@ -39,7 +35,7 @@ Ollama 在本机提供模型运行服务，默认地址为 localhost:11434。Spr
 
 ## 三、核心代码实现
 
-学习资料记录的环境使用 Spring Boot 3.5.15 与 Spring AI 1.0.9 BOM。BOM 用于统一 Spring AI 组件版本，具体版本应按项目依赖兼容关系选择。Ollama 模型需先在本机通过 ollama list 确认已安装。
+示例使用 Spring Boot 3.5.15 与 Spring AI 1.0.9 BOM。BOM 用于统一 Spring AI 组件版本，具体版本应按项目依赖兼容关系选择。Ollama 模型需先在本机通过 `ollama list` 确认已安装。
 
 application.yaml 示例：
 
@@ -120,13 +116,14 @@ curl -X POST http://localhost:8080/ai/chat \
 
 ## 四、实际应用
 
-这次练习的链路是：本地模型准备、Spring Boot 依赖与配置、模型 Bean 注入、Controller 接收输入，再把模型文本返回。课程资料也记录了 deepseek-r1:1.5b；不同模型的参数支持不同，不能把 temperature 等选项默认套用到所有模型。
+这次练习的链路是：本地模型准备、Spring Boot 依赖与配置、模型 Bean 注入、Controller 接收输入，再把模型文本返回。不同模型的参数支持不同，不能把 temperature 等选项默认套用到所有模型。
 
-### 课程笔记中的部署选择
 
-`10.12 SpringAI入门与环境搭建` 记录了本地 Ollama 安装和模型下载；`10.13 Ollama+SpringBoot大模型应用` 继续对照 Ollama 的 `/api/chat` 与应用自己的聊天接口，并介绍 OpenAI 兼容 API 的接入思路。`01–03` 思维导图还把本地模型、云端 API 和自建服务列为不同部署选择。
+### 部署选择与接口兼容
 
-这些资料说明的是学习时讨论和验证的路线，不能据此声称已经部署了云端或企业模型服务。OpenAI 兼容通常只表示一组接口形状相近，模型名、鉴权、流式事件、工具调用支持和参数语义仍需逐项核对；API key 应由环境变量或密钥管理系统注入。Apifox 集合中的本地示例地址仅供课堂调试，不应照抄到公开文章或生产配置。
+Ollama 的 `/api/chat` 与应用自身的聊天接口属于不同边界；使用 OpenAI 兼容 API 时，也要确认服务端实际支持的模型名、鉴权方式、流式事件和参数语义。部署方式可以是本地模型、云端 API 或自建服务，接入前应逐项验证接口能力。
+
+OpenAI 兼容通常只表示接口形状相近，不代表模型名、鉴权、流式事件、工具调用支持和参数语义完全一致；API key 应由环境变量或密钥管理系统注入。
 
 学习阶段先验证本地服务状态和模型名，再检查配置属性与启动日志。若模型加载慢，先确认硬件资源和 Ollama 状态；不要把等待页面误判为 Controller 路由没有生效。
 

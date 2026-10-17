@@ -76,7 +76,7 @@ public class DemoController {
 }
 ```
 
-本地启动后可分别请求 `GET /api/demo/users/1`、`GET /api/demo/dates?value=2026-07-18`，以及带 `Content-Type: application/json` 的 `POST /api/demo/users`，请求体如 `{"name":"小林","birthday":"2026-07-18"}`。缺少必需查询参数或 JSON 格式错误通常由参数解析阶段形成 4xx 响应；具体错误结构取决于项目异常处理配置。课堂笔记把所有 400 都概括为“请求方式异常”并不准确：HTTP 方法不匹配通常是 405。
+本地启动后可分别请求 `GET /api/demo/users/1`、`GET /api/demo/dates?value=2026-07-18`，以及带 `Content-Type: application/json` 的 `POST /api/demo/users`，请求体如 `{"name":"小林","birthday":"2026-07-18"}`。缺少必需查询参数或 JSON 格式错误通常由参数解析阶段形成 4xx 响应；具体错误结构取决于项目异常处理配置。
 
 ## 四、真实项目落地
 

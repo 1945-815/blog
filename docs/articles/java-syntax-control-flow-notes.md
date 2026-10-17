@@ -3,14 +3,14 @@ title: "Java 基础语法练习：变量、输入与流程控制"
 date: "2026-10-16"
 categories: ["Java 基础"]
 tags: ["Java", "基础语法", "流程控制"]
-description: "把本地课堂笔记中的变量、类型转换、Scanner、分支和循环整理成一段可运行练习，并校正易混淆的语言规则。"
+description: "用变量、类型转换、Scanner、分支和循环组成可运行练习，并校正易混淆的语言规则。"
 plan_date: "2026-10-16"
 phase: "Java 基础与数据结构"
 ---
 
 # Java 基础语法练习：变量、输入与流程控制
 
-本篇依据 2026 年 3 月 2–5 日的 Java 基础课堂笔记整理。课堂日期是资料时间，本文日期是写作时间。示例是独立练习，不涉及真实业务系统。
+课堂日期是资料时间，本文日期是写作时间。示例是独立练习，不涉及真实业务系统。
 
 ## 从源文件运行
 
@@ -20,7 +20,7 @@ JDK 提供 `javac` 编译器和 `java` 启动命令。把下方代码保存为 `
 
 ## 把输入、条件和循环放在一个流程里
 
-课堂笔记分别练习了 `Scanner`、`if`、`switch`、`while`、`for`、`break` 和 `continue`。下面把它们放进一个“输入三次分数并求等级”的小程序：
+下面把它们放进一个“输入三次分数并求等级”的小程序：
 
 ~~~java
 import java.util.Scanner;
@@ -85,6 +85,5 @@ public class ScoreLevelDemo {
 
 ## 资料与规范
 
-- 本地资料：`day01 Java基础编程 -- 早期开发和变量.md`、`day02 Java基础编程 -- 数据类型 + 运算符 + 文本扫描器.md`、`day03 Java基础编程 -- 流程控制语句.md`、`day04 Java基础编程 -- 数组应用.md`。
 - [Java 语言规范：变量](https://docs.oracle.com/javase/specs/jls/se21/html/jls-4.html)
 - [Java 语言规范：语句](https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html)

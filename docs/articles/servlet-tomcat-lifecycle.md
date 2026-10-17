@@ -10,7 +10,7 @@ phase: "数据库与 Spring 基础"
 
 # Tomcat 与 Servlet：从 URL 映射到生命周期
 
-课堂笔记从浏览器、IP/端口、Tomcat 配置讲到 Servlet 的创建和销毁。这里用一个最小 WAR 练习把这些步骤连起来。它属于传统 Java Web 学习材料；Spring MVC 的 `DispatcherServlet` 在 Servlet 容器之上组织请求处理，可继续读 [Spring MVC 请求流程](/articles/spring-mvc-request-flow)。
+这里用一个最小 WAR 练习把这些步骤连起来。它属于传统 Java Web 学习材料；Spring MVC 的 `DispatcherServlet` 在 Servlet 容器之上组织请求处理，可继续读 [Spring MVC 请求流程](/articles/spring-mvc-request-flow)。
 
 ## 先看请求走到哪里
 
@@ -107,8 +107,8 @@ Servlet 实例通常处理多个请求。上面的 `name` 是 `doGet` 的局部�
 
 ## 版本边界与下一步
 
-Tomcat 10 起规范包名从 `javax.servlet` 改为 `jakarta.servlet`，旧代码不能只换 Tomcat 可执行文件就保证兼容；需要按对应 Servlet/JSP 版本重新编译并处理依赖。本文保留 Tomcat 9 语境，是为了准确呈现本地笔记中的旧式 Web 学习路径，而不是推荐所有新项目都使用该版本。
+Tomcat 10 起规范包名从 `javax.servlet` 改为 `jakarta.servlet`，旧代码不能只换 Tomcat 可执行文件就保证兼容；需要按对应 Servlet/JSP 版本重新编译并处理依赖。
 
 请求与响应、转发、作用域以及 JSP/EL/JSTL 的课堂练习见 [Servlet Web 组件与商品 CRUD](/articles/servlet-jsp-webcrud-classroom)。
 
-资料依据：课堂笔记中的容器配置、Servlet 编写与生命周期；版本修正参考 [Tomcat 9 文档](https://tomcat.apache.org/tomcat-9.0-doc/)和 [Tomcat 10 迁移指南](https://tomcat.apache.org/migration-10)。
+版本修正参考 [Tomcat 9 文档](https://tomcat.apache.org/tomcat-9.0-doc/)和 [Tomcat 10 迁移指南](https://tomcat.apache.org/migration-10)。

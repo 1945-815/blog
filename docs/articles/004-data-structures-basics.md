@@ -14,10 +14,6 @@ phase: "Java 基础与数据结构"
 
 # 数据结构入门：数组、链表、栈、队列与复杂度
 
-### 文章定位
-
-这篇文章整理数据结构入门阶段的几种基本组织方式。复杂度用于描述规模增长趋势，不是对某台机器运行时间的承诺。代码是可独立运行的练习。
-
 ### 学习目标
 
 - 通过访问和插入方式区分数组与链表。
@@ -137,7 +133,7 @@ public class DataStructuresDemo {
 
 ## 补充：数组复制与冒泡排序练习
 
-本地 3 月 5–6 日笔记从声明数组、下标遍历走到备份和冒泡排序。数组长度创建后固定；有效下标是 `0` 到 `length - 1`，越界访问会抛出 `ArrayIndexOutOfBoundsException`。`Arrays.copyOf` 生成新数组；直接把数组变量赋给另一个变量只会共享同一个数组对象。下面是 JDK 8+ 可运行的课堂练习，保存为 `ArrayCopySortDemo.java`：
+数组长度创建后固定；有效下标是 `0` 到 `length - 1`，越界访问会抛出 `ArrayIndexOutOfBoundsException`。`Arrays.copyOf` 生成新数组；直接把数组变量赋给另一个变量只会共享同一个数组对象。下面是 JDK 8+ 可运行的课堂练习，保存为 `ArrayCopySortDemo.java`：
 
 ~~~java
 import java.util.Arrays;

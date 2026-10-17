@@ -15,10 +15,6 @@ phase: "数据库与 Spring 基础"
 
 # Spring Boot 练习项目：从表结构到分页 CRUD 接口
 
-### 文章定位
-
-这篇文章把 Spring Boot、MySQL 和 MyBatis 的基础内容连成一个练习项目。示例以课程 CRUD 练习中的员工信息为参照，不代表企业系统或真实员工数据。
-
 ### 学习目标
 
 - 从表结构确定实体字段和主键。
@@ -39,7 +35,7 @@ Controller 接收并校验 HTTP 请求，Service 放业务规则，Mapper 负责
 
 ## 三、核心代码实现
 
-`案例01.md` 的课堂项目明确使用 Java 17、Spring Boot 3.3.5 与 `mybatis-spring-boot-starter` 3.0.5，练习员工/部门实体、Controller/Service/Mapper 分层和分页。本篇代码是按同类 CRUD 流程整理的练习示例，依赖版本应以这份课堂 POM 为复现基线；不要把示例表结构和字段说成企业系统实表。配置数据库时用本机环境变量注入账号密码，课堂笔记中的演示口令不进入文章。
+该课堂项目使用 Java 17、Spring Boot 3.3.5 与 `mybatis-spring-boot-starter` 3.0.5，练习员工/部门实体、Controller/Service/Mapper 分层和分页。本篇代码是按同类 CRUD 流程整理的练习示例，依赖版本按上述组合设置；不要把示例表结构和字段说成企业系统实表。
 
 若想先单独理解员工资源的 URL、HTTP 方法和状态码，可读 [REST 员工接口设计](/articles/restful-employee-api-design)，再把服务层和持久层接到数据库。
 

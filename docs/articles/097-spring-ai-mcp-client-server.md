@@ -3,16 +3,12 @@ title: "Spring AI MCP：用标准协议连接 Java 工具服务"
 date: "2026-10-17"
 categories: ["AI 应用"]
 tags: ["Spring AI", "MCP", "JSON-RPC", "工具调用", "SSE"]
-description: "从本地 Spring AI 1.0.9 client/server 代码理解 MCP 能力发现、工具注册、传输与安全边界。"
+description: "基于 Spring AI 1.0.9 梳理 MCP 能力发现、工具注册、传输与安全边界。"
 plan_date: "2026-10-17"
 phase: "AI 应用探索"
 ---
 
 # Spring AI MCP：用标准协议连接 Java 工具服务
-
-### 文章定位
-
-本地 `20 Spring AI MCP.mmap` 梳理了 MCP 的 client/server、工具、资源、提示词和传输方式。`my-spring-ai-mcp-73魔改.rar` 中有 Spring Boot 3.3.5、Spring AI 1.0.9 的 Maven 工程，包含一个 MCP client 模块和一个 WebFlux MCP server 模块。本文按这份归档说明代码结构，不声称归档项目已在本机运行或部署。
 
 ## 一、MCP 解决什么问题
 
@@ -34,13 +30,13 @@ MCP 不负责模型推理，也不是权限系统。模型可以提出工具调�
   -> Host 把结果交回模型，再生成用户回答
 ```
 
-本地归档中的 client 配置创建了名为 `amap` 的命名传输，并使用 `HttpClientSseClientTransport`；另一模块的 `WeatherService` 把按城市 id 查询天气的方法标记为 `@Tool`，由 `MethodToolCallbackProvider` 暴露给 MCP server。资料显示的是两个模块各自的代码形态，不能据此断言这两个示例被组装成一条经过验证的端到端链路。
+`WeatherService` 可把按城市 id 查询天气的方法标记为 `@Tool`，再由 `MethodToolCallbackProvider` 暴露给 MCP server。Client 与 server 应分别验证，不能把两个独立模块的代码片段当作已经验证的端到端链路。
 
 ## 三、Spring AI 1.0.9 代码结构
 
-本地 Maven 工程使用 Java 17、Spring Boot 3.3.5 和 Spring AI BOM 1.0.9。client 模块包含 OpenAI 模型 starter 和 `spring-ai-starter-mcp-client`；server 模块使用 `spring-ai-starter-mcp-server-webflux`。这是本地归档的版本快照，与 [Spring AI + Ollama 入门文章](/articles/043-spring-ai-ollama)中另一套 Boot 版本不要混为一个项目。
+示例基于 Java 17、Spring Boot 3.3.5 和 Spring AI BOM 1.0.9。client 模块包含 OpenAI 模型 starter 和 `spring-ai-starter-mcp-client`；server 模块使用 `spring-ai-starter-mcp-server-webflux`。
 
-server 从 Spring Bean 中注册 MCP 工具的结构如下，和归档里的 `McpConfig` 一致：
+server 可以从 Spring Bean 中注册 MCP 工具：
 
 ~~~java
 import org.springframework.ai.tool.ToolCallbackProvider;
@@ -59,17 +55,17 @@ public class McpConfig {
 }
 ~~~
 
-天气方法来自归档中的 `WeatherService`，用 `@Tool` 描述用途、用 `@ToolParam` 描述输入。以下是归档中的方法签名摘录；原方法体包含 HTTP 调用、JSON 解析和 DTO 组装，本文省略该实现与外部 API 地址、凭据：
+天气查询方法可用 `@Tool` 描述用途、用 `@ToolParam` 描述输入。下面只展示方法签名，省略 HTTP 调用、JSON 解析和 DTO 组装；部署时应从受控配置读取外部 API 地址和凭据：
 
 ~~~java
 @Tool(description = "根据城市 id 查询天气信息")
 public WeatherDTO getWeather(
         @ToolParam(description = "城市 id") String cityId) {
-    // 方法体省略；完整实现位于本地归档中的 WeatherService
+    // 方法体省略
 }
 ~~~
 
-client 侧则把远端 MCP 工具桥接为 Spring AI 的 `ToolCallbackProvider`，再显式提供给 ChatClient。归档中的 `SpringAIConfig` 注入了该 provider；不要把所有远程工具不加筛选地设为每次对话都可用。
+client 侧则把远端 MCP 工具桥接为 Spring AI 的 `ToolCallbackProvider`，再显式提供给 ChatClient。不要把所有远程工具不加筛选地设为每次对话都可用。
 
 ~~~java
 import org.springframework.ai.chat.client.ChatClient;
@@ -83,11 +79,11 @@ ChatClient chatClient(ChatClient.Builder builder,
 }
 ~~~
 
-当前片段展示依赖关系和注册边界；具体 DTO、WeatherService 业务代码、连接地址和鉴权值应从目标项目配置读取。归档中的 endpoint 与凭据没有复制到博客。
+当前片段展示依赖关系和注册边界；具体 DTO、WeatherService 业务代码、连接地址和鉴权值应从目标项目配置读取。示例不包含 endpoint 与凭据。
 
 ## 四、传输方式与版本边界
 
-本地 client 使用 Spring AI 1.0.9 的 HTTP/SSE transport。SSE 是该版本代码使用的传输方式，不是 MCP 本身的全部语义。协议与框架都在演进：当前 MCP 规范列出 STDIO 和 Streamable HTTP 等标准 transport；较早 revision 的兼容规则仍需在连接双方核对。当前 Spring AI 2.x 文档将旧 SSE server transport 标为弃用并建议新项目评估 Streamable HTTP。因此，迁移时不能只改 starter 名称，还要检查协议 revision、client/server 支持、反向代理、会话、鉴权和取消行为。
+Spring AI 1.0.9 的 client 示例使用 HTTP/SSE transport。SSE 是该版本代码使用的传输方式，不是 MCP 本身的全部语义。协议与框架都在演进：当前 MCP 规范列出 STDIO 和 Streamable HTTP 等标准 transport；较早 revision 的兼容规则仍需在连接双方核对。当前 Spring AI 2.x 文档将旧 SSE server transport 标为弃用并建议新项目评估 Streamable HTTP。因此，迁移时不能只改 starter 名称，还要检查协议 revision、client/server 支持、反向代理、会话、鉴权和取消行为。
 
 若使用 STDIO，通常由 Host 启动本地子进程并经标准输入输出交换消息；使用 HTTP transport 时，MCP server 通过网络独立运行。两种部署的进程管理、网络边界和安全审查方式不同。
 
@@ -104,7 +100,7 @@ ChatClient chatClient(ChatClient.Builder builder,
 
 ## 六、学习总结
 
-MCP 解决的是能力如何被发现和调用的互操作问题。对 Java 应用来说，Spring AI client 能把 MCP 能力接入工具调用链，server 能把现有服务方法按受控接口公开；业务权限和安全责任依旧属于应用本身。课程归档给出了 SSE client 与 WebFlux server 的 1.0.9 代码线索，新版本实现需要按当前协议和依赖重新核对。
+MCP 解决的是能力如何被发现和调用的互操作问题。对 Java 应用来说，Spring AI client 能把 MCP 能力接入工具调用链，server 能把现有服务方法按受控接口公开；业务权限和安全责任依旧属于应用本身。1.0.9 的 SSE client 与 WebFlux server 组合仅适用于对应版本，新版本实现需要按当前协议和依赖重新核对。
 
 ## 参考资料
 

@@ -14,10 +14,6 @@ phase: "数据库与 Spring 基础"
 
 # JDBC 预编译与 DAO：参数绑定和持久层边界
 
-### 文章定位
-
-这篇文章把数据库连接、SQL 参数绑定和 DAO 职责放到一个小型 Java 示例中。代码用环境变量读取连接信息，不包含真实账号、密码或公司项目配置。
-
 ### 学习目标
 
 - 了解 JDBC 中 Connection、PreparedStatement 和 ResultSet 的基本职责。
@@ -193,13 +189,13 @@ JDBC 资源使用完应关闭。try-with-resources 会在正常或异常离开�
 
 ## 补充：配置来源与驱动版本
 
-本地 3 月 20–23 日课堂笔记演示了把 JDBC 连接参数放入 `.properties`，比写死在 Java 类中便于切换练习环境。上面的示例选择环境变量，二者都是配置来源；若用 `db.properties`，只应提交不含真实密码的模板，实际口令从环境变量或受控密钥来源覆盖。`Properties.load` 可从类路径读取配置，但要明确流的字符编码与配置文件部署位置。不要把数据库口令写进博客或 Git 历史。
+上面的示例选择环境变量，二者都是配置来源；若用 `db.properties`，只应提交不含真实密码的模板，实际口令从环境变量或受控密钥来源覆盖。`Properties.load` 可从类路径读取配置，但要明确流的字符编码与配置文件部署位置。不要把数据库口令写进博客或 Git 历史。
 
 课堂截图使用 Connector/J 5.1.49 和旧驱动名 `com.mysql.jdbc.Driver`，属于旧环境。本文 Maven 依赖为 26.7.0，驱动类名应使用 `com.mysql.cj.jdbc.Driver`；通过 JDBC 4 驱动自动注册时，上文 `DriverManager.getConnection` 不必手动 `Class.forName`。依赖版本和 MySQL/JDK 兼容范围应按[官方版本表](https://dev.mysql.com/doc/connector-j/en/connector-j-versions.html)核对，不能混抄不同代的连接 URL 和驱动参数。
 
 ## 补充：一条连接上的转账事务
 
-本地 3 月 23 日笔记用“从账户 1 向账户 2 转账 500”说明为什么两次更新要一起成功或一起回滚。下面是修正后的独立练习：金额用 `DECIMAL`/`BigDecimal`，扣款语句同时检查余额，检查两条语句的影响行数。先在独立练习库建立表：
+下面是修正后的独立练习：金额用 `DECIMAL`/`BigDecimal`，扣款语句同时检查余额，检查两条语句的影响行数。先在独立练习库建立表：
 
 ~~~sql
 CREATE TABLE account_demo (

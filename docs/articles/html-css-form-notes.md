@@ -3,14 +3,14 @@ title: "HTML 与 CSS 入门：表格、表单和提交方式"
 date: "2026-10-16"
 categories: ["前端技术"]
 tags: ["HTML", "CSS", "表单"]
-description: "根据本地 Web 基础笔记整理语义标签、表格、表单控件与 GET/POST 的真实边界。"
+description: "梳理语义标签、表格、表单控件与 GET/POST 的真实边界。"
 plan_date: "2026-10-16"
 phase: "Web 基础"
 ---
 
 # HTML 与 CSS 入门：表格、表单和提交方式
 
-本篇依据 2026 年 3 月 24–25 日的 Web 课堂笔记。示例是可直接用浏览器打开的静态页面，用于理解标签、样式与表单提交，不代表已有后端接口。
+示例是可直接用浏览器打开的静态页面，用于理解标签、样式与表单提交，不代表已有后端接口。
 
 ## 从结构到展示
 
@@ -61,12 +61,11 @@ HTML 表达文档结构和控件语义，CSS 控制展示。标题、列表、�
 
 ## GET 与 POST 的实际区别
 
-课堂笔记把 POST 描述成“隐式提交，所以安全且大小不受限制”，这需要修正。GET 通常把表单数据编码到 URL 查询串，适合可分享的无副作用查询；敏感信息不应出现在查询串。POST 把数据放在请求体中，适合提交会改变状态的数据，但**POST 自身不提供加密**，传输保密依赖 HTTPS；请求体大小也受客户端、服务器和配置限制。无论哪种方法，后端都必须验证输入并控制授权。
+GET 通常把表单数据编码到 URL 查询串，适合可分享的无副作用查询；敏感信息不应出现在查询串。POST 把数据放在请求体中，适合提交会改变状态的数据，但**POST 自身不提供加密**，传输保密依赖 HTTPS；请求体大小也受客户端、服务器和配置限制。无论哪种方法，后端都必须验证输入并控制授权。
 
 表单提交会产生 HTTP 请求；静态文件示例只是演示浏览器行为。真正保存记录时需要服务端接口、错误处理和防重复提交设计，不能仅把 `method` 改成 POST 就称为安全系统。DOM 和事件处理的前端交互另见 [JavaScript 与 DOM 笔记](./javascript-dom-events-notes.md)。
 
 ## 资料与参考
 
-- 本地资料：`day18 Web开发 -- HTML + CSS.md`、`day19 Web开发 -- JavaScript基础.md` 中的标签、表格、表单和 GET/POST 章节。
 - [MDN：表单发送数据](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Sending_and_retrieving_form_data)
 - [MDN：label 元素](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label)

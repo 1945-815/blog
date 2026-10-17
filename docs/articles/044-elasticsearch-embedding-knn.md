@@ -15,10 +15,6 @@ phase: "AI 应用探索"
 
 # Embedding 接入 Elasticsearch：dense_vector、KNN 与维度核对
 
-### 文章定位
-
-我的 RAG 学习资料记录了用阿里云千问 Embedding 生成 768 维向量，并将向量写入 Elasticsearch 8.x，通过余弦相似度取 topK。本文整理模型输出、索引字段和检索向量之间必须满足的约束；这里的配置属于课程 Demo，维度应以实际模型响应和部署版本为准。
-
 ### 学习目标
 
 - 解释 Embedding 输出向量如何进入 Elasticsearch。
@@ -33,7 +29,7 @@ phase: "AI 应用探索"
 
 ## 二、技术原理
 
-Embedding 是固定长度的数值数组。Elasticsearch 的 dense_vector 字段需要指定向量维度；KNN 查询使用的 query_vector 元素个数必须与映射维度一致。课程资料记录的 768 维是当时配置，不应被推广成所有 Qwen 模型或所有部署版本的固定事实。
+Embedding 是固定长度的数值数组。Elasticsearch 的 dense_vector 字段需要指定向量维度；KNN 查询使用的 query_vector 元素个数必须与映射维度一致。
 
 索引开启近似向量检索后，Elasticsearch 使用向量索引结构加速近邻搜索。近似搜索用速度换取一定的候选准确度；k 决定返回数量，num_candidates 控制每个分片参与候选合并的规模，需结合数据量和查询效果调节。
 

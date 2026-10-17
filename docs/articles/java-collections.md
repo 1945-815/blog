@@ -14,10 +14,6 @@ phase: "Java 基础与数据结构"
 
 # Java 集合的选择：List、Set、Map 分别解决什么问题
 
-### 文章定位
-
-这篇文章对应路线图中的“Java 基础”阶段，目标是把概念、实现和验证过程连接起来。内容以个人学习与简历可支撑的实践为边界；示例代码与机制分析应结合实际依赖版本和运行环境核对。
-
 ### 学习目标
 
 - 能解释本文核心机制以及它解决的问题。
@@ -86,7 +82,7 @@ Map<Long, Document> byId = documents.stream()
 
 ## 补充：从数组升级到集合的可运行练习
 
-本地 3 月 13、16 日笔记从定长数组走到 `ArrayList`、`LinkedList`、`HashSet` 和 `HashMap`。下面的练习按“保存顺序—去重—按键查找”推进，保存为 `CollectionChoiceDemo.java`，JDK 8+ 可运行：
+下面的练习按“保存顺序—去重—按键查找”推进，保存为 `CollectionChoiceDemo.java`，JDK 8+ 可运行：
 
 ~~~java
 import java.util.ArrayList;

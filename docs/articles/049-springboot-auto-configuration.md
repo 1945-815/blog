@@ -10,10 +10,6 @@ phase: "Java 后端实习与业务实践"
 
 # Spring Boot 启动与自动配置：从条件装配到问题诊断
 
-### 文章定位
-
-博客已有 Spring Boot CRUD、MVC 请求流程和校验响应文章。本文聚焦启动类、自动配置条件以及启动失败时如何找出 Bean 来源，不重复讲解 CRUD 接口。
-
 ## 一、为什么学习这个技术
 
 Spring Boot 项目里常常只加一个 starter，数据源、MVC 组件或 JSON 转换器就可以使用。便利也带来困惑：某个 Bean 为什么出现？自己的配置为什么没有覆盖默认值？缺少某个类时启动又为何报错？若只靠反复加注解，容易把依赖冲突和扫描范围问题误判为代码问题。
@@ -89,7 +85,7 @@ CREATE TABLE startup_check (
 
 表结构只是数据库连通性示例，与自动配置自身无关。启动后可通过 `curl -i http://localhost:8080/actuator/health` 检查健康端点；该端点需要相应 actuator 依赖和暴露配置，不能默认认为所有项目都已启用。排查自动配置可在本地启动参数中增加 `--debug`，查看条件评估报告；也可以在断点中检查 Environment 和容器 Bean。
 
-本地 `0727SpringBoot底层原理` 还演示了配置覆盖。排查时先列出“值从哪里来”：JAR 内配置、JAR 外配置、激活 profile 的配置、环境变量、JVM 系统属性与命令行选项都可能参与。Spring Boot 的配置源是有顺序的，后加入的源可覆盖前面的值；命令行 `--server.port=9090` 默认会覆盖配置文件中的端口。同一目录同时放 `application.properties` 和 YAML 时，properties 优先，但不能把 `.yaml < .yml < .properties < 系统属性 < 命令行` 当作不区分目录与 profile 的万能优先级表。调试时记录生效属性与来源，并避免在日志中输出密码。
+配置覆盖排查时先列出“值从哪里来”：JAR 内配置、JAR 外配置、激活 profile 的配置、环境变量、JVM 系统属性与命令行选项都可能参与。Spring Boot 的配置源是有顺序的，后加入的源可覆盖前面的值；命令行 `--server.port=9090` 默认会覆盖配置文件中的端口。同一目录同时放 `application.properties` 和 YAML 时，properties 优先，但不能把 `.yaml < .yml < .properties < 系统属性 < 命令行` 当作不区分目录与 profile 的万能优先级表。调试时记录生效属性与来源，并避免在日志中输出密码。
 
 ## 五、项目真实落地
 

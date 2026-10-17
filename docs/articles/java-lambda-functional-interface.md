@@ -10,7 +10,7 @@ phase: "Java 基础与数据结构"
 
 # 从商品筛选理解 Lambda、函数式接口与方法引用
 
-本地 `0706Lambda+Stream` 的笔记和 PDF 用“按名称或价格筛选商品”解释 Lambda。这里保留这个课堂练习的输入与目标，代码重新整理为一个可运行的 JDK 8 示例；它不是企业商品系统的实现。
+这里保留这个课堂练习的输入与目标，代码重新整理为一个可运行的 JDK 8 示例；它不是企业商品系统的实现。
 
 ## 从重复的筛选循环开始
 
@@ -90,6 +90,5 @@ Lambda 是表达行为的一种语法，Stream 是组织集合处理步骤的 AP
 - 使用 Lambda 不会自动提高性能。筛选是否保留为循环、是否改用 Stream，先看可读性和实际数据量。
 - 本文的 `Collectors.toList()` 可用于 JDK 8；`Stream.toList()` 从 Java 16 才可用。
 
-资料依据：本地 `笔记.md` 与 `Lambda表达式.pdf` 的商品筛选、函数式接口和方法引用课堂示例。
 
 参考：[Java 8 Predicate](https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html)、[Java 8 Lambda 表达式教程](https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html)。

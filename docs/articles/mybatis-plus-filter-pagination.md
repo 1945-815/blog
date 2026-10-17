@@ -14,10 +14,6 @@ phase: "数据库与 Spring 基础"
 
 # 用 MyBatis-Plus 实现条件筛选和分页查询
 
-### 文章定位
-
-这篇文章对应路线图中的“持久层”阶段，目标是把概念、实现和验证过程连接起来。内容以个人学习与简历可支撑的实践为边界；示例代码与机制分析应结合实际依赖版本和运行环境核对。
-
 ### 学习目标
 
 - 能解释本文核心机制以及它解决的问题。
@@ -52,7 +48,7 @@ IPage<Document> result = mapper.selectPage(page, query);
 
 ### 补充：BaseMapper CRUD 与分页插件
 
-本地《MyBatis-Plus.md》从 `department`、`employee` 表讲解通用 Mapper、实体映射、Wrapper 和分页。下面保留 `department` 示例的字段含义，DDL 写成精简的 MySQL 形式：
+以 `department`、`employee` 两张表为例，可以演示通用 Mapper、实体映射、Wrapper 和分页。下面保留 `department` 示例的字段含义，DDL 写成精简的 MySQL 形式：
 
 ```sql
 CREATE TABLE department (
@@ -123,7 +119,7 @@ public class MybatisPlusConfig {
 }
 ```
 
-使用多个内置拦截器时，分页拦截器按官方说明放在最后。当前官网说明自 MyBatis-Plus 3.5.9 起，分页插件拆分为单独的 `mybatis-plus-jsqlparser` 依赖；本地讲义没有记录依赖版本，因此这里不把版本猜作课程环境。复制配置前应先对照项目的 `pom.xml` 或锁定版本文档确认 artifact 和插件包名。
+使用多个内置拦截器时，分页拦截器按官方说明放在最后。当前官网说明自 MyBatis-Plus 3.5.9 起，分页插件拆分为单独的 `mybatis-plus-jsqlparser` 依赖；复制配置前应先对照项目的 `pom.xml` 或锁定版本文档确认 artifact 和插件包名。
 
 ## 四、列表查询的落地检查
 

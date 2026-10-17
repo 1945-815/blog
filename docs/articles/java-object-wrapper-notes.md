@@ -10,7 +10,7 @@ phase: "Java 基础与数据结构"
 
 # Object 与包装类：判等、装箱和类型转换
 
-本篇依据 2026 年 3 月 10–11 日的本地课堂笔记整理，属于学习示例。`Object` 是 Java 类层次结构的根；`Integer` 等包装类把基本类型值放进对象语境，便于与泛型、集合等 API 配合。
+`Object` 是 Java 类层次结构的根；`Integer` 等包装类把基本类型值放进对象语境，便于与泛型、集合等 API 配合。
 
 ## `==`、`equals` 与 `hashCode`
 
@@ -63,7 +63,6 @@ public class ObjectWrapperDemo {
 
 ## 资料与延伸
 
-- 本地资料：`day07 完全面向对象 -- 接口.md`、`day08 核心类库 -- 常用类.md`；笔记中 `==`/`equals`、重写 `hashCode`、基本类型与包装类转换均有对应章节。
 - 需要选择实际集合实现时，接着看 [Java 集合的选择](./java-collections.md)。
 - [Object API](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html)
 - [Integer API](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html)

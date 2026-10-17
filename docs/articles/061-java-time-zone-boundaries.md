@@ -129,7 +129,7 @@ LocalDateTime 表示没有时区的本地日历日期时间；Instant 表示时�
 
 ## 补充：课堂 `Date`/`Calendar` 写法如何迁移
 
-本地 3 月 11 日笔记练习了 `Date`、`SimpleDateFormat` 和 `Calendar`。阅读旧代码时，`Date` 更接近时间线上一个时刻，格式化和日历计算通常由其他 API 承担；`SimpleDateFormat` 是可变对象，不要把单个实例作为无保护的全局共享对象。新代码优先按业务含义选择 `java.time` 类型，尤其不要把不带时区的 `LocalDateTime` 自动当作 UTC。
+阅读旧代码时，`Date` 更接近时间线上一个时刻，格式化和日历计算通常由其他 API 承担；`SimpleDateFormat` 是可变对象，不要把单个实例作为无保护的全局共享对象。新代码优先按业务含义选择 `java.time` 类型，尤其不要把不带时区的 `LocalDateTime` 自动当作 UTC。
 
 ~~~java
 import java.time.Instant;

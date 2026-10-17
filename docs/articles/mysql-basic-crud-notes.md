@@ -3,14 +3,14 @@ title: "MySQL 基础 SQL：从建表到单表查询"
 date: "2026-10-16"
 categories: ["数据库"]
 tags: ["MySQL", "SQL", "数据库基础"]
-description: "依据本地 MySQL 课堂笔记整理 DDL、DML、约束、过滤、排序、分页和聚合的练习顺序。"
+description: "梳理 MySQL DDL、DML、约束、过滤、排序、分页和聚合的练习顺序。"
 plan_date: "2026-10-16"
 phase: "数据库与 Spring 基础"
 ---
 
 # MySQL 基础 SQL：从建表到单表查询
 
-本篇依据 2026 年 3 月 18–20 日的 MySQL 课堂笔记。课堂讲了 DDL 建表、DML 增删改和 DQL 查询；下面把零散语句整理为可在**独立练习库**执行的最小流程。表与记录是学习数据，不对应真实公司员工。
+课堂讲了 DDL 建表、DML 增删改和 DQL 查询；下面把零散语句整理为可在**独立练习库**执行的最小流程。表与记录是学习数据，不对应真实公司员工。
 
 ## 建表与约束
 
@@ -70,7 +70,7 @@ DELETE FROM employee_practice
 WHERE emp_no = 'E003';
 ~~~
 
-`WHERE` 过滤行，`ORDER BY` 排序，`LIMIT`/`OFFSET` 取页面，聚合函数配合 `GROUP BY` 按部门汇总。分页需要稳定排序，否则数据变化时不同页可能重复或遗漏；大偏移分页还有额外扫描成本，后续可按索引和游标方案评估。`SELECT` 也受数据库授权控制，本地笔记中“查询无需分配权限”的说法不正确。
+`WHERE` 过滤行，`ORDER BY` 排序，`LIMIT`/`OFFSET` 取页面，聚合函数配合 `GROUP BY` 按部门汇总。分页需要稳定排序，否则数据变化时不同页可能重复或遗漏；大偏移分页还有额外扫描成本，后续可按索引和游标方案评估。
 
 `DELETE` 删除符合条件的行；`DROP TABLE` 删除整张表及其定义，作用范围完全不同。实际应用从 Java 调用 SQL 时，应使用参数绑定，不把用户输入拼进字符串；具体示例见 [JDBC 与 DAO](./011-jdbc-preparedstatement-dao.md)。多表关联和分组报表另见 [表设计与 JOIN](./008-mysql-table-design-joins.md) 和 [分组统计](./062-mysql-grouped-reporting.md)。
 
@@ -102,6 +102,5 @@ FROM employee_practice;
 
 ## 资料与参考
 
-- 本地资料：`day13 数据库应用 -- MySQL基础应用.md`、`day14 数据库应用 -- MySQL基础应用.md`、`day15 原生JDBC --初识.md`。原始员工表是课堂练习；此处改用最小练习表和更合适的金额类型。
 - [MySQL 官方教程](https://dev.mysql.com/doc/refman/8.4/en/tutorial.html)
 - [MySQL SELECT](https://dev.mysql.com/doc/refman/8.4/en/select.html)

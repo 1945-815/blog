@@ -10,10 +10,6 @@ phase: "企业开发技术学习"
 
 # Nacos 在微服务中的注册发现与配置管理
 
-### 文章定位
-
-这篇文章对应路线图中的 微服务 主题，文章使用可复现的技术链路解释问题；涉及实习内容时只描述简历能够支撑的职责，不补充未确认的实现细节或效果数据。
-
 ### 学习目标
 
 - 理解关键组件的职责与边界。
@@ -42,9 +38,9 @@ spring:
         namespace: ${NACOS_NAMESPACE:local}
 ```
 
-### 与本地课程资料对照
+### 课程示例与版本说明
 
-0901 的课程笔记依次覆盖服务注册、通过 `DiscoveryClient` 获取实例、结合 `RestTemplate` 和 LoadBalancer 调用，以及 OpenFeign 声明式调用。0904 的配置中心笔记使用 Nacos 配置、`bootstrap.yml`、按应用名和 profile 组织 Data ID，并演示动态刷新与共享配置。这里的配置方式属于课程依赖组合下的学习记录。
+0904 的配置中心笔记使用 Nacos 配置、`bootstrap.yml`、按应用名和 profile 组织 Data ID，并演示动态刷新与共享配置。这里的配置方式属于课程依赖组合下的学习记录。
 
 当前 Spring Cloud Alibaba 文档已说明版本边界：SCA 2025.1.x 不再支持旧 Bootstrap 配置加载方式，需改用 `spring.config.import`；`shared-configs` / `extension-configs` 从 2023.0.1.3 起已弃用。升级时应按 Spring Boot、Spring Cloud 与 SCA 的兼容矩阵迁移，不能把课程里的 `bootstrap.yml` 当作当前通用模板。详见[Spring Cloud Alibaba Nacos 配置指南](https://sca.aliyun.com/en/docs/2025.x/user-guide/nacos/quick-start/)。
 

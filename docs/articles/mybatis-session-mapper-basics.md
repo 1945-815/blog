@@ -10,7 +10,7 @@ phase: "数据库与 Spring 基础"
 
 # MyBatis 入门：从商品 Mapper 到 SqlSession 的一次工作单元
 
-`Stream+MyBatis.md` 从商品表开始，逐步写主配置文件、Mapper XML、CRUD 和测试。下面保留这条学习链路，同时把课堂 DAO 长期保存 `SqlSession` 的写法改成每次工作单元独立获取、提交并关闭会话。它是可本地复现的课堂示例，不代表实际企业表结构。
+商品 CRUD 练习可以从表结构、主配置文件、Mapper XML 和测试串起 MyBatis 基本流程。下面将长期保存 `SqlSession` 的 DAO 写法改为每个工作单元独立获取、提交并关闭会话。
 
 ## 版本与准备
 
@@ -164,10 +164,10 @@ public class App {
 }
 ```
 
-运行前设置本地 `DB_URL`（例如指向练习库的 JDBC URL）、`DB_USER`、`DB_PASSWORD`，然后运行 `demo.App`。若插入后抛异常且没有提交，关闭会话时未提交的变更不应当被当成成功结果。生产应用中常由 Spring 与 MyBatis 集成管理 Mapper 和事务，不应再手动把这个示例的会话代码塞进单例 Service。
+运行前设置 `DB_URL`（例如指向练习库的 JDBC URL）、`DB_USER`、`DB_PASSWORD`，然后运行 `demo.App`。若插入后抛异常且没有提交，关闭会话时未提交的变更不应当被当成成功结果。生产应用中常由 Spring 与 MyBatis 集成管理 Mapper 和事务，不应再手动把这个示例的会话代码塞进单例 Service。
 
 ## 排查顺序与延伸
 
 找不到 Mapper 时，先检查 XML 是否进入 classpath、`namespace` 与接口全限定名是否一致、语句 `id` 是否与方法匹配；字段无法映射时检查列名和 JavaBean 属性。多参数和可选条件查询继续读 [MyBatis 参数映射与动态 SQL](/articles/016-mybatis-dynamic-sql)，对象关系映射见 [MyBatis 关联映射](/articles/mybatis-association-mapping)。
 
-资料依据：本地 `Stream+MyBatis.md` 的商品 CRUD、主配置与 Mapper 示例；主键回填和日志截图只作为辅助核对。会话关闭方式依据 [MyBatis 官方入门](https://mybatis.org/mybatis-3/getting-started.html) 与 [Java API](https://mybatis.org/mybatis-3/java-api.html)。
+主键回填和日志截图只作为辅助核对。会话关闭方式依据 [MyBatis 官方入门](https://mybatis.org/mybatis-3/getting-started.html) 与 [Java API](https://mybatis.org/mybatis-3/java-api.html)。

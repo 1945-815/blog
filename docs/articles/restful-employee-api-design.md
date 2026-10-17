@@ -10,7 +10,7 @@ phase: "数据库与 Spring 基础"
 
 # 用员工资源练习 REST 接口：路径、方法与状态码
 
-本地 `笔记.md` 比较了 `/employee/add`、`/employee/save` 等动词式路径，再用 `/employees` 与 HTTP 方法表达资源操作。REST 风格是接口设计约束，不能只把路径改成复数就称为完整 REST 接口。下面沿用员工课堂例子，用内存数据演示路由语义，不声称有数据库或企业员工系统。
+REST 风格是接口设计约束，不能只把路径改成复数就称为完整 REST 接口。下面沿用员工课堂例子，用内存数据演示路由语义，不声称有数据库或企业员工系统。
 
 | 操作 | 方法与路径 | 成功时的典型状态 |
 | --- | --- | --- |
@@ -104,4 +104,4 @@ public class EmployeeController {
 
 本地启动后可用 `curl -i -X POST http://localhost:8080/api/employees -H "Content-Type: application/json" -d "{\"name\":\"小林\"}"` 创建，再请求返回的 `Location`。同一路径使用未映射的 HTTP 方法通常得到 405；资源 ID 不存在得到 404；缺少名称得到 400。具体错误 JSON 格式仍由项目异常处理配置决定，不能把所有错误都包装成 HTTP 200。
 
-资料依据：本地 `笔记.md` 的员工资源路径、GET/POST/PUT/PATCH/DELETE 和 405 课堂练习。请求进入 Controller 的机制可看 [Spring MVC 请求流程](/articles/spring-mvc-request-flow)。
+请求进入 Controller 的机制可看 [Spring MVC 请求流程](/articles/spring-mvc-request-flow)。

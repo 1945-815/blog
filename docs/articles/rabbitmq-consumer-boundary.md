@@ -10,10 +10,6 @@ phase: "企业开发技术学习"
 
 # RabbitMQ 异步处理的基本流程与消费者边界
 
-### 文章定位
-
-这篇文章对应路线图中的 消息队列 主题，文章使用可复现的技术链路解释问题；涉及实习内容时只描述简历能够支撑的职责，不补充未确认的实现细节或效果数据。
-
 ### 学习目标
 
 - 理解关键组件的职责与边界。
@@ -43,7 +39,6 @@ try {
 }
 ```
 
-### 课程笔记中的消息模型与版本
 
 0918 的 RabbitMQ 课程覆盖 Direct、Fanout、Topic 路由、同步/异步 publisher confirms、consumer acknowledgements，以及原生 Java 客户端和 Spring Boot AMQP。课程记录的 RabbitMQ 版本是 3.7.2，安装环境与客户端 API 较旧；复用配置或命令前应核对目标 RabbitMQ/Erlang 与 Java 客户端版本。
 

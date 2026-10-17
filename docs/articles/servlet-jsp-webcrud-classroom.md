@@ -3,14 +3,14 @@ title: "Servlet Web 组件练习：请求、转发、JSP 与商品列表"
 date: "2026-10-16"
 categories: ["Java 基础"]
 tags: ["Java Web", "Servlet", "JSP", "JDBC"]
-description: "合并本地 Web 组件与 WebCRUD 笔记，按商品列表练习请求参数、作用域、转发、EL/JSTL 和分页查询。"
+description: "通过商品列表练习请求参数、作用域、转发、EL/JSTL 和分页查询。"
 plan_date: "2026-10-16"
 phase: "数据库与 Spring 基础"
 ---
 
 # Servlet Web 组件练习：请求、转发、JSP 与商品列表
 
-本地 `0709Web组件交互` 先练习 `HttpServletRequest/Response`、转发、重定向、Session 与 JSP，再在 `0710WebCRUD` 用商品增删改查、分页和筛选把这些组件连起来。本文将两份资料合成一个课堂练习，不把它描述成企业系统。原课堂持久层使用 MyBatis；为单独看清请求到页面的数据流，下面的列表查询先用小型 JDBC DAO 演示，写操作再回到笔记的 MyBatis 路线。运行环境沿用 [Tomcat 与 Servlet 入门](/articles/servlet-tomcat-lifecycle) 的 **JDK 8、Tomcat 9、`javax.servlet`**；JSP 循环标签还需要与该栈匹配的 JSTL 1.2 依赖。
+Servlet/JSP 商品管理练习可以把 `HttpServletRequest/Response`、转发、重定向、Session 与 JSP 和商品增删改查、分页、筛选连起来。为单独看清请求到页面的数据流，下面的列表查询用小型 JDBC DAO 演示，写操作使用 MyBatis。运行环境沿用 [Tomcat 与 Servlet 入门](/articles/servlet-tomcat-lifecycle) 的 **JDK 8、Tomcat 9、`javax.servlet`**；JSP 循环标签还需要与该栈匹配的 JSTL 1.2 依赖。
 
 在前一篇的 WAR 项目依赖中加入：
 
@@ -188,7 +188,7 @@ JSP 文件 `src/main/webapp/WEB-INF/views/products.jsp`：
 
 ## 回到课堂的增删改操作
 
-课堂笔记中的 Mapper XML 有 `add`、`update`、`delById`，页面也有填写商品信息、提交与删除的步骤。下面沿用前面的三列练习表展示 SQL 形状；原笔记的完整商品表还有分类、供应商、品牌、折扣和进价，复现原项目时要把这些字段一起建模，不能把这份缩小的示例误当成原表定义。
+完整商品表还可以包含分类、供应商、品牌、折扣和进价；这里使用缩小后的示例表，不应将它误当作完整业务表定义。
 
 ```xml
 <mapper namespace="demo.ProductWriteMapper">
@@ -204,7 +204,7 @@ JSP 文件 `src/main/webapp/WEB-INF/views/products.jsp`：
 </mapper>
 ```
 
-接口参数明确命名，避免多个简单参数在 XML 中难以对应；一次写请求使用独立 `SqlSession`，检查影响行数后提交。`SqlSessionFactory` 可以复用，不能照搬原笔记中把一个 `SqlSession` 长期放进 DAO 字段的写法。
+接口参数应明确命名，避免多个简单参数难以映射；一次写请求使用独立 `SqlSession`，检查影响行数后提交。`SqlSessionFactory` 可以复用，但不要把 `SqlSession` 长期放进 DAO 字段。
 
 ```java
 package demo;
@@ -275,6 +275,4 @@ public class ProductWriteService {
 }
 ```
 
-把 XML 放进 classpath，并在 MyBatis 主配置中登记 Mapper；依赖、数据库连接和 `SqlSessionFactory` 初始化见 [MyBatis 入门文章](/articles/mybatis-session-mapper-basics)。这段代码负责写入事务，尚未给出完整的表单校验与 Servlet 路由。实际表单应以 POST 提交到写请求 Servlet，由它解析参数、调用 Service，并在成功后重定向到列表。不要用原笔记里的 GET 删除链接执行写操作；删除需要权限检查和防 CSRF 措施。若更新或删除返回 `false`，页面应核查记录是否存在、是否重复提交以及 JDBC 驱动对未改变数据的影响行数语义，不能直接显示“操作成功”。一个项目应统一选用可维护的持久层实现；前面的 JDBC 列表只是一段独立的请求链路练习。
-
-资料依据：课堂笔记中的请求/响应、转发、作用域、EL/JSTL，以及商品列表、分页和条件查询流程。
+把 XML 放进 classpath，并在 MyBatis 主配置中登记 Mapper；依赖、数据库连接和 `SqlSessionFactory` 初始化见 [MyBatis 入门文章](/articles/mybatis-session-mapper-basics)。这段代码负责写入事务，尚未给出完整的表单校验与 Servlet 路由。实际表单应以 POST 提交到写请求 Servlet，由它解析参数、调用 Service，并在成功后重定向到列表。不要用 GET 删除链接执行写操作；删除需要权限检查和防 CSRF 措施。若更新或删除返回 `false`，页面应核查记录是否存在、是否重复提交以及 JDBC 驱动对未改变数据的影响行数语义，不能直接显示“操作成功”。一个项目应统一选用可维护的持久层实现；前面的 JDBC 列表只是一段独立的请求链路练习。

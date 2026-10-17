@@ -12,7 +12,7 @@ phase: "企业开发技术学习"
 
 ## 资料范围
 
-本地 `Canal与Swagger全套学习笔记.md` 记录了 wolf2w 课程项目的 `travel-common-swagger` 公共模块、Knife4j 页面、接口注解，以及 SkyWalking Java Agent 启动方式。课程依赖基于 Spring Boot 2.x 和项目封装模块，不能直接作为新项目依赖清单。
+课程依赖基于 Spring Boot 2.x 和项目封装模块，不能直接作为新项目依赖清单。
 
 ## 一、Swagger2 如何生成接口文档
 
@@ -30,7 +30,7 @@ Springfox 扫描 Controller 的映射、请求参数和返回模型，生成 Swa
 
 ## 二、Spring Boot 版本兼容
 
-课程笔记记录 Spring Boot 2.6 后默认 MVC 路径匹配策略变化，旧 Springfox 集成遇到问题时曾使用 `spring.mvc.pathmatch.matching-strategy: ant_path_matcher`。Spring Boot 2.6 发布说明确认默认从 AntPathMatcher 切换为 PathPatternParser，并提示使用 Actuator 与 Springfox 时可能遇到启动问题。[Spring Boot 2.6 发布说明](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.6-Release-Notes)
+Spring Boot 2.6 发布说明确认默认从 AntPathMatcher 切换为 PathPatternParser，并提示使用 Actuator 与 Springfox 时可能遇到启动问题。[Spring Boot 2.6 发布说明](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.6-Release-Notes)
 
 这个属性是旧栈的兼容处理思路，不保证解决所有 Springfox 问题，也不应为迁就旧依赖而不评估路由、安全配置和升级成本。新项目应依据所用 Spring Boot 主版本、API 描述规范和维护状态选择文档工具；例如 springdoc-openapi 项目提供 OpenAPI 集成，但具体 starter 版本仍要按官方兼容说明选择。[springdoc-openapi 官方项目](https://github.com/springdoc/springdoc-openapi)
 
@@ -57,13 +57,10 @@ Swagger 页面帮助调用方查看接口契约并在受控环境中试调；Sky
 1. 先读取项目 pom 与 Spring Boot 版本，确认 Springfox 和 Knife4j 依赖实际来自哪个公共模块。
 2. 检查 `@EnableCustomSwagger2` 的导入包，确认它是项目自定义注解。
 3. 确认 `swagger.base-package` 与 Controller 包路径匹配。
-4. 本地访问课程配置的 `doc.html` 页面，验证接口参数和响应模型。
 5. 启动 OAP 后再运行 Java Agent，确认服务名和 collector 地址，并用一次请求检查 Trace。
 6. 不把课堂版本、端口或运行参数当成所有环境的默认值。
 
-## 资料来源
 
-- 本地 `Canal与Swagger全套学习笔记.md`
 - [Spring Boot 2.6 Release Notes](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.6-Release-Notes)
 - [springdoc-openapi 项目文档](https://github.com/springdoc/springdoc-openapi)
 - [Apache SkyWalking Java Agent 文档](https://skywalking.apache.org/docs/skywalking-java/latest/readme/)

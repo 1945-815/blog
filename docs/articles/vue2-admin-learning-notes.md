@@ -3,14 +3,14 @@ title: "Vue 2 管理后台学习记录：组件、路由与请求拦截"
 date: "2026-10-16"
 categories: ["前端技术"]
 tags: ["Vue 2", "Vue Router", "Vuex", "Element UI", "Axios"]
-description: "结合 Vue 2 课堂笔记和课程项目源码，梳理组件响应式、动态路由与 Axios 请求链路。"
+description: "梳理 Vue 2 组件响应式、动态路由与 Axios 请求链路。"
 plan_date: "2026-10-16"
 phase: "Web 基础"
 ---
 
 # Vue 2 管理后台学习记录：组件、路由与请求拦截
 
-本文根据 `Vue课堂资料.md`、`Vue-Day03学习笔记.md`、`Vue-Day02-课堂笔记.md` 和课程项目中的若依派生前端源码整理。项目 `package.json` 固定使用 Vue 2.6.12、Vue Router 3.4.9、Vuex 3.6.0、Element UI 2.15.14、Axios 0.30.3。下面讨论的是 Vue 2 项目和本地课程源码，不把它描述成 Vue 3 项目或独立企业项目。
+项目 `package.json` 固定使用 Vue 2.6.12、Vue Router 3.4.9、Vuex 3.6.0、Element UI 2.15.14、Axios 0.30.3。
 
 ## 1. 页面更新从响应式数据开始
 
@@ -60,7 +60,7 @@ Vue 2 使用 `Object.defineProperty` 跟踪对象属性变化，因此有两类�
 
 ## 2. 单页应用由路由组织页面
 
-课程笔记介绍了 Vue CLI、单文件组件、路由和 Element UI。课程项目的 `src/router/index.js` 使用 `mode: 'history'`，并把通用路由与动态路由区分开；需要懒加载的页面通过 `() => import(...)` 延后载入。History 模式地址不带 `#`，但部署服务器需要把前端路由回退到应用入口，否则刷新某个深层路径可能得到 404。
+Vue Router 可以把通用路由与动态路由区分开，并通过 `() => import(...)` 延后载入页面。History 模式地址不带 `#`，但部署服务器需要把前端路由回退到应用入口，否则刷新某个深层路径可能得到 404。
 
 项目 `src/permission.js` 中的全局守卫大致按以下顺序处理：有令牌时检查用户信息并按权限拉取路由；无令牌时只放行登录白名单，其它路由跳到登录页；动态路由注册完成后重新进入原目标路由。下面是说明这个顺序的简化示例：
 
@@ -91,9 +91,9 @@ router.beforeEach((to, from, next) => {
 
 ## 3. Vuex 和请求层分别解决什么问题
 
-组件内部状态适合由组件自己维护；多个页面共享的用户信息、角色和权限路由可以放进 Vuex 模块。课程项目的 `store/modules/permission.js` 保存常量路由、动态路由、侧边栏路由和顶部路由，并在 `GenerateRoutes` action 中请求后端的 `/getRouters` 数据后转为前端路由。
+组件内部状态适合由组件自己维护；多个页面共享的用户信息、角色和权限路由可以放进 Vuex 模块。Vuex 权限模块可以保存常量路由、动态路由、侧边栏路由和顶部路由，并在 `GenerateRoutes` action 中请求后端的 `/getRouters` 数据后转为前端路由。
 
-Axios 请求封装集中处理 API 公共配置、令牌和错误响应。本地 `src/utils/request.js` 创建实例时设置基础 URL 和超时，并在请求拦截器中按请求标记决定是否附加 Bearer token。最小形态可以写成：
+请求封装创建 Axios 实例时设置基础 URL 和超时，并在请求拦截器中按请求标记决定是否附加 Bearer token。
 
 ```javascript
 const service = axios.create({
@@ -115,7 +115,7 @@ service.interceptors.request.use(config => {
 
 ## 4. 读代码时优先跟踪的链路
 
-在本地课程项目中，可以从 `src/main.js` 看 Vue、Router、Vuex 与 Element UI 如何注册；从 `src/router/index.js` 看常量路由和动态路由；从 `src/permission.js` 进入用户信息和路由生成；再从 `src/utils/request.js` 跟踪令牌怎样随 API 请求传给服务端。这样可以把课堂中的“路由守卫、状态管理、Axios 拦截器”落到实际文件职责上。
+请求封装创建 Axios 实例时设置基础 URL 和超时，并在请求拦截器中按请求标记决定是否附加 Bearer token。
 
 前端路由和按钮权限只决定界面如何呈现，用户可以直接构造 HTTP 请求；真正的接口权限必须由后端重新校验。这个边界和博客已有的 [RuoYi RBAC 权限模型](/articles/050-ruoyi-rbac-permission-model) 是同一条认证后授权链路。
 
@@ -146,10 +146,8 @@ Vue 2 初始化时遍历 `data` 对象的属性并转成 getter/setter，渲染�
 
 浏览器刷新时会把当前路径发给服务器。服务器若没有将未命中的前端路由重写到 SPA 入口，就会按普通文件路径查找并返回 404。
 
-## 参考资料与本地依据
+## 参考资料
 
-- 本地课程笔记：`Vue课堂资料.md`、`Vue-Day03学习笔记.md`、`Vue-Day02-课堂笔记.md`。
-- 本地课程项目源码：`package.json`、`src/router/index.js`、`src/permission.js`、`src/store/modules/permission.js`、`src/utils/request.js`。
 - [Vue 2 官方指南：组件](https://v2.vuejs.org/v2/guide/components)
 - [Vue 2 官方指南：响应式与变更检测限制](https://v2.vuejs.org/v2/guide/reactivity)
 - [Vue Router 3 官方指南：导航守卫](https://v3.router.vuejs.org/guide/advanced/navigation-guards)
