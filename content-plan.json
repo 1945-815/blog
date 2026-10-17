@@ -766,5 +766,29 @@
     "stageName": "企业开发技术学习",
     "slug": "swagger2-skywalking-observability",
     "title": "Swagger2 接口文档与 SkyWalking 链路追踪：课堂配置和版本边界"
+  },
+  {
+    "id": 97,
+    "planDate": "2026-10-17",
+    "stage": 5,
+    "stageName": "AI 应用探索",
+    "slug": "097-spring-ai-mcp-client-server",
+    "title": "Spring AI MCP：用标准协议连接 Java 工具服务"
+  },
+  {
+    "id": 98,
+    "planDate": "2026-10-17",
+    "stage": 5,
+    "stageName": "AI 应用探索",
+    "slug": "098-spring-ai-multi-agent-patterns",
+    "title": "多智能体协同的几种编排模式：路由、串联、并行与评估"
+  },
+  {
+    "id": 99,
+    "planDate": "2026-10-17",
+    "stage": 5,
+    "stageName": "AI 应用探索",
+    "slug": "099-hutool-java-utilities",
+    "title": "Hutool 常用工具类：字符串、标识符与 JSON"
   }
 ]

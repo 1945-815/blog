@@ -109,6 +109,9 @@
 - [Transactional Outbox：让 MySQL 写入与 RabbitMQ 事件可靠衔接](/articles/068-transactional-outbox-mysql-rabbitmq)
 - [Spring AI 流式响应：用 WebFlux 与 SSE 逐段返回模型内容](/articles/069-spring-ai-streaming-sse)
 - [Spring AI 会话记忆：会话隔离、窗口裁剪与 JDBC 持久化](/articles/070-spring-ai-chat-memory-session)
+- [Spring AI MCP：用标准协议连接 Java 工具服务](/articles/097-spring-ai-mcp-client-server)
+- [多智能体协同的几种编排模式：路由、串联、并行与评估](/articles/098-spring-ai-multi-agent-patterns)
+- [Hutool 常用工具类：字符串、标识符与 JSON](/articles/099-hutool-java-utilities)
 - [Spring Boot 文件上传：大小校验、隔离存储与失败补偿](/articles/073-springboot-file-upload-quarantine)
 
 ## 2026 年本地课堂资料补充
@@ -132,3 +135,11 @@
 - [Java 设计模式总览：按创建、结构与行为梳理](/articles/java-design-patterns-overview)
 - [DAU 与 MAU：先统一活跃口径，再看留存和频率](/articles/dau-mau-metrics)
 - [Swagger2 接口文档与 SkyWalking 链路追踪：课堂配置和版本边界](/articles/swagger2-skywalking-observability)
+
+### 2026-10-17 五阶段资料对照补充
+
+三篇文章按实际资料类型区分了代码证据与设计梳理；写作日期不作为历史学习或公开发布时间。
+
+- [Spring AI MCP：用标准协议连接 Java 工具服务](/articles/097-spring-ai-mcp-client-server)
+- [多智能体协同的几种编排模式：路由、串联、并行与评估](/articles/098-spring-ai-multi-agent-patterns)
+- [Hutool 常用工具类：字符串、标识符与 JSON](/articles/099-hutool-java-utilities)

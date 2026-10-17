@@ -33,7 +33,7 @@ phase: "AI 应用探索"
 
 ## 二、技术原理
 
-Ollama 在本机提供模型运行服务，默认地址为 localhost:11434。Spring AI starter 根据 application 配置自动装配 OllamaChatModel；ChatClient 是更高层的流式调用接口。调用 chatClient.prompt().user(...).call().content() 会构造请求、等待模型完成并读取文本内容。
+Ollama 在本机提供模型运行服务，默认地址为 localhost:11434。Spring AI starter 根据 application 配置自动装配 OllamaChatModel；ChatClient 同时提供同步调用和流式调用入口。`prompt().user(...).call().content()` 会等待模型完成并读取文本内容，`stream()` 则返回增量响应流。
 
 模型本身不替应用保存完整会话状态。多轮对话要由应用明确维护消息历史或会话上下文。小参数模型适合本地流程验证，但回答质量和首轮耗时会受模型、硬件、上下文长度和资源占用影响。
 
@@ -77,22 +77,28 @@ Controller 只接收一个有长度限制的练习提示词。真实对外接口
 
 ~~~java
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class LocalChatController {
     private final ChatClient chatClient;
 
+    public record ChatRequest(String prompt) {}
+
     public LocalChatController(ChatClient chatClient) {
         this.chatClient = chatClient;
     }
 
-    @GetMapping("/ai/chat")
-    public String chat(@RequestParam String prompt) {
-        if (prompt.isBlank() || prompt.length() > 500) {
-            throw new IllegalArgumentException("prompt 长度必须在 1 到 500 个字符之间");
+    @PostMapping("/ai/chat")
+    public String chat(@RequestBody ChatRequest request) {
+        String prompt = request.prompt();
+        if (prompt == null || prompt.isBlank() || prompt.length() > 500) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "prompt 长度必须在 1 到 500 个字符之间");
         }
         return chatClient.prompt()
                 .user(prompt)
@@ -102,11 +108,25 @@ public class LocalChatController {
 }
 ~~~
 
-启动前可以在终端运行 ollama run qwen3:1.7b 完成模型加载，再启动 Spring Boot 并访问 localhost:8080/ai/chat?prompt=你好。8080 是应用端口，11434 是 Ollama 服务端口；第一次推理可能需要等待模型载入。
+启动前可以在终端运行 `ollama run qwen3:1.7b` 完成模型加载，再启动 Spring Boot。通过 POST 请求体调用接口，避免把提示词放在 URL 中：
+
+~~~bash
+curl -X POST http://localhost:8080/ai/chat \
+  -H "Content-Type: application/json" \
+  -d '{"prompt":"你好"}'
+~~~
+
+8080 是应用端口，11434 是 Ollama 服务端口；第一次推理可能需要等待模型载入。
 
 ## 四、实际应用
 
 这次练习的链路是：本地模型准备、Spring Boot 依赖与配置、模型 Bean 注入、Controller 接收输入，再把模型文本返回。课程资料也记录了 deepseek-r1:1.5b；不同模型的参数支持不同，不能把 temperature 等选项默认套用到所有模型。
+
+### 课程笔记中的部署选择
+
+`10.12 SpringAI入门与环境搭建` 记录了本地 Ollama 安装和模型下载；`10.13 Ollama+SpringBoot大模型应用` 继续对照 Ollama 的 `/api/chat` 与应用自己的聊天接口，并介绍 OpenAI 兼容 API 的接入思路。`01 SpringAI部分/01–03` 思维导图还把本地模型、云端 API 和自建服务列为不同部署选择。
+
+这些资料说明的是学习时讨论和验证的路线，不能据此声称已经部署了云端或企业模型服务。OpenAI 兼容通常只表示一组接口形状相近，模型名、鉴权、流式事件、工具调用支持和参数语义仍需逐项核对；API key 应由环境变量或密钥管理系统注入。Apifox 集合中的本地示例地址仅供课堂调试，不应照抄到公开文章或生产配置。
 
 学习阶段先验证本地服务状态和模型名，再检查配置属性与启动日志。若模型加载慢，先确认硬件资源和 Ollama 状态；不要把等待页面误判为 Controller 路由没有生效。
 

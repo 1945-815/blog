@@ -111,6 +111,22 @@ WHERE id = ? AND status = 1;
 
 ## 五、项目真实落地
 
+### 课堂资料版本快照
+
+本地 `10.8 Docker入门` 笔记记录的课堂主机为 Docker CE 20.10.9；`10.10 Docker 从入门到微服务部署` 记录了 OpenJDK 17.0.2、Nginx 1.17.6、单阶段 Dockerfile 和单机 Compose 编排。配套 `09.Docker/09.Docker/docker-compose.yml` 中的 `version: '2.1'` 是该 YAML 使用的旧版 Compose 文件格式标记，示例包含 `nginx-1`、`nginx-2`、`boot-1`、`boot-2` 四个服务。它是课程快照，不是当前 Compose 的格式建议。
+
+归档中的 Java demo Dockerfile 采用 OpenJDK 17.0.2、`VOLUME /tmp`、`ADD target/*.jar app.jar`、exec form 的 `ENTRYPOINT` 和 `EXPOSE 9008`。下面保留其启动结构供对照；底层镜像地址和维护者字段来自课程环境，已省略。普通 JAR 文件通常用 `COPY` 表达复制意图更清晰。
+
+~~~dockerfile
+FROM openjdk:17.0.2
+VOLUME /tmp
+COPY target/*.jar /app.jar
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+EXPOSE 9008
+~~~
+
+现代 Docker Compose 忽略顶层 `version` 字段并按当前 Compose Specification 校验文件；迁移旧文件时应检查实际字段兼容性。Dockerfile 中 `ENTRYPOINT` 定义容器的固定主程序，`CMD` 可提供默认参数或命令，运行时命令参数会影响默认 `CMD`；使用 JSON 数组形式的 exec form 能让 Java 进程作为容器主进程处理停止信号。`VOLUME /tmp` 只声明挂载点，不等于备份、复制或高可用方案。
+
 在企业项目中，我们通常把镜像构建放在发布流水线：代码版本产生唯一镜像标签，镜像推送到受控仓库，部署环境只拉取镜像并注入环境配置。多阶段构建减少最终运行镜像中的构建工具；非 root 用户、基础镜像补丁、镜像扫描、资源限制和回滚策略也应纳入发布设计。
 
 数据库容器的启动顺序不等于数据库已准备好。Compose 的 depends_on 基础形式只管理启动依赖，应用还需配置连接池重试和启动失败处理，或使用健康检查表达就绪条件。生产环境通常由平台负责数据库服务和编排，不能把教学 Compose 文件直接当作生产部署方案。日志、文件上传和用户生成内容要存到合适的外部存储，不能依赖容器可写层长期保留。
@@ -133,3 +149,6 @@ WHERE id = ? AND status = 1;
 
 - [Docker 多阶段构建](https://docs.docker.com/get-started/docker-concepts/building-images/multi-stage-builds/)
 - [Docker 构建上下文](https://docs.docker.com/build/concepts/context/)
+- [Docker Compose 的 version 字段](https://docs.docker.com/reference/compose-file/version-and-name/)
+- [Dockerfile CMD 与 ENTRYPOINT](https://docs.docker.com/reference/dockerfile/)
+- [Docker volumes](https://docs.docker.com/engine/storage/volumes/)

@@ -90,6 +90,22 @@ public StrategyDetail detail(@PathVariable Long id) {
 
 ## 五、项目真实落地
 
+### 本地课程配置对照
+
+`10.6 Nginx安装与基础配置` 笔记记录了编译安装、启停、虚拟主机和主配置文件；两份 `10.7 Nginx 入门到负载均衡` 笔记补充静态站点、Java 接口反向代理、`location`、`upstream` 和 Keepalived。课堂 Java demo 用 9001、9002 两个端口模拟同机的两个后端实例。本文前面的 8081、8082 配置是独立演示值，不是课程配置或生产环境记录。
+
+课程笔记中的 `location` 规则可按以下顺序理解：
+
+| 规则 | 匹配行为 |
+| --- | --- |
+| `location = /path` | 精确匹配成功后立即采用该块 |
+| 普通前缀，如 `location /api/` | 先记录匹配到的最长前缀 |
+| `location ^~ /assets/` | 若它是最长前缀，则跳过后续正则匹配 |
+| `location ~` / `~*` | 按配置顺序检查正则；首个匹配项生效 |
+| 未命中正则 | 回到此前记录的最长前缀 |
+
+课程同时演示默认轮询、权重和 `ip_hash`。`ip_hash` 用客户端地址做粘性分配；它不能让多个 JVM 共享 HttpSession，同一客户端地址变化或节点不可用时也可能落到另一实例。需要跨节点会话时应使用共享存储等应用层方案。资料图中还整理了 Keepalived 主备与虚拟 IP 的思路，并附有一份 Master 配置和 Nginx 检查脚本；这些文件只能证明有课程级配置材料，不能证明完整故障切换已部署或测试。
+
 在企业项目中，我们通常会让 Nginx、云负载均衡或 API 网关承担统一入口，再由应用按部署拓扑监听内部端口。示例配置只是练习，不代表某个企业项目的真实架构。容器网络部署时，upstream 地址要使用同一网络内可解析的服务名或实际实例地址，不能想当然沿用宿主机 localhost。
 
 遇到 404 时，先比对 Nginx 转发后的 URI 和 Controller 映射；遇到 502 时，查目标 IP、端口、进程状态和网络连通性；遇到 504 时，检查应用慢查询、线程池、下游调用和超时配置。不要看到错误码就盲目延长超时。上线前还要设置请求体大小、访问日志字段、HTTPS、敏感路径策略和可信代理边界。
@@ -112,3 +128,4 @@ public StrategyDetail detail(@PathVariable Long id) {
 
 - [Nginx proxy 模块文档](https://nginx.org/en/docs/http/ngx_http_proxy_module.html)
 - [Nginx upstream 模块文档](https://nginx.org/en/docs/http/ngx_http_upstream_module.html)
+- [Nginx location 指令与匹配规则](https://nginx.org/en/docs/http/ngx_http_core_module.html#location)

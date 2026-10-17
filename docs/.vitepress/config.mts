@@ -177,6 +177,9 @@ export default defineConfig({
             { text: "RAG 检索评估", link: "/articles/060-rag-retrieval-evaluation" },
             { text: "Spring AI 流式响应与 SSE", link: "/articles/069-spring-ai-streaming-sse" },
             { text: "Spring AI 会话记忆", link: "/articles/070-spring-ai-chat-memory-session" },
+            { text: "Spring AI MCP Client / Server", link: "/articles/097-spring-ai-mcp-client-server" },
+            { text: "多智能体协同模式", link: "/articles/098-spring-ai-multi-agent-patterns" },
+            { text: "Hutool 常用工具类", link: "/articles/099-hutool-java-utilities" },
           ]
         },
       ]

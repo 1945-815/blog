@@ -111,7 +111,68 @@ public class SafeToolRouterDemo {
 
 ## 四、实际应用
 
-如果后续把这个路由接到 Spring AI，应用仍需显式注册哪些工具可用，并决定按请求、用户或业务操作授予权限。只读检索可以先做权限过滤；写操作要增加用户确认、幂等键、审计记录和可撤销策略。
+### 本地课程中的 Function Calling 示例
+
+`10.16 智能客服FunctionCalling项目/智能客服FunctionCalling项目-学习笔记.md` 记录了一个课程客服示例：Spring AI 把模型提出的工具调用交给 Java 方法执行，MyBatis-Plus 查询课程与校区，并在单独的预约服务中创建预约记录。课程数据来自 `玄枢-课程数据.xlsx`。笔记还记录了 Spring Boot 3、MyBatis-Plus 3.5.10.1、Spring AI OpenAI/Ollama starter，以及百炼 OpenAI 兼容模型和本地 Ollama 作为课堂模型选项。这里整理的是学习资料中的代码与流程，不表示本人部署过线上客服。
+
+| 工具 | 课程中记录的职责 | 副作用 |
+| --- | --- | --- |
+| `queryCourse` | 按课程类型、学历要求和排序条件查询可选课程 | 只读 |
+| `queryAllSchools` | 查询校区信息 | 只读 |
+| `createCourseReservation` | 生成课程预约 | 写入预约数据，需额外授权与确认 |
+
+在 Spring AI 1.0.x 中，工具方法可用 `@Tool` 暴露，`@ToolParam` 为模型可见的参数提供说明。下面是工具层的结构示意；`CourseQuery`、`Course`、`CourseService` 和 `validate` 表示应用自己的 DTO、服务与校验边界，方法名是本文示意，不是从可运行归档还原的签名。具体 MyBatis-Plus 查询仍由课程业务代码负责：
+
+~~~java
+// 结构示意：CourseQuery / Course / CourseService / validate 由业务工程提供。
+@Service
+public class CourseTools {
+    private final CourseService courseService;
+
+    public CourseTools(CourseService courseService) {
+        this.courseService = courseService;
+    }
+
+    @Tool(description = "按课程类型和学历要求查询可选课程")
+    public List<Course> queryCourse(
+            @ToolParam(description = "课程筛选条件；缺省时查询可选课程", required = false)
+            CourseQuery query) {
+        return courseService.findAvailable(validate(query));
+    }
+
+    @Tool(description = "查询可供用户选择的校区")
+    public List<String> queryAllSchools() {
+        return courseService.findSchoolNames();
+    }
+
+    private CourseQuery validate(CourseQuery query) {
+        return CourseQueryValidator.validate(query);
+    }
+}
+~~~
+
+课程笔记中的排序实现把模型返回的字段名直接交给 `QueryWrapper.orderBy(...)`。在实际代码中要先把字段映射到固定列名，再执行排序；不要将模型提供的任意字符串拼进 SQL：
+
+~~~java
+private static final Map<String, String> SORT_COLUMNS = Map.of(
+    "price", "price",
+    "duration", "duration"
+);
+
+static String requireSortColumn(String requestedField) {
+    String column = SORT_COLUMNS.get(requestedField);
+    if (column == null) {
+        throw new IllegalArgumentException("不支持的课程排序字段");
+    }
+    return column;
+}
+~~~
+
+预约属于写操作。推荐流程是先查询并展示课程、校区和用户将要提交的信息，等待用户明确确认，再由服务端校验登录身份、课程状态、输入长度和重复提交标识，最后调用预约服务。聊天中的“帮我预约”只能形成工具调用建议，不能替代用户确认。真实预约还应最小化收集联系方式并设置访问与保留规则。
+
+课程地图和提示词笔记还列出提示词注入、越狱、数据提取及提示词拒绝服务等威胁。系统提示词可以约束模型行为，却不能替代鉴权、工具白名单、字段校验、配额和超时；检索到的网页或文档内容也必须当作不可信数据。
+
+当前纯 Java 示例仍是独立的输入校验练习；它没有连接上述课程项目或真实模型。若把课程工具接入 Spring AI，仍需按请求或用户显式注册可用工具，并由应用代码决定权限。只读检索可以先做资源范围过滤；写操作还要有用户确认、幂等键、审计记录和失败补偿策略。
 
 工具结果也不能直接视为可信指令。网页、文档和用户输入可能包含 prompt injection 内容；检索结果要作为数据处理，不能让它覆盖系统权限规则。
 

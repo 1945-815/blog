@@ -26,6 +26,8 @@ Spring AI 的 `ChatClient.stream().content()` 返回 `Flux<String>`，即异步�
 
 SSE（Server-Sent Events）是服务端通过一个 HTTP 响应持续向客户端发送事件的格式。响应通常使用 `text/event-stream`，每个事件由 `data:` 行和空行边界组成。SSE 适合服务端向客户端单向推送；若需要客户端实时双向发送消息，可以另行评估 WebSocket 等方案。
 
+`Flux<String>` 描述的是 Java 侧的数据流，不会自动决定 HTTP 使用 SSE。若接口声明 `text/plain` 或 `text/html` 并直接写出字符串片段，客户端收到的是普通响应体流；若声明 `text/event-stream` 并输出 `ServerSentEvent` 或遵循 SSE 事件帧格式，才是 SSE。前后端必须按同一协议解析。
+
 Spring AI 1.0.x 的流式模型调用依赖响应式栈。对于现有 Servlet 项目，接入流式调用时可在该接口边界使用 Spring WebFlux；在同一个应用混合 imperative 和 reactive 编程时，应明确阻塞调用所在的线程，避免在事件循环线程上执行 JDBC 或阻塞式服务调用。代理层还需关闭响应缓冲或配置适当的超时策略。
 
 ## 三、底层原理
@@ -38,7 +40,7 @@ Spring AI 1.0.x 的流式模型调用依赖响应式栈。对于现有 Servlet �
 
 ## 四、代码案例
 
-本地练习以 Java 17、Spring Boot 3.5.x 和 Spring AI 1.0.9 为参考，Ollama 需要已经启动并拉取对应模型。示例通过 `Flux<ServerSentEvent<String>>` 输出 `delta` 事件；客户端接收到的文本片段应按原顺序拼接，而不是依赖片段边界。
+下面是根据课程中 `Flux<String>` 流式调用整理的独立 SSE 适配示例，环境参考 Java 17、Spring Boot 3.5.x 和 Spring AI 1.0.9；它不是课程项目源代码。Ollama 需要已经启动并拉取对应模型。示例通过 `Flux<ServerSentEvent<String>>` 输出 `delta` 事件；客户端接收到的文本片段应按原顺序拼接，而不是依赖片段边界。
 
 ~~~yaml
 spring:
@@ -121,6 +123,12 @@ curl -N -X POST "http://localhost:8080/api/ai/stream" \
 浏览器端也可以通过 `fetch` 的 `ReadableStream` 读取响应体并按空行解析 SSE 事件。若使用原生 `EventSource`，需注意它默认使用 GET 且不便携带自定义 Authorization 请求头；认证方式和 prompt 长度应按项目安全模型设计。
 
 如果需要接收客户端提供的 X-Request-Id，应先限制为 1 到 64 位的安全字符；不符合规则时由服务端生成 UUID。prompt 使用 POST 请求体传输，避免出现在 URL、代理访问日志和浏览器历史记录中。
+
+### 与课程资料中的流式接口对照
+
+`10.14 SpringAI聊天应用开发/SpringAI聊天应用开发学习笔记.md` 记录的 Controller 返回 `Flux<String>`，并记录课堂前端直接消费文本流；笔记还说明曾把响应类型从 `text/event-stream` 改成 `text/html;charset=UTF-8`。`10.15 哄哄模拟器-SpringAI实/哄哄模拟器-SpringAI实战学习笔记.md` 也以 `Flux<String>` 记录模型增量输出，文字摘要中称作 SSE，但仅凭 `Flux` 无法确认服务端是否按 SSE 帧编码。
+
+因此本文保留两种实现的边界：课堂资料能证明使用了响应式文本流；本节代码额外把文本片段包装成标准 SSE 事件。它适合作为协议适配练习，不能据此声称课堂接口原本就是标准 SSE。
 
 ## 五、项目真实落地
 
