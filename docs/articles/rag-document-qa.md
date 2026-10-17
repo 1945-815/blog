@@ -44,11 +44,11 @@ phase: "AI 应用探索"
 
 这份课程实现用 `RestTemplate` 直接调用模型 API，并非 Spring AI 管线；课程设置中的模型标识、服务地址、维度和 topK 都是当时的示例值，复用前应以服务方文档和真实响应核对。页面展示的是候选攻略列表，不等同于回答中每句话都有精确引用。若需要可核验引用，应保留每条片段的文档 ID、标题与段落位置，并在答案中建立片段到来源的映射。
 
-课程笔记中的 API key 以占位符展示。实际密钥应从环境变量或密钥管理服务注入，不应写入源码、日志或截图；公开浏览器端也不能安全保存长期 API 密钥。本地资料来源：`923 AI智能问答模块RAG / AI智能问答模块RAG学习笔记.md`。
+课程笔记中的 API key 以占位符展示。实际密钥应从环境变量或密钥管理服务注入，不应写入源码、日志或截图；公开浏览器端也不能安全保存长期 API 密钥。本地资料来源：`AI智能问答模块RAG学习笔记.md`。
 
 ### 与 Spring AI 课程知识库的关系
 
-本地 `01 SpringAI部分/04 SpringAI.mmap` 把 ChatPDF 知识库拆成 PDF 上传与解析、文本切分、Embedding、向量存储和检索后组装上下文；`11 购买课程与知识库.mmap` 继续列出 Elasticsearch 知识库、课程查询工具和会话历史等主题。这些是课程地图记录的学习范围，不足以证明地图中每个能力都已有可运行实现。本文的 923 案例是另一条已经由课程笔记记录的 Elasticsearch KNN + HTTP 模型调用链。
+本地 `04 SpringAI.mmap` 把 ChatPDF 知识库拆成 PDF 上传与解析、文本切分、Embedding、向量存储和检索后组装上下文；`11 购买课程与知识库.mmap` 继续列出 Elasticsearch 知识库、课程查询工具和会话历史等主题。这些是课程地图记录的学习范围，不足以证明地图中每个能力都已有可运行实现。本文的 923 案例是另一条已经由课程笔记记录的 Elasticsearch KNN + HTTP 模型调用链。
 
 `10.16 智能客服FunctionCalling项目` 和 `玄枢-课程数据.xlsx` 还提供了一个有用的边界：课程类型、学历要求、校区和预约记录属于结构化业务数据，课堂采用 MyBatis-Plus 查询工具；文档切片的语义召回则属于 RAG。两者可以在一个应用中协作，但工具调用查询不等同于向量检索。可继续阅读 [Spring AI 工具调用边界](/articles/045-agent-tool-boundaries) 与 [Embedding 接入 Elasticsearch](/articles/044-elasticsearch-embedding-knn)。
 

@@ -10,7 +10,7 @@ phase: "Web 基础"
 
 # Vue 2 管理后台学习记录：组件、路由与请求拦截
 
-本文根据 `01-vue/01-vue/vue/Vue课堂资料.md`、`0803-vue-day01/Vue-Day03学习笔记.md`、`0804-vue-day02/Vue-Day02-课堂笔记.md` 和课程项目中的若依派生前端源码整理。项目 `package.json` 固定使用 Vue 2.6.12、Vue Router 3.4.9、Vuex 3.6.0、Element UI 2.15.14、Axios 0.30.3。下面讨论的是 Vue 2 项目和本地课程源码，不把它描述成 Vue 3 项目或独立企业项目。
+本文根据 `Vue课堂资料.md`、`Vue-Day03学习笔记.md`、`Vue-Day02-课堂笔记.md` 和课程项目中的若依派生前端源码整理。项目 `package.json` 固定使用 Vue 2.6.12、Vue Router 3.4.9、Vuex 3.6.0、Element UI 2.15.14、Axios 0.30.3。下面讨论的是 Vue 2 项目和本地课程源码，不把它描述成 Vue 3 项目或独立企业项目。
 
 ## 1. 页面更新从响应式数据开始
 
@@ -148,8 +148,8 @@ Vue 2 初始化时遍历 `data` 对象的属性并转成 getter/setter，渲染�
 
 ## 参考资料与本地依据
 
-- 本地课程笔记：`01-vue/01-vue/vue/Vue课堂资料.md`、`0803-vue-day01/Vue-Day03学习笔记.md`、`0804-vue-day02/Vue-Day02-课堂笔记.md`。
-- 本地课程项目源码：`05-淘车湾项目实战/工具/20260810102405/vehicle-cove/vehicle-cove-ui/package.json`、`src/router/index.js`、`src/permission.js`、`src/store/modules/permission.js`、`src/utils/request.js`。
+- 本地课程笔记：`Vue课堂资料.md`、`Vue-Day03学习笔记.md`、`Vue-Day02-课堂笔记.md`。
+- 本地课程项目源码：`package.json`、`src/router/index.js`、`src/permission.js`、`src/store/modules/permission.js`、`src/utils/request.js`。
 - [Vue 2 官方指南：组件](https://v2.vuejs.org/v2/guide/components)
 - [Vue 2 官方指南：响应式与变更检测限制](https://v2.vuejs.org/v2/guide/reactivity)
 - [Vue Router 3 官方指南：导航守卫](https://v3.router.vuejs.org/guide/advanced/navigation-guards)

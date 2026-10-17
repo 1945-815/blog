@@ -177,7 +177,7 @@ public interface ProductMapper {
 
 调用前先拒绝 `null` 或空集合，否则生成的 `IN ()` 在数据库中可能报语法错误。`#{id}` 会绑定为预编译语句的值参数，而不是简单地给字符串加引号；表名、列名和排序方向不能通过它绑定。`${}` 会直接拼接文本，只有经过服务端白名单映射的标识符才可进入 SQL。
 
-这个练习延续本地 `0717MyBatis加强/MyBatis加强.md` 的批量删除与参数处理主题。有关从配置文件创建 `SqlSessionFactory`、打开和关闭会话的基本流程，见 [MyBatis 入门与会话管理](/articles/mybatis-session-mapper-basics)；一对多和多对多映射见 [MyBatis 关联映射](/articles/mybatis-association-mapping)。
+这个练习延续本地 `MyBatis加强.md` 的批量删除与参数处理主题。有关从配置文件创建 `SqlSessionFactory`、打开和关闭会话的基本流程，见 [MyBatis 入门与会话管理](/articles/mybatis-session-mapper-basics)；一对多和多对多映射见 [MyBatis 关联映射](/articles/mybatis-association-mapping)。
 
 课程 CRUD 练习里可以把接口接收的筛选条件映射成 UserSearch，由 Service 校验空白关键词、状态范围和分页边界，再调用 Mapper。不要把任意排序字段直接拼入动态 SQL；可以用枚举把 API 的排序选项转换为有限的服务端字段，并对升降序做固定映射。
 

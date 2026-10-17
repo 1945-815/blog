@@ -34,7 +34,7 @@ RBAC 即基于角色的访问控制。它把用户与权限之间的关系通过
 
 ### 与本地若依源码的对照
 
-指定资料中有 RuoYi Vue 脚手架讲义、代码和课程项目源码。以 `04-脚手架/RuoYi-Vue-springboot2` 这份本地副本为例，`SysPermissionService.getMenuPermission` 汇总有效角色的菜单权限，`SysMenuServiceImpl.selectMenuPermsByUserId` 通过 Mapper 查询用户权限；接口侧可由 Spring Security 权限表达式执行服务端校验。前端 `src/permission.js` 在带令牌后获取用户信息并生成路由，`src/store/modules/permission.js` 调用 `/getRouters` 数据构建动态路由，`src/utils/request.js` 为请求附加 `Authorization` 令牌。
+指定资料中有 RuoYi Vue 脚手架讲义、代码和课程项目源码。以 `RuoYi-Vue-springboot2` 这份本地副本为例，`SysPermissionService.getMenuPermission` 汇总有效角色的菜单权限，`SysMenuServiceImpl.selectMenuPermsByUserId` 通过 Mapper 查询用户权限；接口侧可由 Spring Security 权限表达式执行服务端校验。前端 `src/permission.js` 在带令牌后获取用户信息并生成路由，`src/store/modules/permission.js` 调用 `/getRouters` 数据构建动态路由，`src/utils/request.js` 为请求附加 `Authorization` 令牌。
 
 这能把 RBAC 的“角色到权限”模型对应到一条可读的代码链路：登录态提供当前身份，菜单接口返回当前用户可见的路由，前端据此组织界面；后端仍通过接口授权规则验证实际请求。前端路由或按钮隐藏只负责界面体验，不是安全边界。
 

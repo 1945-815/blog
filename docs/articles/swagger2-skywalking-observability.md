@@ -12,7 +12,7 @@ phase: "企业开发技术学习"
 
 ## 资料范围
 
-本地 `0921 Canal与Swagger全套学习/Canal与Swagger全套学习笔记.md` 记录了 wolf2w 课程项目的 `travel-common-swagger` 公共模块、Knife4j 页面、接口注解，以及 SkyWalking Java Agent 启动方式。课程依赖基于 Spring Boot 2.x 和项目封装模块，不能直接作为新项目依赖清单。
+本地 `Canal与Swagger全套学习笔记.md` 记录了 wolf2w 课程项目的 `travel-common-swagger` 公共模块、Knife4j 页面、接口注解，以及 SkyWalking Java Agent 启动方式。课程依赖基于 Spring Boot 2.x 和项目封装模块，不能直接作为新项目依赖清单。
 
 ## 一、Swagger2 如何生成接口文档
 
@@ -63,7 +63,7 @@ Swagger 页面帮助调用方查看接口契约并在受控环境中试调；Sky
 
 ## 资料来源
 
-- 本地 `0921 Canal与Swagger全套学习/Canal与Swagger全套学习笔记.md`
+- 本地 `Canal与Swagger全套学习笔记.md`
 - [Spring Boot 2.6 Release Notes](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.6-Release-Notes)
 - [springdoc-openapi 项目文档](https://github.com/springdoc/springdoc-openapi)
 - [Apache SkyWalking Java Agent 文档](https://skywalking.apache.org/docs/skywalking-java/latest/readme/)

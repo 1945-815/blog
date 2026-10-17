@@ -12,7 +12,7 @@ phase: "AI 应用探索"
 
 ### 文章定位
 
-本地 `01 SpringAI部分/05 HuTool.mmap` 按字符串、ID、集合、日期、Bean、转换、Map、JSON 和 Spring 工具类整理了 Hutool API。另一个 MCP 示例归档的父 POM 使用 `cn.hutool:hutool-all:5.8.34`，天气服务源码还引用 `HttpUtil` 和 `JSONUtil`。这能证明资料中出现过该依赖与 API，不代表它已经用于本人维护的生产系统。
+本地 `05 HuTool.mmap` 按字符串、ID、集合、日期、Bean、转换、Map、JSON 和 Spring 工具类整理了 Hutool API。另一个 MCP 示例归档的父 POM 使用 `cn.hutool:hutool-all:5.8.34`，天气服务源码还引用 `HttpUtil` 和 `JSONUtil`。这能证明资料中出现过该依赖与 API，不代表它已经用于本人维护的生产系统。
 
 ## 一、引入依赖
 
@@ -101,8 +101,8 @@ Hutool 把字符串、集合、日期、ID、Bean 和 JSON 的常见操作放进
 
 ## 参考资料
 
-- 本地课程资料：`01 SpringAI部分/05 HuTool.mmap`
-- 本地依赖记录：`01 SpringAI部分/资料/备份/my-spring-ai-mcp-73魔改.rar`（Maven 依赖版本 5.8.34）
+- 本地课程资料：`05 HuTool.mmap`
+- 本地依赖记录：`my-spring-ai-mcp-73魔改.rar`（Maven 依赖版本 5.8.34）
 - [Hutool StrUtil 文档](https://doc.hutool.cn/pages/StrUtil/)
 - [Hutool IdUtil 文档](https://doc.hutool.cn/pages/IdUtil/)
 - [Hutool JSONUtil API](https://plus.hutool.cn/apidocs/cn/hutool/json/JSONUtil.html)

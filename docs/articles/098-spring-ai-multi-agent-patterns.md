@@ -12,7 +12,7 @@ phase: "AI 应用探索"
 
 ### 文章定位
 
-本地 `01 SpringAI部分/12 多智能体协同工作.mmap` 列出了 router、chain、parallel、coordinator、evaluator 等模式，并整理课程推荐、购买、咨询和知识库等角色。该目录中没有找到对应的可运行多智能体项目代码，因此本文是课程设计图的概念整理，不描述为已实现或已上线的项目。
+本地课程资料列出了 router、chain、parallel、coordinator、evaluator 等模式，并整理课程推荐、购买、咨询和知识库等角色。现有资料中没有找到对应的可运行多智能体项目代码，因此本文是课程设计图的概念整理，不描述为已实现或已上线的项目。
 
 ## 一、为什么需要编排
 
@@ -85,6 +85,6 @@ Router 通常负责把请求分到某个固定角色；Coordinator 会把目标�
 
 ## 参考资料
 
-- 本地课程资料：`01 SpringAI部分/12 多智能体协同工作.mmap`
+- 本地课程资料：`12 多智能体协同工作.mmap`
 - 关联文章：[Agent 工具调用与权限边界](/articles/045-agent-tool-boundaries)
 - [Spring AI 1.0.9：Tool Calling](https://docs.spring.io/spring-ai/reference/1.0/api/tools.html)

@@ -46,7 +46,7 @@ volumes:
 
 ### 与本地 Docker 课程资料的对应
 
-`09.Docker/09.Docker/` 的课堂笔记记录了一条手动发布 Vue 静态站的学习流程：启动 CentOS 容器、安装 Nginx、将构建产物 `dist` 放到 Nginx 文档目录、以前台方式运行 Nginx，再练习 `docker commit`、镜像 `tag`、推送私有仓库，以及在另一台机器 `pull` 后运行。笔记还记录了 CentOS 8 软件源变更造成的安装问题。这些是课程操作过程，不是我独立搭建或维护的发布环境。
+`` 的课堂笔记记录了一条手动发布 Vue 静态站的学习流程：启动 CentOS 容器、安装 Nginx、将构建产物 `dist` 放到 Nginx 文档目录、以前台方式运行 Nginx，再练习 `docker commit`、镜像 `tag`、推送私有仓库，以及在另一台机器 `pull` 后运行。笔记还记录了 CentOS 8 软件源变更造成的安装问题。这些是课程操作过程，不是我独立搭建或维护的发布环境。
 
 手动进入容器修改文件再 `commit` 有助于理解镜像与容器，但步骤容易遗漏，也不方便代码审查和重复构建。项目交付更适合把 Nginx 配置、静态资源复制和启动命令写入 Dockerfile，再通过镜像仓库发布；Spring Boot 镜像的构建例子见 [Spring Boot 多阶段镜像](/articles/059-springboot-docker-multistage)。复制目录后要检查 `index.html` 实际落在 Nginx 的文档根目录，避免多出一层 `dist/` 目录。
 

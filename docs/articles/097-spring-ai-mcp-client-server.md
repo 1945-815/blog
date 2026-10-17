@@ -12,7 +12,7 @@ phase: "AI 应用探索"
 
 ### 文章定位
 
-本地 `01 SpringAI部分/20 Spring AI MCP.mmap` 梳理了 MCP 的 client/server、工具、资源、提示词和传输方式。`资料/备份/my-spring-ai-mcp-73魔改.rar` 中有 Spring Boot 3.3.5、Spring AI 1.0.9 的 Maven 工程，包含一个 MCP client 模块和一个 WebFlux MCP server 模块。本文按这份归档说明代码结构，不声称归档项目已在本机运行或部署。
+本地 `20 Spring AI MCP.mmap` 梳理了 MCP 的 client/server、工具、资源、提示词和传输方式。`my-spring-ai-mcp-73魔改.rar` 中有 Spring Boot 3.3.5、Spring AI 1.0.9 的 Maven 工程，包含一个 MCP client 模块和一个 WebFlux MCP server 模块。本文按这份归档说明代码结构，不声称归档项目已在本机运行或部署。
 
 ## 一、MCP 解决什么问题
 

@@ -12,7 +12,7 @@ phase: "企业开发技术学习"
 
 ## 学习来源与目标
 
-本地 `10.1作业/布隆过滤器.pdf` 介绍位数组、多组哈希、误判、Guava 和 Redis Bloom。本文不照搬 PDF 中的手写哈希实现，而是说明概率结构的边界，并用成熟 API 演示。
+本地 `布隆过滤器.pdf` 介绍位数组、多组哈希、误判、Guava 和 Redis Bloom。本文不照搬 PDF 中的手写哈希实现，而是说明概率结构的边界，并用成熟 API 演示。
 
 布隆过滤器回答的是“这个元素一定不在集合里吗？”它可以快速排除确定不存在的数据，常见设计场景包括缓存穿透防护和大集合存在性预筛查。它不保存原始对象，也不能替代数据库中的最终查询。
 
@@ -89,6 +89,6 @@ BF.EXISTS users:bf user-2002
 
 ## 资料来源
 
-- 本地 `10.1作业/布隆过滤器.pdf`
+- 本地 `布隆过滤器.pdf`
 - [Redis Bloom filter 文档](https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/)
 - [Guava BloomFilter API](https://guava.dev/releases/20.0/api/docs/com/google/common/hash/BloomFilter.html)

@@ -10,7 +10,7 @@ phase: "数据库与 Spring 基础"
 
 # Git 课堂笔记整理：暂存、提交、分支与冲突处理
 
-本地 `0729Git/笔记/笔记.md` 从初始化仓库讲到暂存、日志、版本回退、分支和合并冲突。这里把截图中的命令整理成一条可在空目录练习的流程，不复制课堂人物故事，也不表示曾在某个企业仓库执行过这些操作。
+本地 `笔记.md` 从初始化仓库讲到暂存、日志、版本回退、分支和合并冲突。这里把截图中的命令整理成一条可在空目录练习的流程，不复制课堂人物故事，也不表示曾在某个企业仓库执行过这些操作。
 
 ## 从一个文件看三种状态
 
@@ -63,4 +63,4 @@ git branch -d feature/notes
 
 在 Java 项目里，提交前检查 `git diff --staged`，确认只包含源码、测试、文档和安全的配置样例；`target/`、IDE 临时文件和本地密钥应由 `.gitignore` 或项目规范排除。合并冲突后不仅要让 Git 显示“已解决”，还要运行项目已有的构建与测试，特别是同时修改了 POM、Mapper XML 或配置文件时。
 
-资料依据：本地 `0729Git/笔记/笔记.md` 的初始化、暂存、日志、回退、分支、合并和冲突操作。命令语义参考 [Git reset](https://git-scm.com/docs/git-reset)、[Git restore](https://git-scm.com/docs/git-restore) 与 [Git revert](https://git-scm.com/docs/git-revert)。
+资料依据：本地 `笔记.md` 的初始化、暂存、日志、回退、分支、合并和冲突操作。命令语义参考 [Git reset](https://git-scm.com/docs/git-reset)、[Git restore](https://git-scm.com/docs/git-restore) 与 [Git revert](https://git-scm.com/docs/git-revert)。

@@ -188,7 +188,7 @@ JSP 文件 `src/main/webapp/WEB-INF/views/products.jsp`：
 
 ## 回到课堂的增删改操作
 
-`0710WebCRUD/笔记.md` 的 Mapper XML 有 `add`、`update`、`delById`，页面也有填写商品信息、提交与删除的步骤。下面沿用前面的三列练习表展示 SQL 形状；原笔记的完整商品表还有分类、供应商、品牌、折扣和进价，复现原项目时要把这些字段一起建模，不能把这份缩小的示例误当成原表定义。
+课堂笔记中的 Mapper XML 有 `add`、`update`、`delById`，页面也有填写商品信息、提交与删除的步骤。下面沿用前面的三列练习表展示 SQL 形状；原笔记的完整商品表还有分类、供应商、品牌、折扣和进价，复现原项目时要把这些字段一起建模，不能把这份缩小的示例误当成原表定义。
 
 ```xml
 <mapper namespace="demo.ProductWriteMapper">
@@ -277,4 +277,4 @@ public class ProductWriteService {
 
 把 XML 放进 classpath，并在 MyBatis 主配置中登记 Mapper；依赖、数据库连接和 `SqlSessionFactory` 初始化见 [MyBatis 入门文章](/articles/mybatis-session-mapper-basics)。这段代码负责写入事务，尚未给出完整的表单校验与 Servlet 路由。实际表单应以 POST 提交到写请求 Servlet，由它解析参数、调用 Service，并在成功后重定向到列表。不要用原笔记里的 GET 删除链接执行写操作；删除需要权限检查和防 CSRF 措施。若更新或删除返回 `false`，页面应核查记录是否存在、是否重复提交以及 JDBC 驱动对未改变数据的影响行数语义，不能直接显示“操作成功”。一个项目应统一选用可维护的持久层实现；前面的 JDBC 列表只是一段独立的请求链路练习。
 
-资料依据：本地 `0709Web组件交互/web组件交互.md` 的请求/响应、转发、作用域、EL/JSTL，以及 `0710WebCRUD/笔记.md` 的商品列表、分页和条件查询流程。
+资料依据：课堂笔记中的请求/响应、转发、作用域、EL/JSTL，以及商品列表、分页和条件查询流程。

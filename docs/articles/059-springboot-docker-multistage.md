@@ -113,7 +113,7 @@ WHERE id = ? AND status = 1;
 
 ### 课堂资料版本快照
 
-本地 `10.8 Docker入门` 笔记记录的课堂主机为 Docker CE 20.10.9；`10.10 Docker 从入门到微服务部署` 记录了 OpenJDK 17.0.2、Nginx 1.17.6、单阶段 Dockerfile 和单机 Compose 编排。配套 `09.Docker/09.Docker/docker-compose.yml` 中的 `version: '2.1'` 是该 YAML 使用的旧版 Compose 文件格式标记，示例包含 `nginx-1`、`nginx-2`、`boot-1`、`boot-2` 四个服务。它是课程快照，不是当前 Compose 的格式建议。
+本地 `10.8 Docker入门` 笔记记录的课堂主机为 Docker CE 20.10.9；`10.10 Docker 从入门到微服务部署` 记录了 OpenJDK 17.0.2、Nginx 1.17.6、单阶段 Dockerfile 和单机 Compose 编排。配套 `docker-compose.yml` 中的 `version: '2.1'` 是该 YAML 使用的旧版 Compose 文件格式标记，示例包含 `nginx-1`、`nginx-2`、`boot-1`、`boot-2` 四个服务。它是课程快照，不是当前 Compose 的格式建议。
 
 归档中的 Java demo Dockerfile 采用 OpenJDK 17.0.2、`VOLUME /tmp`、`ADD target/*.jar app.jar`、exec form 的 `ENTRYPOINT` 和 `EXPOSE 9008`。下面保留其启动结构供对照；底层镜像地址和维护者字段来自课程环境，已省略。普通 JAR 文件通常用 `COPY` 表达复制意图更清晰。
 

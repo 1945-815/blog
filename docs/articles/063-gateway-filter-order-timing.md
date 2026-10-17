@@ -104,7 +104,7 @@ CREATE TABLE gateway_request_log (
 
 ## 五、课堂案例与验证边界
 
-本地 `0903 SpringCloudGateway网关系列/SpringCloudGateway网关系列笔记.md` 使用 Java74 的 shop 订单服务示例演示局部过滤器：在进入链时记录开始时间，在 `chain.filter(exchange).then(...)` 中计算完成后的耗时，并打印 IP、路径和耗时。这里的 `RequestTimingFilter` 是将该课堂思路扩展为含失败和取消终态记录的独立示例，不是资料中的原样代码。现有资料没有证明这段计时逻辑已部署到 wolf2w 课程项目或生产环境。
+本地 `SpringCloudGateway网关系列笔记.md` 使用 Java74 的 shop 订单服务示例演示局部过滤器：在进入链时记录开始时间，在 `chain.filter(exchange).then(...)` 中计算完成后的耗时，并打印 IP、路径和耗时。这里的 `RequestTimingFilter` 是将该课堂思路扩展为含失败和取消终态记录的独立示例，不是资料中的原样代码。现有资料没有证明这段计时逻辑已部署到 wolf2w 课程项目或生产环境。
 
 设计上应控制日志基数：不要把完整 URL、用户输入或任意 Header 当成指标标签。日志可记录脱敏后的路径模板，指标标签则使用有限集合的 routeId、method、status。访问日志与业务审计也不是一回事，后者要有授权、留存和数据保护规则。
 

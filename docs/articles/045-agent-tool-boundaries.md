@@ -113,7 +113,7 @@ public class SafeToolRouterDemo {
 
 ### 本地课程中的 Function Calling 示例
 
-`10.16 智能客服FunctionCalling项目/智能客服FunctionCalling项目-学习笔记.md` 记录了一个课程客服示例：Spring AI 把模型提出的工具调用交给 Java 方法执行，MyBatis-Plus 查询课程与校区，并在单独的预约服务中创建预约记录。课程数据来自 `玄枢-课程数据.xlsx`。笔记还记录了 Spring Boot 3、MyBatis-Plus 3.5.10.1、Spring AI OpenAI/Ollama starter，以及百炼 OpenAI 兼容模型和本地 Ollama 作为课堂模型选项。这里整理的是学习资料中的代码与流程，不表示本人部署过线上客服。
+`智能客服FunctionCalling项目-学习笔记.md` 记录了一个课程客服示例：Spring AI 把模型提出的工具调用交给 Java 方法执行，MyBatis-Plus 查询课程与校区，并在单独的预约服务中创建预约记录。课程数据来自 `玄枢-课程数据.xlsx`。笔记还记录了 Spring Boot 3、MyBatis-Plus 3.5.10.1、Spring AI OpenAI/Ollama starter，以及百炼 OpenAI 兼容模型和本地 Ollama 作为课堂模型选项。这里整理的是学习资料中的代码与流程，不表示本人部署过线上客服。
 
 | 工具 | 课程中记录的职责 | 副作用 |
 | --- | --- | --- |

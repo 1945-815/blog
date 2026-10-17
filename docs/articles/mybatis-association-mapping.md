@@ -129,4 +129,4 @@ ORDER BY t.id;
 
 一对一可以用唯一外键表示，再用 `<association>` 映射单个对象；它与 `<collection>` 的区别是属性基数。选择嵌套连接结果还是分步查询时，要注意列表查询的 N+1 风险，不因对象模型方便而忽略 SQL 次数。相关性能边界见 [MyBatis 查询与批量写入性能](/articles/047-mybatis-query-batch-performance)。
 
-资料依据：本地 `0717MyBatis加强/MyBatis加强.md` 的部门/员工及学生/教师课堂关系、关联查询和删除顺序。XML 映射行为参考 [MyBatis Mapper XML 官方文档](https://mybatis.org/mybatis-3/sqlmap-xml.html)。
+资料依据：本地 `MyBatis加强.md` 的部门/员工及学生/教师课堂关系、关联查询和删除顺序。XML 映射行为参考 [MyBatis Mapper XML 官方文档](https://mybatis.org/mybatis-3/sqlmap-xml.html)。

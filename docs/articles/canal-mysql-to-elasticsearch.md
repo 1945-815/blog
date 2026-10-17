@@ -52,7 +52,7 @@ MySQL 提交事务后写入 binlog；Canal 获取变更并交给客户端消费�
 
 ZSet 中暂存的成员是消息内容，score 使用课程对象的创建时间戳。定时任务按当前时间减 10 秒查询超时成员并再次发布；10 秒是课程示例阈值，不是可靠性保证。RabbitMQ 消费成功写入 ES 后才从 ZSet 删除，因此“ES 已写入、ZSet 尚未删除”时崩溃会造成重复消息。课程用业务主键作为 ES 文档 ID，重复写同一版本可覆盖文档，但若将来支持更新，乱序的旧事件仍可能覆盖新数据，需要加版本或重新读取当前数据库状态。
 
-这套 ZSet 补偿逻辑是课程练习中的应用层重发机制，不等同 broker publisher confirms、consumer ack 或严格的 exactly-once。更完整的失败路径要处理重复投递、发送与 ZSet 写入失败、重试风暴、消息保留时长和 ZSet 清理。确认机制见[RabbitMQ 消费者边界](./rabbitmq-consumer-boundary.md)。本地资料来源：`921 Canal与Swagger全套学习 / Canal与Swagger全套学习笔记.md`。
+这套 ZSet 补偿逻辑是课程练习中的应用层重发机制，不等同 broker publisher confirms、consumer ack 或严格的 exactly-once。更完整的失败路径要处理重复投递、发送与 ZSet 写入失败、重试风暴、消息保留时长和 ZSet 清理。确认机制见[RabbitMQ 消费者边界](./rabbitmq-consumer-boundary.md)。本地资料来源：`Canal与Swagger全套学习笔记.md`。
 
 
 

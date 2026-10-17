@@ -10,7 +10,7 @@ phase: "企业开发技术学习"
 
 # Linux 基础操作笔记：命令、权限与网络排查
 
-本文依据本地 `827 初识Linux/Linux基础学习笔记_20260827.md`、`Linux基础练习题_20260827.md` 和 `0828 进阶Linux/Linux进阶网络配置笔记.md` 整理。课堂环境是 VMware NAT 网络中的 CentOS 7 Minimal，通过 SecureCRT 使用 SSH 连接。示例命令是学习用例，不代表在生产服务器上执行过。
+本文依据本地 Linux 基础学习笔记、练习题和进阶网络配置笔记整理。课堂环境是 VMware NAT 网络中的 CentOS 7 Minimal，通过 SecureCRT 使用 SSH 连接。示例命令是学习用例，不代表在生产服务器上执行过。
 
 CentOS Linux 7 已于 2024 年 6 月 30 日结束维护。复现旧课程时可以使用隔离的虚拟机；新环境应选择仍受维护的发行版，并按对应版本确认网络和软件包管理方式。[CentOS Linux 生命周期说明](https://www.centos.org/centos-linux/)
 
@@ -85,6 +85,6 @@ curl -v http://127.0.0.1:8080/actuator/health
 
 ## 资料来源
 
-- `827 初识Linux/Linux基础学习笔记_20260827.md`
-- `827 初识Linux/Linux基础练习题_20260827.md`
-- `0828 进阶Linux/Linux进阶网络配置笔记.md`
+- Linux 基础学习笔记
+- Linux 基础练习题
+- Linux 进阶网络配置笔记

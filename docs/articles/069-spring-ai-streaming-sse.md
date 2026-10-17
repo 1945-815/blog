@@ -126,7 +126,7 @@ curl -N -X POST "http://localhost:8080/api/ai/stream" \
 
 ### 与课程资料中的流式接口对照
 
-`10.14 SpringAI聊天应用开发/SpringAI聊天应用开发学习笔记.md` 记录的 Controller 返回 `Flux<String>`，并记录课堂前端直接消费文本流；笔记还说明曾把响应类型从 `text/event-stream` 改成 `text/html;charset=UTF-8`。`10.15 哄哄模拟器-SpringAI实/哄哄模拟器-SpringAI实战学习笔记.md` 也以 `Flux<String>` 记录模型增量输出，文字摘要中称作 SSE，但仅凭 `Flux` 无法确认服务端是否按 SSE 帧编码。
+`SpringAI聊天应用开发学习笔记.md` 记录的 Controller 返回 `Flux<String>`，并记录课堂前端直接消费文本流；笔记还说明曾把响应类型从 `text/event-stream` 改成 `text/html;charset=UTF-8`。`哄哄模拟器-SpringAI实战学习笔记.md` 也以 `Flux<String>` 记录模型增量输出，文字摘要中称作 SSE，但仅凭 `Flux` 无法确认服务端是否按 SSE 帧编码。
 
 因此本文保留两种实现的边界：课堂资料能证明使用了响应式文本流；本节代码额外把文本片段包装成标准 SSE 事件。它适合作为协议适配练习，不能据此声称课堂接口原本就是标准 SSE。
 
