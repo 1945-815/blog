@@ -37,8 +37,7 @@
 html { scroll-behavior: smooth; }
 body { background: var(--vp-c-bg); }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 3px; }
-.VPNav { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
-.VPNavBar { background: var(--vp-nav-bg-color) !important; }
+.VPNavBar { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); background: var(--vp-nav-bg-color) !important; }
 .VPNavBar .divider-line { background-color: var(--blog-line) !important; }
 .VPNavBarTitle .title { position: relative; font-weight: 760; letter-spacing: -.03em; }
 .brand-mark { display: block; flex: 0 0 26px; width: 26px; height: 26px; margin-right: 8px; }
