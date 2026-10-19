@@ -13,11 +13,11 @@ const selected = computed(() => {
 </script>
 
 <template>
-  <aside class="blog-sidebar" aria-label="作者信息与精选文章">
+  <aside v-reveal class="blog-sidebar" aria-label="作者信息与精选文章">
     <section class="side-card profile-card">
       <div class="profile-cover" :style="{ backgroundImage: `url(${withBase('/profile-cover-sea.jpg')})` }"></div>
       <div class="profile-content">
-        <img class="profile-avatar" :src="withBase('/avatar-patrick.jpg')" alt="派大星头像" width="80" height="80" />
+        <img class="profile-avatar" :src="withBase('/avatar-monogram.svg')" alt="Cyzee 字母头像" width="80" height="80" loading="lazy" />
         <h2>Cyzee</h2>
         <p class="profile-role">Java 后端开发者 · AI 应用探索者</p>
         <p class="profile-location"><MapPin :size="15" :stroke-width="1.8" aria-hidden="true" />中华人民共和国</p>

@@ -13,6 +13,7 @@ const definition = computed(() => topics.find((item) => item.id === props.topic)
 const scopedPosts = computed(() => topicArticles(articles, props.topic))
 const posts = computed(() => [...scopedPosts.value].reverse())
 const selectedTag = ref('')
+const showAllTags = ref(false)
 const subtopics = computed(() => {
   const options = topicTagOptions(articles, props.topic)
   if (selectedTag.value && !options.some((item) => tagKey(item.name) === tagKey(selectedTag.value))) {
@@ -23,6 +24,12 @@ const subtopics = computed(() => {
 const visiblePosts = computed(() => selectedTag.value
   ? posts.value.filter((article) => hasTag(article, selectedTag.value))
   : posts.value)
+const displayedSubtopics = computed(() => {
+  if (showAllTags.value) return subtopics.value
+  const first = subtopics.value.slice(0, 14)
+  const active = subtopics.value.find((item) => tagKey(item.name) === tagKey(selectedTag.value))
+  return active && !first.some((item) => tagKey(item.name) === tagKey(active.name)) ? [...first, active] : first
+})
 
 function syncFromUrl() {
   selectedTag.value = selectedCategoryTag()
@@ -41,7 +48,10 @@ onUnmounted(() => {
   window.removeEventListener('popstate', syncFromUrl)
   window.removeEventListener('blog-category-tag-change', syncFromUrl)
 })
-watch(() => props.topic, syncFromUrl)
+watch(() => props.topic, () => {
+  showAllTags.value = false
+  syncFromUrl()
+})
 </script>
 
 <template>
@@ -53,9 +63,10 @@ watch(() => props.topic, syncFromUrl)
       <p>{{ definition.description }} · {{ posts.length }} 篇已发布文章</p>
     </header>
     <div v-if="subtopics.length" class="subtopic-list" aria-label="相关标签">
-      <button v-for="item in subtopics" :key="item.name" type="button" :class="{ active: tagKey(selectedTag) === tagKey(item.name) }" :aria-pressed="tagKey(selectedTag) === tagKey(item.name)" @click="selectTag(item.name)">
+      <button v-for="item in displayedSubtopics" :key="item.name" type="button" :class="{ active: tagKey(selectedTag) === tagKey(item.name) }" :aria-pressed="tagKey(selectedTag) === tagKey(item.name)" @click="selectTag(item.name)">
         {{ item.name }} <span v-if="tagKey(selectedTag) === tagKey(item.name)" aria-hidden="true">✓</span> <b>{{ item.count }}</b>
       </button>
+      <button v-if="subtopics.length > 14" class="subtopic-toggle" type="button" :aria-expanded="showAllTags" @click="showAllTags = !showAllTags">{{ showAllTags ? '收起标签' : `显示全部 ${subtopics.length} 个标签` }}</button>
     </div>
     <p v-if="selectedTag" class="category-filter-status" role="status">标签「{{ selectedTag }}」· {{ visiblePosts.length }} 篇文章 <button type="button" @click="setCategoryTag(topic)">清除筛选</button></p>
     <div class="blog-main-grid">

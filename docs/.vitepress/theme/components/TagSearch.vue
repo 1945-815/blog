@@ -43,7 +43,7 @@ function toggleTag(name: string) {
 
 function goToPage(nextPage: number) {
   updateUrl(selected.value, nextPage)
-  document.getElementById('tag-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  document.getElementById('tag-results')?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' })
 }
 
 onMounted(() => {

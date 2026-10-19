@@ -13,15 +13,35 @@ import CategoriesHome from './components/CategoriesHome.vue'
 import BlogCategory from './components/BlogCategory.vue'
 import ArticleMeta from './components/ArticleMeta.vue'
 import TagSearch from './components/TagSearch.vue'
+import ReadingTools from './components/ReadingTools.vue'
 import './custom.css'
 
 export default {
   extends: DefaultTheme,
   Layout: () => h(DefaultTheme.Layout, null, {
     'nav-bar-title-before': () => h(BrandMark),
-    'doc-before': () => h(ArticleMeta)
+    'doc-before': () => h(ArticleMeta),
+    'layout-bottom': () => h(ReadingTools)
   }),
   enhanceApp({ app }) {
+    if (typeof window !== 'undefined' && 'IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          entry.target.classList.add('is-visible')
+          observer.unobserve(entry.target)
+        })
+      }, { rootMargin: '0px 0px -36px 0px', threshold: 0.04 })
+      app.directive('reveal', {
+        mounted(el: HTMLElement) {
+          el.classList.add('reveal-pending')
+          observer.observe(el)
+        },
+        unmounted(el: HTMLElement) { observer.unobserve(el) }
+      })
+    } else {
+      app.directive('reveal', {})
+    }
     app.component('BlogNavItem', Header)
     app.component('Banner', Banner)
     app.component('ArticleCard', ArticleCard)
