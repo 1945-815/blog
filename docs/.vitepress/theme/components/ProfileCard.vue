@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { withBase } from 'vitepress'
-import { Github, MapPin } from 'lucide-vue-next'
 import type { BlogArticle } from '../../../articles.data'
 import ContactCard from './ContactCard.vue'
+import { profile } from '../data/profile'
 
 const props = defineProps<{ articles: BlogArticle[] }>()
 const selected = computed(() => {
@@ -17,20 +17,19 @@ const selected = computed(() => {
     <section class="side-card profile-card">
       <div class="profile-cover" :style="{ backgroundImage: `url(${withBase('/profile-cover-sea.jpg')})` }"></div>
       <div class="profile-content">
-        <img class="profile-avatar" :src="withBase('/avatar-monogram.svg')" alt="Cyzee 字母头像" width="80" height="80" loading="lazy" />
-        <h2>Cyzee</h2>
-        <p class="profile-role">Java 后端开发者 · AI 应用探索者</p>
-        <p class="profile-location"><MapPin :size="15" :stroke-width="1.8" aria-hidden="true" />中华人民共和国</p>
+        <img class="profile-avatar" :src="withBase('/avatar-monogram.svg')" alt="张耘璨的文字头像" width="80" height="80" loading="lazy" />
+        <h2>{{ profile.name }}</h2>
+        <p class="profile-role">{{ profile.nickname }} · {{ profile.headline }}</p>
+        <p class="profile-location">{{ profile.education.school }} · {{ profile.education.major }}</p>
         <ContactCard />
-        <p class="profile-about">写下可解释的技术选择，也记录学习与实践之间的距离。</p>
-        <div class="profile-skills"><span v-for="skill in ['Java', 'Spring Boot', 'Spring Cloud', 'Redis', 'RabbitMQ', 'Elasticsearch', 'RAG']" :key="skill">{{ skill }}</span></div>
-        <div class="profile-links"><a href="https://github.com/1945-815" target="_blank" rel="noopener noreferrer"><Github :size="15" :stroke-width="1.8" aria-hidden="true" />GitHub ↗</a></div>
+        <p class="profile-about">{{ profile.introduction }}</p>
+        <div class="profile-skills"><span v-for="skill in ['Java', 'Spring Boot', 'MySQL', 'Redis', 'RabbitMQ', 'Elasticsearch', 'RAG']" :key="skill">{{ skill }}</span></div>
       </div>
     </section>
     <section class="side-card featured-card">
       <div class="side-heading"><span class="side-heading-mark"></span><h2>精选文章</h2></div>
       <ol><li v-for="(article, index) in selected" :key="article.url"><span>{{ String(index + 1).padStart(2, '0') }}</span><a :href="withBase(article.url)">{{ article.title }}</a></li></ol>
     </section>
-    <section class="side-card side-note"><span class="side-heading-mark"></span><h2>关于这个博客</h2><p>属于Cyzee的个人博客,仅供个人复盘</p><a :href="withBase('/roadmap')">查看成长路线 →</a></section>
+    <section class="side-card side-note"><span class="side-heading-mark"></span><h2>关于这个博客</h2><p>记录工程实践、项目复盘与 AI 应用探索。</p><a :href="withBase('/about')">关于我 →</a></section>
   </aside>
 </template>

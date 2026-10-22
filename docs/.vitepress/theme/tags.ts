@@ -1,19 +1,7 @@
 import { withBase } from 'vitepress'
 import type { BlogArticle } from '../../articles.data'
-import { belongsTo, topicArticles, topics } from './blog'
+import { belongsTo, topics } from './blog'
 import type { TopicId } from './blog'
-
-// Empty topics remain visible as learning directions. Published tag counts come from Front Matter.
-const topicSuggestions: Partial<Record<TopicId, readonly string[]>> = {
-  java: ['Java 基础', 'JVM', '集合', '并发'],
-  spring: ['Spring Boot', 'Spring Cloud', 'MyBatis'],
-  microservices: ['Spring Boot', 'Spring Cloud', 'Nacos', 'Gateway', 'OpenFeign'],
-  database: ['MySQL', 'Redis', 'Elasticsearch', 'MongoDB'],
-  middleware: ['Redis', 'RabbitMQ', 'Elasticsearch'],
-  ai: ['RAG', 'Agent', 'LLM', '向量数据库'],
-  frontend: ['Vue', 'React', 'TypeScript'],
-  notes: ['实习', '项目复盘', '接口设计']
-}
 
 export interface TagOption { name: string; count: number }
 
@@ -40,10 +28,8 @@ export function tagCount(articles: BlogArticle[], name: string) {
 }
 
 export function topicTagOptions(articles: BlogArticle[], topic: TopicId): TagOption[] {
-  const scopedArticles = topicArticles(articles, topic)
-  const names = scopedArticles.length
-    ? [...new Map(scopedArticles.flatMap((article) => article.tags).map((name) => [tagKey(name), name.trim()])).values()]
-    : [...(topicSuggestions[topic] || [])]
+  const scopedArticles = articles.filter((article) => belongsTo(article, topic))
+  const names = [...new Map(scopedArticles.flatMap(articleTagNames).map((name) => [tagKey(name), name.trim()])).values()]
 
   return names
     .map((name) => ({ name, count: tagCount(scopedArticles, name) }))
@@ -51,7 +37,7 @@ export function topicTagOptions(articles: BlogArticle[], topic: TopicId): TagOpt
 }
 
 export function allTagOptions(articles: BlogArticle[]): TagOption[] {
-  const names = [...new Set([...Object.values(topicSuggestions).flat(), ...articles.flatMap(articleTagNames)])]
+  const names = [...new Set(articles.flatMap(articleTagNames))]
   return names.map((name) => ({ name, count: tagCount(articles, name) }))
     .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, 'zh-CN'))
 }
@@ -83,7 +69,7 @@ export function onCategoryTagLinkClick(event: MouseEvent, topic: TopicId, name: 
 // Article tags outside a category page still open an existing category with the tag preselected.
 export function topicForTag(articles: BlogArticle[], name: string, article?: BlogArticle): TopicId {
   const matching = topics.map((topic) => topic.id).filter((topic) =>
-    topicSuggestions[topic]?.some((suggestion) => tagKey(suggestion) === tagKey(name))
+    articles.some((item) => belongsTo(item, topic) && hasTag(item, name))
   )
   if (article) {
     const ownTopic = matching.find((topic) => belongsTo(article, topic))

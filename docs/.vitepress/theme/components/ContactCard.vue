@@ -1,17 +1,23 @@
 <script setup lang="ts">
-import { MessageCircle } from 'lucide-vue-next'
-import QqIcon from './QqIcon.vue'
+import BrandIcon from './BrandIcon.vue'
+import { contacts } from '../data/contacts'
 </script>
 
 <template>
-  <div class="contact-card" aria-label="联系方式">
-    <div class="contact-item">
-      <button type="button" aria-describedby="wechat-tooltip"><MessageCircle :size="16" :stroke-width="1.8" aria-hidden="true" /><span>微信</span></button>
-      <div id="wechat-tooltip" class="contact-popover" role="tooltip">微信号：<strong>z2645021509</strong></div>
+  <section id="contact" class="contact-panel" aria-labelledby="contact-title">
+    <h3 id="contact-title">联系我 <span aria-hidden="true">›</span></h3>
+    <div class="contact-card">
+      <template v-for="contact in contacts" :key="contact.id">
+        <a v-if="contact.href" class="contact-pill" :href="contact.href" target="_blank" rel="noopener noreferrer">
+          <BrandIcon :name="contact.id" />
+          <span>{{ contact.label }}</span>
+        </a>
+        <span v-else class="contact-pill is-unavailable" :title="contact.missingHint" :aria-label="`${contact.label}：${contact.missingHint}`" aria-disabled="true">
+          <BrandIcon :name="contact.id" />
+          <span>{{ contact.label }}</span>
+          <small>待补充</small>
+        </span>
+      </template>
     </div>
-    <div class="contact-item contact-qq">
-      <button type="button" aria-describedby="qq-tooltip"><QqIcon /><span>QQ</span></button>
-      <div id="qq-tooltip" class="contact-popover" role="tooltip">QQ: <strong>zyc545@qq.com</strong></div>
-    </div>
-  </div>
+  </section>
 </template>
