@@ -1,4 +1,4 @@
-import { h } from 'vue'
+import { defineAsyncComponent, h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import Header from './components/Header.vue'
@@ -14,14 +14,24 @@ import BlogCategory from './components/BlogCategory.vue'
 import ArticleMeta from './components/ArticleMeta.vue'
 import TagSearch from './components/TagSearch.vue'
 import ReadingTools from './components/ReadingTools.vue'
+import ArticleRelations from './components/ArticleRelations.vue'
+import ContactCard from './components/ContactCard.vue'
 import './custom.css'
+
+const MusicPlayer = defineAsyncComponent(() => import('./components/MusicPlayer.vue'))
+const ArticleImageLightbox = defineAsyncComponent(() => import('./components/ArticleImageLightbox.vue'))
+const AlbumPage = defineAsyncComponent(() => import('./components/AlbumPage.vue'))
+const FriendsPage = defineAsyncComponent(() => import('./components/FriendsPage.vue'))
+const MomentsPage = defineAsyncComponent(() => import('./components/MomentsPage.vue'))
+const MusicPage = defineAsyncComponent(() => import('./components/MusicPage.vue'))
 
 export default {
   extends: DefaultTheme,
   Layout: () => h(DefaultTheme.Layout, null, {
     'nav-bar-title-before': () => h(BrandMark),
     'doc-before': () => h(ArticleMeta),
-    'layout-bottom': () => h(ReadingTools)
+    'doc-after': () => h(ArticleRelations),
+    'layout-bottom': () => h('div', { class: 'global-site-tools' }, [h(ReadingTools), h(ArticleImageLightbox), h(MusicPlayer)])
   }),
   enhanceApp({ app }) {
     if (typeof window !== 'undefined' && 'IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -52,5 +62,10 @@ export default {
     app.component('CategoriesHome', CategoriesHome)
     app.component('BlogCategory', BlogCategory)
     app.component('TagSearch', TagSearch)
+    app.component('ContactCard', ContactCard)
+    app.component('AlbumPage', AlbumPage)
+    app.component('FriendsPage', FriendsPage)
+    app.component('MomentsPage', MomentsPage)
+    app.component('MusicPage', MusicPage)
   }
 } satisfies Theme

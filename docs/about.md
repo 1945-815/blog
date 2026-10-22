@@ -1,34 +1,53 @@
+---
+title: 关于我
+description: 张耘璨的教育背景、Java 后端实习经历与技术方向。
+---
+
+<script setup lang="ts">
+import { profile } from './.vitepress/theme/data/profile'
+import ContactCard from './.vitepress/theme/components/ContactCard.vue'
+</script>
+
 # 关于我
 
-我叫 Cyzee，是沈阳理工大学计算机科学与技术专业本科生，求职方向是 Java 后端开发。这个站点用于记录后端工程实践、项目复盘和 AI 应用探索。
+你好，我是**张耘璨（Cyzee）**，沈阳理工大学计算机科学与技术专业本科生，求职方向是 Java 后端开发，兼顾 AI 应用开发。
 
-## 我关注的方向
+我关注 Java 服务端开发、数据访问与检索，也在探索 RAG、Embedding、MCP 等 AI 应用能力。本站保留真实文章与项目复盘，职业信息以当前公开的简历摘要为准。
 
-- Java 与 Spring Boot 业务开发
-- MySQL、Redis 与 Elasticsearch 数据访问和检索
-- Activiti 审批流程及微服务组件
-- 文档检索与 RAG 应用集成
+## 教育背景
 
-## 学习与项目时间
+| 学校 | 专业 | 学历 | 时间 |
+| --- | --- | --- | --- |
+| 沈阳理工大学 | 计算机科学与技术 | 本科（一本） | 2023.09—2027.07 |
 
-<div class="timeline-item"><time>2023.09—2027.07</time><div><strong>沈阳理工大学 · 计算机科学与技术</strong><p>本科在读。该区间来自简历教育经历。</p></div></div>
-<div class="timeline-item"><time>2023.10.11—2025.12.30</time><div><strong>Java 基础与后端能力学习阶段</strong><p>按本次内容规划回顾 Java 核心、Spring 与数据库等学习主题；不代表博客当时已发布。</p></div></div>
-<div class="timeline-item"><time>2026.01.06—2026.09.30</time><div><strong>Java 后端实习阶段</strong><p>结合简历中的接口、项目协作与问题定位经历整理可公开的复盘。</p></div></div>
+## 实习经历
 
-## 简历摘要
+**辽宁若水科技有限公司｜Java 后端开发**　`2026.01—2026.09`
 
-简历中记录了 2026 年 1 月至 9 月的 Java 后端实习经历，以及两个业务项目：一个面向文档管理、检索和知识问答；另一个面向预约、服务订单和内部审批。具体项目介绍见[项目复盘](/projects)。
+- 参与业务系统熟悉及历史代码维护。
+- 独立负责两个核心模块，累计完成 20 余项 RESTful API。
+- 参与系统联调，与前端协作定位并修复测试阶段业务问题 10 余项。
 
-简历也记录了在校期间的 GPA、专业排名、竞赛奖项和校园技术团队经历。为保护个人隐私，本站只保留公开专业资料，不展示手机号和私人邮箱；技术交流可围绕公开文章和代码仓库展开。
+## 技术方向
 
-## 内容标注
+<div class="skill-groups about-skill-groups">
+  <div v-for="group in profile.skillGroups" :key="group.title" class="skill-group">
+    <h3>{{ group.title }}</h3>
+    <div class="skill-pills"><span v-for="skill in group.skills" :key="skill">{{ skill }}</span></div>
+  </div>
+</div>
 
-文章会区分三种内容：
+## 项目经历
 
-- **简历经历：**只描述简历和本人可确认的工作内容。
-- **个人实践：**基于公开资料或自建 Demo 的练习，不写成企业项目成果。
-- **规划与回顾：**路线图日期代表内容整理顺序，不代表历史发布记录。
+- [智文知识管理平台](/projects/knowledge-management-platform)：文档管理、全文检索与 RAG 智能问答。
+- [牙管家](/projects/dental-clinic-manager)：预约、诊疗订单、项目管理与 Activiti 7 审批。
 
-## 站点
+## 联系我
 
-本站以 Markdown 记录技术主题、项目复盘和个人实践。文章会持续整理，尚未核实或无法公开的经历不会作为事实发布。
+<ContactCard />
+
+手机号和私人邮箱默认不在公开页面展示。QQ、BiliBili 与网易云音乐地址尚待补充；公开入口只会在地址核实后启用。
+
+## 内容说明
+
+文章 frontmatter 中的 `date` 保留原始字段含义；`plan_date` 用于阶段参考或内容规划。页面会明确标出这两个字段，不将它们统一解释为真实公开发布日期。企业经历只做经许可的脱敏表达，个人练习也不会写成企业项目成果。

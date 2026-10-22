@@ -14,13 +14,13 @@ import { ArrowDown, ArrowUpRight } from 'lucide-vue-next'
       fetchpriority="high"
     />
     <div class="blog-banner-inner">
-      <p class="hero-kicker">CYZEE <span aria-hidden="true">/</span> 技术笔记</p>
-      <h1 id="welcome-title">你好<span class="hero-punctuation">！</span></h1>
-      <p class="hero-lead">欢迎来到我的技术博客</p>
-      <p class="hero-description">记录 Java 后端开发、AI 应用探索与个人成长。<br class="hero-desktop-break" />从一篇篇实践笔记出发，继续向前。</p>
-      <a class="hero-action" href="#latest-articles">探索博客 <ArrowUpRight :size="19" :stroke-width="1.8" aria-hidden="true" /></a>
+      <p class="hero-kicker">CYZEE <span aria-hidden="true">/</span> 2027 届 · 求职展示</p>
+      <h1 id="welcome-title">张耘璨<span class="hero-punctuation">。</span></h1>
+      <p class="hero-lead">Java 后端开发 · AI 应用探索</p>
+      <p class="hero-description">九个月企业 Java 后端实习经历，参与接口开发、功能联调与问题定位。<br class="hero-desktop-break" />记录工程实践，也分享正在探索的 AI 应用。</p>
+      <a class="hero-action" href="#career-title">了解我的经历 <ArrowUpRight :size="19" :stroke-width="1.8" aria-hidden="true" /></a>
     </div>
-    <a class="hero-scroll" href="#latest-articles" aria-label="向下滚动，浏览博客文章">
+    <a class="hero-scroll" href="#career-title" aria-label="向下滚动，浏览个人经历">
       <span>SCROLL TO EXPLORE</span>
       <ArrowDown :size="17" :stroke-width="1.7" aria-hidden="true" />
     </a>

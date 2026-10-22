@@ -1,0 +1,43 @@
+name: 申请友情链接
+description: 提交真实的网站信息，供站点维护者人工审核。
+title: "友链申请："
+body:
+  - type: input
+    id: name
+    attributes:
+      label: 网站名称
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: 网站主页地址
+      placeholder: https://example.com
+    validations:
+      required: true
+  - type: input
+    id: logo
+    attributes:
+      label: Logo 地址（可选）
+      placeholder: https://example.com/logo.png
+  - type: textarea
+    id: description
+    attributes:
+      label: 网站简介
+      description: 请简要说明网站主题。
+    validations:
+      required: true
+  - type: input
+    id: category
+    attributes:
+      label: 分类
+      placeholder: 技术博客、设计、生活等
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: 确认
+      options:
+        - label: 我确认以上信息真实，网站可以正常访问。
+          required: true

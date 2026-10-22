@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed, defineComponent, h, inject, ref, type VNode } from 'vue'
 import { useRoute, withBase } from 'vitepress'
-import { House, Network, NotebookPen, UserRound, ChevronDown, BookOpen } from 'lucide-vue-next'
+import { House, Network, NotebookPen, UserRound, ChevronDown, BookOpen, Send } from 'lucide-vue-next'
+import type { ContactId } from '../data/contacts'
+import BrandIcon from './BrandIcon.vue'
 
-type NavIcon = 'home' | 'code' | 'network' | 'database' | 'ai' | 'frontend' | 'notes' | 'about' | 'python' | 'peripheral' | 'help'
-type NavLink = { label: string; href: string }
+type NavIcon = 'home' | 'code' | 'network' | 'database' | 'ai' | 'frontend' | 'notes' | 'about' | 'python' | 'peripheral' | 'help' | 'contact'
+type NavLink = { label: string; href?: string; icon?: ContactId; external?: boolean; hint?: string }
 const props = defineProps<{ label: string; icon: NavIcon; href: string; links?: NavLink[]; screenMenu?: boolean; align?: 'start' | 'end' }>()
 
 function createNavIcon(name: string, draw: (strokeWidth: number) => VNode[]) {
@@ -86,14 +88,20 @@ const icons = {
   about: UserRound,
   python: PythonNavIcon,
   peripheral: PeripheralNavIcon,
-  help: BookOpen
+  help: BookOpen,
+  contact: Send
 }
 const route = useRoute()
 const closeScreen = inject<(() => void) | undefined>('close-screen', undefined)
 function isLinkActive(href: string) {
-  const path = withBase(href.split('?')[0]).replace(/\/$/, '') || '/'
+  if (/^https?:\/\//.test(href)) return false
+  const path = withBase(href.split(/[?#]/)[0]).replace(/\/$/, '') || '/'
   const currentPath = route.path.replace(/\/$/, '') || '/'
   return currentPath === path || currentPath === `${path}.html`
+}
+
+function linkHref(href: string) {
+  return /^https?:\/\//.test(href) ? href : withBase(href)
 }
 
 const active = computed(() => isLinkActive(props.href))
@@ -134,7 +142,18 @@ function onMenuClick(event: MouseEvent) {
       <button v-if="screenMenu && links?.length" class="mobile-tag-toggle" type="button" :aria-label="label + '子菜单'" :aria-expanded="mobileExpanded" @click="mobileExpanded = !mobileExpanded"><ChevronDown :size="16" aria-hidden="true" /></button>
     </div>
     <div v-if="links?.length && (!screenMenu || mobileExpanded)" class="nav-tag-dropdown" :class="{ 'mobile-tags': screenMenu, 'nav-tag-dropdown--end': align === 'end' }" :aria-label="label + '子菜单'">
-      <a v-for="link in links" :key="link.href" class="nav-tag-link" :class="{ 'is-current': isLinkActive(link.href) }" :href="withBase(link.href)" :aria-current="isLinkActive(link.href) ? 'page' : undefined" @click="onMenuClick"><span>{{ link.label }}</span></a>
+      <template v-for="link in links" :key="link.label">
+        <a v-if="link.href" class="nav-tag-link" :class="{ 'is-current': isLinkActive(link.href) }" :href="linkHref(link.href)" :target="link.external ? '_blank' : undefined" :rel="link.external ? 'noopener noreferrer' : undefined" :aria-current="isLinkActive(link.href) ? 'page' : undefined" @click="onMenuClick">
+          <BrandIcon v-if="link.icon" :name="link.icon" :size="16" />
+          <span>{{ link.label }}</span>
+          <small v-if="link.external" class="nav-external-mark" aria-hidden="true">↗</small>
+        </a>
+        <span v-else class="nav-tag-link is-unavailable" aria-disabled="true" :title="link.hint">
+          <BrandIcon v-if="link.icon" :name="link.icon" :size="16" />
+          <span>{{ link.label }}</span>
+          <small>{{ link.hint || '地址待补充' }}</small>
+        </span>
+      </template>
     </div>
   </div>
 </template>

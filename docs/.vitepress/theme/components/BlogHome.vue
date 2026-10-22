@@ -8,6 +8,8 @@ import Banner from './Banner.vue'
 import ArticleCard from './ArticleCard.vue'
 import ProfileCard from './ProfileCard.vue'
 import CategoryCard from './CategoryCard.vue'
+import CareerOverview from './CareerOverview.vue'
+import LifePreview from './LifePreview.vue'
 
 const latest = computed(() => [...articles].reverse().slice(0, 8))
 const popularTags = allTagOptions(articles).filter((item) => item.count > 0).slice(0, 7)
@@ -39,6 +41,7 @@ onUnmounted(() => window.removeEventListener('popstate', syncFromUrl))
 <template>
   <div class="blog-home">
     <Banner />
+    <CareerOverview />
     <div class="blog-shell">
       <div class="blog-main-grid">
         <main class="blog-feed" id="latest-articles">
@@ -51,7 +54,8 @@ onUnmounted(() => window.removeEventListener('popstate', syncFromUrl))
         </main>
         <ProfileCard :articles="articles" />
       </div>
-      <section v-reveal class="home-categories" aria-labelledby="category-title"><div class="section-heading"><div><p class="section-eyebrow">EXPLORE BY TOPIC</p><h2 id="category-title">按技术方向阅读</h2></div><a :href="withBase('/categories/')">全部分类 ↗</a></div><div class="category-grid"><CategoryCard v-for="topic in topics.filter((item) => !['python', 'frontend', 'notes'].includes(item.id))" :key="topic.id" v-bind="topic" :count="topicArticles(articles, topic.id).length" /></div></section>
+      <section v-reveal class="home-categories" aria-labelledby="category-title"><div class="section-heading"><div><p class="section-eyebrow">EXPLORE BY TOPIC</p><h2 id="category-title">按技术方向阅读</h2></div><a :href="withBase('/categories/')">全部分类 ↗</a></div><div class="category-grid"><CategoryCard v-for="topic in topics.filter((item) => topicArticles(articles, item.id).length)" :key="topic.id" v-bind="topic" :count="topicArticles(articles, topic.id).length" /></div></section>
+      <LifePreview />
     </div>
   </div>
 </template>
