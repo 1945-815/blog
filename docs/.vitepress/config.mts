@@ -1,12 +1,13 @@
 import { defineConfig } from 'vitepress'
 import { contacts } from './theme/data/contacts'
 
-const contactLinks = contacts.map((contact) => ({
+const contactLinks = contacts.filter((contact) => contact.href).map((contact) => ({
   label: contact.label,
   href: contact.href,
+  appHref: contact.appHref,
   icon: contact.id,
   external: Boolean(contact.href),
-  hint: contact.value || contact.missingHint
+  hint: contact.missingHint
 }))
 
 export default defineConfig({

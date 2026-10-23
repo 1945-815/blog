@@ -46,7 +46,7 @@ import ContactCard from './.vitepress/theme/components/ContactCard.vue'
 
 <ContactCard />
 
-手机号和私人邮箱默认不在公开页面展示。上方 QQ、BiliBili、网易云音乐与微信联系方式由本人提供并公开显示。
+QQ 号、微信号、手机号和私人邮箱不会直接显示。点击微信卡片会复制微信号并尝试打开微信；在手机上点击 QQ、BiliBili 或网易云，会尝试打开对应应用，未能打开时跳转到网页。
 
 ## 内容说明
 

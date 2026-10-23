@@ -70,4 +70,4 @@ npm run docs:build
 
 ## 联系入口
 
-编辑 `docs/.vitepress/theme/data/contacts.ts`。GitHub 地址已核实；QQ、BiliBili 和网易云音乐目标地址需要本人补充后，联系按钮才会启用。不要用占位链接代替真实账号。
+编辑 `docs/.vitepress/theme/data/contacts.ts`。`href` 是电脑和手机的网页回退地址，`appHref` 是移动端尝试唤起的应用链接。QQ 和微信账号不会直接渲染到页面文字中；微信卡片会复制账号并尝试打开微信，用户需在微信中搜索添加。不要在可见文案或无障碍标签里输出 `copyValue`。
