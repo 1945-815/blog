@@ -3,10 +3,11 @@ import { computed, defineComponent, h, inject, ref, type VNode } from 'vue'
 import { useRoute, withBase } from 'vitepress'
 import { House, Network, NotebookPen, UserRound, ChevronDown, BookOpen, Send } from 'lucide-vue-next'
 import type { ContactId } from '../data/contacts'
+import { isMobileDevice, openAppWithFallback } from '../utils/contactActions'
 import BrandIcon from './BrandIcon.vue'
 
 type NavIcon = 'home' | 'code' | 'network' | 'database' | 'ai' | 'frontend' | 'notes' | 'about' | 'python' | 'peripheral' | 'help' | 'contact'
-type NavLink = { label: string; href?: string; icon?: ContactId; external?: boolean; hint?: string }
+type NavLink = { label: string; href?: string; appHref?: string; icon?: ContactId; external?: boolean; hint?: string }
 const props = defineProps<{ label: string; icon: NavIcon; href: string; links?: NavLink[]; screenMenu?: boolean; align?: 'start' | 'end' }>()
 
 function createNavIcon(name: string, draw: (strokeWidth: number) => VNode[]) {
@@ -104,6 +105,12 @@ function linkHref(href: string) {
   return /^https?:\/\//.test(href) ? href : withBase(href)
 }
 
+function onContactLinkClick(event: MouseEvent, link: NavLink) {
+  if (!link.appHref || !link.href || !isMobileDevice()) return
+  event.preventDefault()
+  openAppWithFallback(link.appHref, link.href)
+}
+
 const active = computed(() => isLinkActive(props.href))
 const mobileExpanded = ref(false)
 const hovered = ref(false)
@@ -143,7 +150,7 @@ function onMenuClick(event: MouseEvent) {
     </div>
     <div v-if="links?.length && (!screenMenu || mobileExpanded)" class="nav-tag-dropdown" :class="{ 'mobile-tags': screenMenu, 'nav-tag-dropdown--end': align === 'end' }" :aria-label="label + '子菜单'">
       <template v-for="link in links" :key="link.label">
-        <a v-if="link.href" class="nav-tag-link" :class="{ 'is-current': isLinkActive(link.href) }" :href="linkHref(link.href)" :target="link.external ? '_blank' : undefined" :rel="link.external ? 'noopener noreferrer' : undefined" :aria-current="isLinkActive(link.href) ? 'page' : undefined" @click="onMenuClick">
+        <a v-if="link.href" class="nav-tag-link" :class="{ 'is-current': isLinkActive(link.href) }" :href="linkHref(link.href)" :aria-current="isLinkActive(link.href) ? 'page' : undefined" @click="onContactLinkClick($event, link); onMenuClick($event)">
           <BrandIcon v-if="link.icon" :name="link.icon" :size="16" />
           <span>{{ link.label }}</span>
           <small v-if="link.external" class="nav-external-mark" aria-hidden="true">↗</small>
