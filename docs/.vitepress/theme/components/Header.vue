@@ -148,7 +148,7 @@ function onMenuClick(event: MouseEvent) {
           <span>{{ link.label }}</span>
           <small v-if="link.external" class="nav-external-mark" aria-hidden="true">↗</small>
         </a>
-        <span v-else class="nav-tag-link is-unavailable" aria-disabled="true" :title="link.hint">
+        <span v-else class="nav-tag-link" :class="link.hint ? 'is-contact-info' : 'is-unavailable'" :aria-disabled="link.hint ? undefined : 'true'" :title="link.hint">
           <BrandIcon v-if="link.icon" :name="link.icon" :size="16" />
           <span>{{ link.label }}</span>
           <small>{{ link.hint || '地址待补充' }}</small>

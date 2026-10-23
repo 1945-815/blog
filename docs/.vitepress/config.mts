@@ -6,7 +6,7 @@ const contactLinks = contacts.map((contact) => ({
   href: contact.href,
   icon: contact.id,
   external: Boolean(contact.href),
-  hint: contact.missingHint
+  hint: contact.value || contact.missingHint
 }))
 
 export default defineConfig({

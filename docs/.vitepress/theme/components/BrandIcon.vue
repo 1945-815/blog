@@ -16,6 +16,14 @@ defineProps<{ name: ContactId; size?: number }>()
     <rect x="3" y="6" width="18" height="14" rx="3" />
     <path d="M8.5 11v3M15.5 11v3M8 20l-1 2M16 20l1 2" />
   </svg>
+  <svg v-else-if="name === 'wechat'" :width="size || 18" :height="size || 18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M9.4 4.2c-4 0-7.2 2.5-7.2 5.6 0 1.8 1.1 3.4 2.8 4.4l-.7 2.3 2.9-1.4c.7.2 1.5.3 2.2.3.2 0 .4 0 .6-.1-.3-.6-.5-1.2-.5-1.9 0-2.7 2.7-4.9 6.1-4.9h.6c-.6-2.5-3.4-4.3-6.8-4.3Z" />
+    <path d="M15.4 10.1c-3.2 0-5.8 1.8-5.8 4.1s2.6 4.1 5.8 4.1c.7 0 1.4-.1 2-.3l2.3 1.1-.5-1.8c1.3-.7 2.1-1.8 2.1-3.1 0-2.3-2.7-4.1-5.9-4.1Z" />
+    <circle cx="7.2" cy="9.5" r=".5" fill="currentColor" stroke="none" />
+    <circle cx="11.4" cy="9.5" r=".5" fill="currentColor" stroke="none" />
+    <circle cx="13.5" cy="14.1" r=".5" fill="currentColor" stroke="none" />
+    <circle cx="17.3" cy="14.1" r=".5" fill="currentColor" stroke="none" />
+  </svg>
   <svg v-else :width="size || 18" :height="size || 18" viewBox="0 0 24 24" aria-hidden="true">
     <circle cx="12" cy="12" r="11" fill="#d33a32" />
     <path d="M7 15.8c2.2-.2 3.8-1.4 4.5-3.5.4-1.2.4-2.6.3-4.2 2.1 1.6 4.8 2.7 6.3 3.6-1.1 2.7-3.9 4.9-7.7 5.1 2.4-.7 4.2-1.8 5.1-3.5-2.1-.6-4.4-1.6-5.9-2.9-.1 2.7-1 4.3-2.6 5.4Z" fill="#fff" />
