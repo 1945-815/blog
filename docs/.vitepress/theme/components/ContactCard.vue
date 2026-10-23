@@ -17,7 +17,7 @@ async function handleWechatClick() {
   if (!wechat.copyValue) return
   const copyPromise = copyText(wechat.copyValue)
   wechatStatus.value = '正在复制微信号…'
-  if (isMobileDevice() && wechat.appHref) openAppWithFallback(wechat.appHref)
+  if (wechat.appHref) openAppWithFallback(wechat.appHref)
   wechatStatus.value = await copyPromise
     ? '微信号已复制，可在微信中搜索添加'
     : '复制失败，请检查浏览器权限'
