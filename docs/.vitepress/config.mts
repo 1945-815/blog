@@ -1,5 +1,33 @@
 import { defineConfig } from 'vitepress'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
+import { join } from 'node:path'
 import { contacts } from './theme/data/contacts'
+
+// Keep the hand-curated phase order intact and append articles that do not yet
+// have a manual sidebar entry. This keeps new article pages reachable
+// while preserving the hand-curated navigation.
+const docsDirectory = existsSync(join(process.cwd(), 'articles')) ? process.cwd() : join(process.cwd(), 'docs')
+const articleDirectory = join(docsDirectory, 'articles')
+const currentConfig = readFileSync(join(docsDirectory, '.vitepress', 'config.mts'), 'utf8')
+const manuallyLinkedSlugs = new Set([...currentConfig.matchAll(/link:\s*["']\/articles\/([^"']+)["']/g)].map((match) => match[1]))
+const automaticArticleLinks = readdirSync(articleDirectory, { withFileTypes: true })
+  .filter((entry) => entry.isFile() && entry.name.endsWith('.md') && entry.name !== 'index.md')
+  .map((entry) => {
+    const slug = entry.name.slice(0, -3)
+    const markdown = readFileSync(join(articleDirectory, entry.name), 'utf8')
+    const frontmatter = markdown.match(/^---\r?\n([\s\S]*?)\r?\n---/)
+    const header = frontmatter?.[1] || ''
+    const titleMatch = header.match(/^title:\s*(?:"((?:\\.|[^"])*)"|'([^']*)'|(.+))\s*$/m)
+    let title = titleMatch?.[1] || titleMatch?.[2] || titleMatch?.[3]?.trim() || slug
+    if (titleMatch?.[1]) {
+      try { title = JSON.parse(`"${titleMatch[1]}"`) } catch { /* keep the displayed title as written */ }
+    }
+    const planDate = header.match(/^plan_date:\s*["']?([^"'\r\n]+)["']?\s*$/m)?.[1]?.trim() || ''
+    return { slug, title, planDate }
+  })
+  .filter((article) => !manuallyLinkedSlugs.has(article.slug))
+  .sort((a, b) => a.planDate.localeCompare(b.planDate) || a.slug.localeCompare(b.slug))
+  .map((article) => ({ text: article.title, link: `/articles/${article.slug}` }))
 
 const contactLinks = contacts.filter((contact) => contact.href).map((contact) => ({
   label: contact.label,
@@ -192,6 +220,7 @@ export default defineConfig({
             { text: "Hutool 常用工具类", link: "/articles/099-hutool-java-utilities" },
           ]
         },
+        ...(automaticArticleLinks.length ? [{ text: "自动收录文章", collapsed: true, items: automaticArticleLinks }] : [])
       ]
     },
     footer: {
