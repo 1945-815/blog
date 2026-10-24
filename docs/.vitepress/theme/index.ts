@@ -5,7 +5,6 @@ import Header from './components/Header.vue'
 import BrandMark from './components/BrandMark.vue'
 import Banner from './components/Banner.vue'
 import ArticleCard from './components/ArticleCard.vue'
-import ProfileCard from './components/ProfileCard.vue'
 import CategoryCard from './components/CategoryCard.vue'
 import BlogHome from './components/BlogHome.vue'
 import BlogList from './components/BlogList.vue'
@@ -16,6 +15,7 @@ import TagSearch from './components/TagSearch.vue'
 import ReadingTools from './components/ReadingTools.vue'
 import ArticleRelations from './components/ArticleRelations.vue'
 import ContactCard from './components/ContactCard.vue'
+import './components.css'
 import './custom.css'
 
 const MusicPlayer = defineAsyncComponent(() => import('./components/MusicPlayer.vue'))
@@ -55,7 +55,6 @@ export default {
     app.component('BlogNavItem', Header)
     app.component('Banner', Banner)
     app.component('ArticleCard', ArticleCard)
-    app.component('ProfileCard', ProfileCard)
     app.component('CategoryCard', CategoryCard)
     app.component('BlogHome', BlogHome)
     app.component('BlogList', BlogList)

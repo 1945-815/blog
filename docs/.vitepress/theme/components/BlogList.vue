@@ -6,7 +6,6 @@ import { belongsTo, topics } from '../blog'
 import type { TopicId } from '../blog'
 import { allTagOptions, hasTag, tagKey } from '../tags'
 import ArticleCard from './ArticleCard.vue'
-import ProfileCard from './ProfileCard.vue'
 
 type SortOrder = 'plan' | 'date-desc' | 'date-asc'
 
@@ -188,14 +187,11 @@ onUnmounted(() => window.removeEventListener('popstate', syncFromUrl))
       </div>
     </section>
 
-    <div class="blog-main-grid">
-      <main class="blog-feed" id="article-results">
+    <main class="blog-feed" id="article-results">
         <div class="section-heading"><div><p class="section-eyebrow">ARTICLE INDEX</p><h2>{{ hasFilters ? '筛选结果' : '全部文章' }}</h2><p aria-live="polite">显示 {{ visible.length }} / {{ matching.length }} 篇 · 第 {{ currentPage }} / {{ totalPages }} 页</p></div></div>
         <div v-if="visible.length" class="article-list"><ArticleCard v-for="article in visible" :key="article.url" :article="article" /></div>
         <div v-else class="empty-card"><h2>没有找到匹配文章</h2><p>试试更短的关键词、其他标签，或清除部分筛选条件。</p><button type="button" class="clear-tags" @click="clearFilters">查看全部文章 →</button></div>
         <nav v-if="totalPages > 1" class="tag-pagination" aria-label="文章分页"><button type="button" :disabled="currentPage === 1" @click="goToPage(currentPage - 1)">上一页</button><button v-for="number in totalPages" :key="number" type="button" :class="{ active: currentPage === number }" :aria-current="currentPage === number ? 'page' : undefined" @click="goToPage(number)">{{ number }}</button><button type="button" :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)">下一页</button></nav>
-      </main>
-      <ProfileCard :articles="articles" />
-    </div>
+    </main>
   </div>
 </template>

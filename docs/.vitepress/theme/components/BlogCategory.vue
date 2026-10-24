@@ -6,7 +6,6 @@ import { topics, topicArticles } from '../blog'
 import { hasTag, selectedCategoryTag, setCategoryTag, tagCount, tagKey, topicTagOptions } from '../tags'
 import type { TopicId } from '../blog'
 import ArticleCard from './ArticleCard.vue'
-import ProfileCard from './ProfileCard.vue'
 
 const props = defineProps<{ topic: TopicId }>()
 const definition = computed(() => topics.find((item) => item.id === props.topic)!)
@@ -60,7 +59,7 @@ watch(() => props.topic, () => {
       <a class="breadcrumb" :href="withBase('/categories/')">技术分类 /</a>
       <p class="section-eyebrow">{{ definition.icon }} / TOPIC</p>
       <h1>{{ definition.name }}</h1>
-      <p>{{ definition.description }} · {{ posts.length }} 篇已发布文章</p>
+      <p>{{ definition.description }} · {{ posts.length }} 篇文章</p>
     </header>
     <div v-if="subtopics.length" class="subtopic-list" aria-label="相关标签">
       <button v-for="item in displayedSubtopics" :key="item.name" type="button" :class="{ active: tagKey(selectedTag) === tagKey(item.name) }" :aria-pressed="tagKey(selectedTag) === tagKey(item.name)" @click="selectTag(item.name)">
@@ -69,8 +68,7 @@ watch(() => props.topic, () => {
       <button v-if="subtopics.length > 14" class="subtopic-toggle" type="button" :aria-expanded="showAllTags" @click="showAllTags = !showAllTags">{{ showAllTags ? '收起标签' : `显示全部 ${subtopics.length} 个标签` }}</button>
     </div>
     <p v-if="selectedTag" class="category-filter-status" role="status">标签「{{ selectedTag }}」· {{ visiblePosts.length }} 篇文章 <button type="button" @click="setCategoryTag(topic)">清除筛选</button></p>
-    <div class="blog-main-grid">
-      <main class="blog-feed">
+    <main class="blog-feed">
         <div v-if="visiblePosts.length" class="article-list"><ArticleCard v-for="article in visiblePosts" :key="article.url" :article="article" :topic="topic" /></div>
         <div v-else class="empty-card">
           <h2>{{ selectedTag ? '这个标签还没有文章' : '这个方向还没有文章' }}</h2>
@@ -78,8 +76,6 @@ watch(() => props.topic, () => {
           <button v-if="selectedTag" type="button" class="clear-tags" @click="setCategoryTag(topic)">清除筛选 →</button>
           <a v-else :href="withBase('/articles/')">先读全部文章 →</a>
         </div>
-      </main>
-      <ProfileCard :articles="articles" />
-    </div>
+    </main>
   </div>
 </template>

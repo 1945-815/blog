@@ -1,6 +1,6 @@
 ---
 title: 关于我
-description: 张耘璨的教育背景、Java 后端实习经历与技术方向。
+description: 张耘璨（Cyzee）的技术方向、学习记录与联系方式。
 ---
 
 <script setup lang="ts">
@@ -8,46 +8,32 @@ import { profile } from './.vitepress/theme/data/profile'
 import ContactCard from './.vitepress/theme/components/ContactCard.vue'
 </script>
 
+<div class="about-page">
+
 # 关于我
 
-你好，我是**张耘璨（Cyzee）**，沈阳理工大学计算机科学与技术专业本科生，求职方向是 Java 后端开发，兼顾 AI 应用开发。
+<p class="about-lead">你好，我是 <strong>张耘璨（Cyzee）</strong>。这里记录我对 Java 后端、Spring 生态和 AI 应用开发的学习，也留一些日常思考。</p>
 
-我关注 Java 服务端开发、数据访问与检索，也在探索 RAG、Embedding、MCP 等 AI 应用能力。本站保留真实文章与项目复盘，职业信息以当前公开的简历摘要为准。
+## 关注的技术
 
-## 教育背景
-
-| 学校 | 专业 | 学历 | 时间 |
-| --- | --- | --- | --- |
-| 沈阳理工大学 | 计算机科学与技术 | 本科（一本） | 2023.09—2027.07 |
-
-## 实习经历
-
-**辽宁若水科技有限公司｜Java 后端开发**　`2026.01—2026.09`
-
-- 参与业务系统熟悉及历史代码维护。
-- 独立负责两个核心模块，累计完成 20 余项 RESTful API。
-- 参与系统联调，与前端协作定位并修复测试阶段业务问题 10 余项。
-
-## 技术方向
-
-<div class="skill-groups about-skill-groups">
-  <div v-for="group in profile.skillGroups" :key="group.title" class="skill-group">
-    <h3>{{ group.title }}</h3>
-    <div class="skill-pills"><span v-for="skill in group.skills" :key="skill">{{ skill }}</span></div>
-  </div>
+<div class="about-topics">
+  <section><h3>Java 与 Spring</h3><p>Java 语言、Spring Boot、Spring Cloud、MyBatis 与服务端开发。</p></section>
+  <section><h3>数据与中间件</h3><p>MySQL、Redis、RabbitMQ、Elasticsearch，以及数据一致性和检索问题。</p></section>
+  <section><h3>AI 应用</h3><p>Spring AI、RAG、Embedding、Agent 与 MCP 的应用实践。</p></section>
+  <section><h3>工程习惯</h3><p>Linux、Docker、Git 和可维护的开发流程。</p></section>
 </div>
 
-## 项目经历
+## 学习与工作背景
 
-- [智文知识管理平台](/projects/knowledge-management-platform)：文档管理、全文检索与 RAG 智能问答。
-- [牙管家](/projects/dental-clinic-manager)：预约、诊疗订单、项目管理与 Activiti 7 审批。
+<dl class="about-facts">
+  <div><dt>教育</dt><dd>{{ profile.education.school }} · {{ profile.education.major }} · {{ profile.education.degree }}（{{ profile.education.period }}）</dd></div>
+  <div><dt>实习</dt><dd>{{ profile.internship.company }} · {{ profile.internship.role }}（{{ profile.internship.period }}）</dd></div>
+</dl>
 
-## 联系我
+## 联系
+
+<p>如果你想交流技术文章或网站内容，可以通过以下方式联系我。</p>
 
 <ContactCard />
 
-QQ 号、微信号、手机号和私人邮箱不会直接显示。点击微信卡片会复制微信号并尝试打开微信；在手机上点击 QQ、BiliBili 或网易云，会尝试打开对应应用，未能打开时跳转到网页。
-
-## 内容说明
-
-文章 frontmatter 中的 `date` 保留原始字段含义；`plan_date` 用于阶段参考或内容规划。页面会明确标出这两个字段，不将它们统一解释为真实公开发布日期。企业经历只做经许可的脱敏表达，个人练习也不会写成企业项目成果。
+</div>

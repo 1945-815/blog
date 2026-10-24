@@ -5,7 +5,7 @@ import type { TopicId } from '../blog'
 import { data as articles } from '../../../articles.data'
 import { categoryTagHref, onCategoryTagLinkClick, topicForTag } from '../tags'
 
-const props = defineProps<{ article: BlogArticle; topic?: TopicId; inlineTags?: boolean }>()
+const props = defineProps<{ article: BlogArticle; topic?: TopicId; inlineTags?: boolean; featured?: boolean; compact?: boolean }>()
 const emit = defineEmits<{ 'tag-select': [tag: string] }>()
 
 function tagTopic(tag: string) {
@@ -23,11 +23,11 @@ function onTagClick(event: MouseEvent, tag: string) {
 </script>
 
 <template>
-  <article v-reveal class="article-card">
+  <article v-reveal class="article-card" :class="{ 'article-card--featured': featured, 'article-card--compact': compact }">
     <div class="article-card-top">
       <span class="article-category">{{ article.category || article.phase }}</span>
       <span class="article-dates">
-        <time v-if="article.date" class="article-date" :datetime="article.date" title="保留 frontmatter date 字段的原始含义">文章 date · {{ article.date }}</time>
+        <time v-if="article.date" class="article-date" :datetime="article.date" title="保留文章 frontmatter date 字段的原始含义">文章 date · {{ article.date }}</time>
         <time v-if="article.planDate" class="article-date" :datetime="article.planDate" title="阶段参考或内容规划日期，不代表真实公开发布日期">阶段参考 · {{ article.planDate }}</time>
       </span>
     </div>
