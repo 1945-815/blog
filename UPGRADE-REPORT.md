@@ -147,14 +147,14 @@
 
 - 删除 `docs/articles/java-backend-learning-route.md`，并从 `content-plan.json` 与 `docs/roadmap.md` 移除对应条目。当前保留 98 篇技术文章，归档索引页不计入。
 - 从 78 篇文章中删除问答式“常见问题/常见追问”章节。8 篇文章的“常见问题”内容是边界/易错点清单而非问答，内容保留并改成描述性标题。
-- 线上页面仍显示旧内容：`.github/workflows/deploy.yml` 仅在 `main` 分支推送或手动触发时部署；`codex/music-library` 分支的推送不会触发 Pages。
+- 合入 `main` 前线上页面仍显示旧内容：`.github/workflows/deploy.yml` 仅在 `main` 分支推送或手动触发时部署；`codex/music-library` 分支推送不会触发 Pages。
 
 ## 当前状态
 
 - 当前保留 98 篇技术文章；文章 slug 与规划数据 98 对 98 一致，已删除文章不再出现在文件、侧栏、路线索引或规划数据中。
 - 从 78 篇文章中移除了问答章节；构建前检查没有残留的问答标题或问答式小节。
 - npm run docs:build：通过，共生成 117 个 HTML 页面。仍有一个超过 500 KB 的 JS 分块警告，不影响构建。
-- 线上站点仍是旧版。当前分支为 codex/music-library，而 .github/workflows/deploy.yml 只对 main 的推送自动部署；需要将本次内容合入 main 才会更新 Pages。
+- PR #12 已合入 `main`，合并提交为 `a739206`；Pages 部署运行 `40320558852` 已成功。线上“Java 类和对象”页面已更新，问答标题已消失；被删除的路线文章 URL 返回 404。
 
 ## 首轮最终状态（历史快照）
 
