@@ -3,9 +3,9 @@ title: "Object 与包装类：判等、装箱和类型转换"
 date: "2026-10-16"
 categories: ["Java 基础"]
 tags: ["Java", "Object", "包装类"]
-description: "依据面向对象与常用类课堂笔记，区分引用判等、equals/hashCode、自动装箱及字符串转换。"
+description: "区分引用判等、equals/hashCode、自动装箱及字符串转换。"
 plan_date: "2026-10-16"
-phase: "Java 基础与数据结构"
+phase: "Java 与并发"
 ---
 
 # Object 与包装类：判等、装箱和类型转换
@@ -22,26 +22,26 @@ import java.util.Objects;
 import java.util.Set;
 
 public class ObjectWrapperDemo {
-    static final class StudentKey {
+    static final class EntryKey {
         private final long id;
 
-        StudentKey(long id) { this.id = id; }
+        EntryKey(long id) { this.id = id; }
 
         @Override public boolean equals(Object other) {
             if (this == other) return true;
-            if (!(other instanceof StudentKey)) return false;
-            return id == ((StudentKey) other).id;
+            if (!(other instanceof EntryKey)) return false;
+            return id == ((EntryKey) other).id;
         }
 
         @Override public int hashCode() { return Objects.hash(id); }
 
-        @Override public String toString() { return "StudentKey{id=" + id + "}"; }
+        @Override public String toString() { return "EntryKey{id=" + id + "}"; }
     }
 
     public static void main(String[] args) {
-        Set<StudentKey> keys = new HashSet<>();
-        keys.add(new StudentKey(42));
-        System.out.println(keys.contains(new StudentKey(42))); // true
+        Set<EntryKey> keys = new HashSet<>();
+        keys.add(new EntryKey(42));
+        System.out.println(keys.contains(new EntryKey(42))); // true
 
         int value = Integer.parseInt("42");
         Integer boxed = value;             // 自动装箱

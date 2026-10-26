@@ -1,16 +1,16 @@
 ---
-title: "Java 基础语法练习：变量、输入与流程控制"
+title: "Java 基础语法：变量、输入与流程控制"
 date: "2026-10-16"
 categories: ["Java 基础"]
 tags: ["Java", "基础语法", "流程控制"]
-description: "用变量、类型转换、Scanner、分支和循环组成可运行练习，并校正易混淆的语言规则。"
+description: "用变量、类型转换、Scanner、分支和循环构造可运行示例，并校正易混淆的语言规则。"
 plan_date: "2026-10-16"
-phase: "Java 基础与数据结构"
+phase: "Java 与并发"
 ---
 
-# Java 基础语法练习：变量、输入与流程控制
+# Java 基础语法：变量、输入与流程控制
 
-课堂日期是资料时间，本文日期是写作时间。示例是独立练习，不涉及真实业务系统。
+示例是独立命令行程序，文章 Frontmatter 中的日期表示本文记录时间。
 
 ## 从源文件运行
 
@@ -33,7 +33,7 @@ public class ScoreLevelDemo {
             for (int attempt = 0; attempt < 3; attempt++) {
                 System.out.print("请输入 0–100 的整数分数：");
                 if (!scanner.hasNextInt()) {
-                    System.out.println("输入不是整数，结束练习");
+                    System.out.println("输入不是整数，结束当前读取");
                     break;
                 }
                 int score = scanner.nextInt();
@@ -55,7 +55,7 @@ public class ScoreLevelDemo {
                         System.out.println("及格");
                         break;
                     default:
-                        System.out.println("需继续练习");
+                        System.out.println("输入不符合要求");
                 }
             }
         }
@@ -68,7 +68,7 @@ public class ScoreLevelDemo {
 
 `score / 10` 是整数除法；`(double) sum / accepted` 先转换再相除，避免截断小数。`&&`、`||` 具有短路求值；仅当确实需要同时计算两边时才使用非短路运算。`break` 结束当前 `switch` 或循环，`continue` 跳过当前循环余下语句。`Scanner` 从标准输入读取；关闭它也会关闭 `System.in`，所以这个独立命令行程序只创建一次扫描器。
 
-`for` 适合次数已知、计数变量作用域只在循环内的场景；`while` 适合结束条件随输入变化的场景。两者没有“for 一定更省内存”的语言保证。课堂中的随机数练习可用 `Random`；随机值不能替代密码学用途的 `SecureRandom`。
+`for` 适合次数已知、计数变量作用域只在循环内的场景；`while` 适合结束条件随输入变化的场景。两者没有“for 一定更省内存”的语言保证。一般随机抽样可用 `Random`；随机值不能替代密码学用途的 `SecureRandom`。
 
 ## 容易混淆的边界
 
@@ -81,7 +81,7 @@ public class ScoreLevelDemo {
 
 输入 `90、101、60` 时，为什么只计算两次平均分？若把 `sum / accepted` 的强制转换去掉会怎样？若读入一个非整数后仍要继续，应该先消费哪个错误 token？这些问题都要顺着实际控制流回答，而不是只背语法。
 
-下一步可沿 [类与对象](./002-java-class-object.md) 理解状态和方法，再用 [数组练习](./004-data-structures-basics.md) 处理一组数据。
+下一步可沿 [类与对象](./002-java-class-object.md) 理解状态和方法，再用 [数组与数据结构](./004-data-structures-basics.md) 处理一组数据。
 
 ## 资料与规范
 

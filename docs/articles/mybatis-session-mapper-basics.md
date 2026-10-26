@@ -1,22 +1,22 @@
 ---
-title: "MyBatis 入门：从商品 Mapper 到 SqlSession 的一次工作单元"
+title: "MyBatis Mapper 与 SqlSession：配置、执行与事务边界"
 date: "2026-10-16"
 categories: ["持久层"]
 tags: ["MyBatis", "MySQL", "Java"]
-description: "按课堂商品 CRUD 梳理配置文件、Mapper XML、主键回填和会话提交关闭，并纠正共享 SqlSession 的风险。"
+description: "说明 MyBatis 配置、Mapper XML、主键回填、会话提交与关闭的职责边界。"
 plan_date: "2026-10-16"
-phase: "数据库与 Spring 基础"
+phase: "Spring 与数据持久化"
 ---
 
-# MyBatis 入门：从商品 Mapper 到 SqlSession 的一次工作单元
+# MyBatis Mapper 与 SqlSession：配置、执行与事务边界
 
-商品 CRUD 练习可以从表结构、主配置文件、Mapper XML 和测试串起 MyBatis 基本流程。下面将长期保存 `SqlSession` 的 DAO 写法改为每个工作单元独立获取、提交并关闭会话。
+从表结构、主配置文件、Mapper XML 和执行入口可以串起 MyBatis 的基本数据流。下面将长期保存 `SqlSession` 的 DAO 写法改为每个工作单元独立获取、提交并关闭会话。
 
 ## 版本与准备
 
-示例按 Java 8、MyBatis 3.5.19、MySQL 8.0+ 与 Connector/J 8.4.0 编写。MyBatis 和 JDBC 驱动使用 Maven 坐标 `org.mybatis:mybatis`、`com.mysql:mysql-connector-j`；本例分别固定为上述版本。课堂截图使用的 JAR 版本未在笔记正文中确定，所以这些固定版本是复现条件，不是对原课堂环境的追认。
+示例按 Java 8、MyBatis 3.5.19、MySQL 8.0+ 与 Connector/J 8.4.0 编写。MyBatis 和 JDBC 驱动使用 Maven 坐标 `org.mybatis:mybatis`、`com.mysql:mysql-connector-j`；本例分别固定为上述版本。这些固定版本只构成本例的复现条件，不代表所有 MyBatis 应用的默认依赖组合。
 
-先在本地练习库执行：
+先在本地测试数据库执行：
 
 ```sql
 CREATE TABLE product (
@@ -119,7 +119,7 @@ public class Product {
 
 ## 执行、提交和关闭
 
-`SqlSessionFactory` 可在应用生命周期内复用；`SqlSession` 不应保存在 DAO 的实例字段中供多个请求共享。它不是线程安全的，并且占用数据库资源。插入与读取作为同一个练习工作单元时，显式提交并在 `try-with-resources` 中关闭：
+`SqlSessionFactory` 可在应用生命周期内复用；`SqlSession` 不应保存在 DAO 的实例字段中供多个请求共享。它不是线程安全的，并且占用数据库资源。插入与读取作为同一个工作单元时，显式提交并在 `try-with-resources` 中关闭：
 
 ```java
 package demo;
@@ -153,7 +153,7 @@ public class App {
         try (SqlSession session = factory.openSession()) {
             ProductMapper mapper = session.getMapper(ProductMapper.class);
             Product product = new Product();
-            product.setName("课堂演示商品");
+            product.setName("索引设计指南");
             product.setPrice(new BigDecimal("19.90"));
             mapper.insert(product);
             session.commit();
@@ -164,10 +164,10 @@ public class App {
 }
 ```
 
-运行前设置 `DB_URL`（例如指向练习库的 JDBC URL）、`DB_USER`、`DB_PASSWORD`，然后运行 `demo.App`。若插入后抛异常且没有提交，关闭会话时未提交的变更不应当被当成成功结果。生产应用中常由 Spring 与 MyBatis 集成管理 Mapper 和事务，不应再手动把这个示例的会话代码塞进单例 Service。
+运行前设置 `DB_URL`（例如指向本地测试数据库的 JDBC URL）、`DB_USER`、`DB_PASSWORD`，然后运行 `demo.App`。若插入后抛异常且没有提交，关闭会话时未提交的变更不应当被当成成功结果。生产应用中常由 Spring 与 MyBatis 集成管理 Mapper 和事务，不应再手动把这个示例的会话代码塞进单例 Service。
 
 ## 排查顺序与延伸
 
 找不到 Mapper 时，先检查 XML 是否进入 classpath、`namespace` 与接口全限定名是否一致、语句 `id` 是否与方法匹配；字段无法映射时检查列名和 JavaBean 属性。多参数和可选条件查询继续读 [MyBatis 参数映射与动态 SQL](/articles/016-mybatis-dynamic-sql)，对象关系映射见 [MyBatis 关联映射](/articles/mybatis-association-mapping)。
 
-主键回填和日志截图只作为辅助核对。会话关闭方式依据 [MyBatis 官方入门](https://mybatis.org/mybatis-3/getting-started.html) 与 [Java API](https://mybatis.org/mybatis-3/java-api.html)。
+可通过主键回填结果、SQL 日志与查询结果核对映射和执行过程；这些信息不能替代对事务提交结果的确认。会话关闭方式依据 [MyBatis 官方入门](https://mybatis.org/mybatis-3/getting-started.html) 与 [Java API](https://mybatis.org/mybatis-3/java-api.html)。

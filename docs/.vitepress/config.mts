@@ -2,9 +2,8 @@ import { defineConfig } from 'vitepress'
 import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 
-// Keep the hand-curated phase order intact and append articles that do not yet
-// have a manual sidebar entry. This keeps new article pages reachable
-// while preserving the hand-curated navigation.
+// Keep the hand-curated sidebar order intact and append articles that do not
+// have a manual entry yet, so every article page remains reachable.
 const docsDirectory = existsSync(join(process.cwd(), 'articles')) ? process.cwd() : join(process.cwd(), 'docs')
 const articleDirectory = join(docsDirectory, 'articles')
 const currentConfig = readFileSync(join(docsDirectory, '.vitepress', 'config.mts'), 'utf8')
@@ -31,7 +30,7 @@ const automaticArticleLinks = readdirSync(articleDirectory, { withFileTypes: tru
 export default defineConfig({
   lang: 'zh-CN',
   title: 'Cyzee · 技术与日常',
-  description: '记录 Java 后端开发、AI 应用探索与日常思考。',
+  description: '记录 Java 后端开发、分布式技术、数据基础设施与 AI 应用。',
   base: '/blog/',
   cleanUrls: true,
   sitemap: { hostname: 'https://1945-815.github.io/blog/' },
@@ -80,10 +79,9 @@ export default defineConfig({
     sidebar: {
       '/articles/': [
         {
-          text: "阶段一：Java 基础与数据结构",
+          text: "Java 与并发",
           collapsed: true,
           items: [
-            { text: "Java 后端学习路线", link: "/articles/java-backend-learning-route" },
             { text: "Java 类和对象", link: "/articles/002-java-class-object" },
             { text: "Java 字符串与 StringBuilder", link: "/articles/066-java-string-stringbuilder" },
             { text: "Java 集合的选择", link: "/articles/java-collections" },
@@ -103,7 +101,7 @@ export default defineConfig({
           ]
         },
         {
-          text: "阶段二：数据库与 Spring 基础",
+          text: "Spring 与数据持久化",
           collapsed: true,
           items: [
             { text: "MySQL 表设计与多表查询", link: "/articles/008-mysql-table-design-joins" },
@@ -111,9 +109,9 @@ export default defineConfig({
             { text: "EXPLAIN 与索引", link: "/articles/010-mysql-explain-index" },
             { text: "JDBC 预编译与 DAO", link: "/articles/011-jdbc-preparedstatement-dao" },
             { text: "Tomcat 与 Servlet", link: "/articles/servlet-tomcat-lifecycle" },
-            { text: "Servlet 组件与商品列表", link: "/articles/servlet-jsp-webcrud-classroom" },
+            { text: "Servlet 请求与 JSP 页面", link: "/articles/servlet-jsp-webcrud-classroom" },
             { text: "Spring MVC 请求流程", link: "/articles/spring-mvc-request-flow" },
-            { text: "REST 员工接口设计", link: "/articles/restful-employee-api-design" },
+            { text: "REST 接口设计", link: "/articles/restful-employee-api-design" },
             { text: "Spring IoC 与 DI", link: "/articles/013-spring-ioc-di" },
             { text: "Maven 多环境配置", link: "/articles/maven-environment-config" },
             { text: "Maven 多模块项目", link: "/articles/048-maven-multi-module" },
@@ -129,12 +127,12 @@ export default defineConfig({
             { text: "InnoDB MVCC 与一致性读", link: "/articles/067-mysql-innodb-mvcc-consistent-read" },
             { text: "Redis 数据结构与 TTL", link: "/articles/019-redis-types-ttl" },
             { text: "Docker 本地环境", link: "/articles/docker-local-backend-environment" },
-            { text: "Spring Boot CRUD 练习项目", link: "/articles/021-springboot-crud-project" },
-            { text: "Git 暂存、分支与冲突", link: "/articles/git-version-control-classroom" },
+            { text: "Spring Boot 分层 CRUD", link: "/articles/021-springboot-crud-project" },
+            { text: "Git 版本控制", link: "/articles/git-version-control-classroom" },
           ]
         },
         {
-          text: "阶段三：企业开发技术学习",
+          text: "分布式与中间件",
           collapsed: true,
           items: [
             { text: "Nacos 注册与配置", link: "/articles/nacos-service-discovery-config" },
@@ -150,14 +148,14 @@ export default defineConfig({
           ]
         },
         {
-          text: "阶段四：Java 后端实习与业务实践",
+          text: "后端工程实践",
           collapsed: true,
           items: [
             { text: "接口文档与安全清单", link: "/articles/api-doc-security-checklist" },
             { text: "预约与订单状态", link: "/articles/appointment-order-state-idempotency" },
-            { text: "诊所预约与审批（脱敏）", link: "/articles/clinic-appointment-approval-redacted" },
+            { text: "预约与审批状态建模", link: "/articles/clinic-appointment-approval-redacted" },
             { text: "Redis TTL 与验证码", link: "/articles/redis-ttl" },
-            { text: "RuoYi RBAC 权限模型", link: "/articles/050-ruoyi-rbac-permission-model" },
+            { text: "RBAC 权限模型", link: "/articles/050-ruoyi-rbac-permission-model" },
             { text: "Redis 分布式锁", link: "/articles/054-redis-distributed-lock" },
             { text: "Spring 定时任务与 Quartz", link: "/articles/055-quartz-scheduled-jobs" },
             { text: "Redis 每日点赞配额", link: "/articles/057-redis-daily-quota-lua" },
@@ -173,12 +171,12 @@ export default defineConfig({
             { text: "审批、任务与业务状态", link: "/articles/approval-and-business-status" },
             { text: "Canal 同步搜索索引", link: "/articles/canal-mysql-to-elasticsearch" },
             { text: "Codex 与 Cursor", link: "/articles/ai-coding-tools-workflow" },
-            { text: "文档检索平台（脱敏）", link: "/articles/document-retrieval-platform-redacted" },
-            { text: "实习接口开发复盘", link: "/articles/internship-api-collaboration-retro" },
+            { text: "文档检索系统设计", link: "/articles/document-retrieval-platform-redacted" },
+            { text: "后端接口协作与联调", link: "/articles/internship-api-collaboration-retro" },
           ]
         },
         {
-          text: "阶段五：AI 应用探索",
+          text: "AI 应用开发",
           collapsed: true,
           items: [
             { text: "RAG 文档问答链路", link: "/articles/rag-document-qa" },
@@ -194,7 +192,16 @@ export default defineConfig({
             { text: "Hutool 常用工具类", link: "/articles/099-hutool-java-utilities" },
           ]
         },
-        ...(automaticArticleLinks.length ? [{ text: "自动收录文章", collapsed: true, items: automaticArticleLinks }] : [])
+        {
+          text: "Web 基础",
+          collapsed: true,
+          items: [
+            { text: "HTML 与 CSS 表单", link: "/articles/html-css-form-notes" },
+            { text: "JavaScript 与 DOM 事件", link: "/articles/javascript-dom-events-notes" },
+            { text: "Vue 2 路由与请求拦截", link: "/articles/vue2-admin-learning-notes" },
+          ]
+        },
+        ...(automaticArticleLinks.length ? [{ text: "其他文章", collapsed: true, items: automaticArticleLinks }] : [])
       ]
     },
     footer: {

@@ -1,77 +1,70 @@
 ---
-title: "员工信息管理：原生 JDBC 课堂案例的分层与边界"
+title: "JDBC 分层与数据访问：DAO、Service 与事务边界"
 date: "2026-10-16"
 categories: ["持久层"]
-tags: ["Java", "JDBC", "DAO", "课堂练习"]
-description: "梳理员工管理练习中的表、菜单、DAO 与 Service 流程，并指出旧示例在口令和金额类型上的改进点。"
+tags: ["Java", "JDBC", "DAO", "分层设计"]
+description: "通过通用记录模型说明 JDBC、DAO 与 Service 的职责，补充参数绑定、事务和分页边界。"
 plan_date: "2026-10-16"
-phase: "数据库与 Spring 基础"
+phase: "Spring 与数据持久化"
 ---
 
-# 员工信息管理：原生 JDBC 课堂案例的分层与边界
+# JDBC 分层与数据访问：DAO、Service 与事务边界
 
-这是一份**课堂综合案例复盘**，依据需求、SQL 正文和代码截图整理。现有材料没有证明该系统用于公司生产环境，也没有独立源码仓库可供完整复现；以下只写可核验的课堂范围。截图中的实现细节不直接当作运行通过的源码发布。
+JDBC 负责连接数据库并执行 SQL。把 SQL 操作集中在 DAO 中，可以隔离持久化细节；Service 则组织输入校验、多个数据操作及其事务边界。以下用不含个人数据的目录记录说明职责划分。
 
-## 课堂需求与数据流
+## 数据模型与查询
 
-资料明确列出登录校验，以及员工信息的添加、删除、修改、全部查询、关键字搜索、部门查询、分页和排序菜单。课堂推荐的分层顺序是：建表与初始化 → JavaBean → `db.properties`/JDBC 工具类 → DAO 接口与实现 → Service → 菜单或测试入口。
-
-以“按工号删除”为例，菜单读取工号，Service 检查参数并调用 DAO；DAO 使用 `PreparedStatement` 按工号查找和删除；Service 根据影响行数返回“已删除”或“未找到”。如果删除前还要确认员工信息，应先查询并向用户展示，再执行删除。查询和删除之间仍可能被其他操作改变，真正需要一致性时要定义事务与并发策略。
-
-原始课堂 SQL 建有 `employee` 表，含自增 ID、员工工号、姓名、账号、邮箱、部门、薪资和奖金等字段；菜单与 DAO/Service 截图覆盖了上述操作。**原始练习把口令明文写入表，并用 `DOUBLE` 保存薪资。**这两点只作为理解课堂代码的历史事实，不能复制为新的安全或财务示例。下面给出缩小后的练习表，保留员工 CRUD 所需字段，金额改为 `DECIMAL`；登录设计另行处理：
+`PreparedStatement` 将数据值与 SQL 结构分开，避免通过字符串拼接传入查询条件。表名和列名不能通过占位符绑定；如果排序字段来自请求，应使用代码白名单映射到固定列名。
 
 ~~~sql
-CREATE TABLE employee_case_practice (
+CREATE TABLE catalog_entry (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    emp_no VARCHAR(20) NOT NULL UNIQUE,
-    name VARCHAR(60) NOT NULL,
-    department_no BIGINT NOT NULL,
-    salary DECIMAL(12, 2) NOT NULL,
-    bonus DECIMAL(12, 2),
-    KEY idx_department_no (department_no)
+    entry_key VARCHAR(40) NOT NULL UNIQUE,
+    title VARCHAR(120) NOT NULL,
+    category VARCHAR(40) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    KEY idx_category_created (category, created_at)
 ) ENGINE=InnoDB;
 
-INSERT INTO employee_case_practice
-    (emp_no, name, department_no, salary, bonus)
-VALUES ('E001', '课堂示例', 2, 8500.00, NULL);
+INSERT INTO catalog_entry (entry_key, title, category)
+VALUES ('guide-001', '索引设计基础', 'database');
 
-SELECT id, emp_no, name, salary
-FROM employee_case_practice
-WHERE emp_no = 'E001';
+SELECT id, entry_key, title, category
+FROM catalog_entry
+WHERE entry_key = 'guide-001';
 ~~~
 
-此表名和字段是为说明改进点编写的**独立练习方案**，不是对原始课堂 SQL 的逐字复刻。请在单独练习库执行；[MySQL 基础 SQL](./mysql-basic-crud-notes.md) 使用另一张表讲查询。
+唯一约束防止业务键重复，联合索引可支持以分类过滤并按创建时间排序的查询。是否需要该索引仍应结合查询频率、选择性和写入成本评估。
 
 ## DAO 与 Service 的责任
 
-DAO 负责 SQL、参数绑定、结果映射与资源关闭；Service 负责输入规则、操作顺序和业务结果。若一项操作包含多条必须一起成功的 SQL，事务边界应覆盖整个操作，不要在 DAO 的每一步各自新开连接并自动提交。JDBC 的连接与事务示例见 [预编译、DAO 与事务](./011-jdbc-preparedstatement-dao.md)。
+DAO 负责 SQL、参数绑定、结果映射和资源关闭。Service 负责业务输入规则、操作顺序及结果语义。单条删除可以写成如下方法：
 
 ~~~java
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class EmployeeDeleteDemo {
-    static int deleteByEmpNo(Connection connection, String empNo)
+public class CatalogEntryDao {
+    public int deleteByKey(Connection connection, String entryKey)
             throws SQLException {
-        if (empNo == null || empNo.trim().isEmpty()) {
-            throw new IllegalArgumentException("工号不能为空");
+        if (entryKey == null || entryKey.isBlank()) {
+            throw new IllegalArgumentException("entryKey must not be blank");
         }
-        String sql = "DELETE FROM employee_case_practice WHERE emp_no = ?";
+
+        String sql = "DELETE FROM catalog_entry WHERE entry_key = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, empNo);
+            statement.setString(1, entryKey);
             return statement.executeUpdate();
         }
     }
 }
 ~~~
 
-此代码是从课堂 DAO 思路提炼出的**方法示例**，由调用方提供连接，不能直接独立运行。`executeUpdate()` 返回影响行数；0 表示当前没有匹配行，不能当成数据库连接失败。查询所有和分页还应限制页大小，排序列由代码白名单决定，不能让用户输入直接成为 `ORDER BY` 的 SQL 片段。
+该方法使用调用方提供的连接，因此事务由调用方控制。`executeUpdate()` 返回受影响行数：0 表示没有匹配记录，不能解释为连接失败。如果一项操作包含多条必须一起成功的 SQL，调用方应关闭自动提交，在全部操作成功后提交，异常时回滚，并在 `finally` 中恢复连接状态或交还连接池。
 
-## 登录练习的安全边界
+## 查询、分页与输入边界
 
-课堂要求“账号、密码、验证码校验”，但笔记没有足够证据确认最终是否实现了口令哈希、验证码生命周期与防重放。若今后把练习扩展为真实登录，至少应采用受维护的密码哈希方案、服务端验证码校验与过期机制，并避免在日志中输出凭据。这里不把上述改进写成已经完成的课堂功能。
+查询列表应限制页大小，并使用稳定排序键；大偏移量分页可能需要扫描大量记录，可以根据索引和访问模式评估基于游标的分页。筛选值使用参数绑定。动态排序只能接受有限的排序字段和方向，不能把原始请求拼进 `ORDER BY`。
 
-## 资料与后续核验
-
-- 本篇没有加入未核实的运行截图、项目周期、本人负责范围或性能数字。
+JDBC 的连接与事务配置见[预编译、DAO 与事务](./011-jdbc-preparedstatement-dao.md)。MySQL 的 DDL、DML 和单表查询见 [MySQL 基础 SQL](./mysql-basic-crud-notes.md)。

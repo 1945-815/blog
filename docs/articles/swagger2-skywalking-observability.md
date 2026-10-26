@@ -1,65 +1,60 @@
 ---
-title: "Swagger2 接口文档与 SkyWalking 链路追踪：课堂配置和版本边界"
+title: "Swagger 2 接口文档与 SkyWalking 链路追踪：兼容边界"
 date: "2026-10-16"
 categories: ["工程实践"]
 tags: ["Swagger", "Knife4j", "SkyWalking", "Spring Boot", "微服务"]
-description: "整理课程项目的 Swagger2 公共模块与 SkyWalking Java Agent 配置，并说明旧版本兼容范围。"
+description: "梳理 Swagger 2 文档生成和 SkyWalking Java Agent 的工作方式，以及旧版依赖的兼容与部署边界。"
 plan_date: "2026-10-16"
-phase: "企业开发技术学习"
+phase: "后端工程实践"
 ---
 
-# Swagger2 接口文档与 SkyWalking 链路追踪：课堂配置和版本边界
+# Swagger 2 接口文档与 SkyWalking 链路追踪：兼容边界
 
-## 资料范围
+接口文档描述可调用的契约；分布式追踪描述一次请求经过的服务和耗时。两者可以互补，但不能代替权限控制、日志、指标或测试。
 
-课程依赖基于 Spring Boot 2.x 和项目封装模块，不能直接作为新项目依赖清单。
+## Swagger 2 文档生成
 
-## 一、Swagger2 如何生成接口文档
+Springfox 根据 Spring MVC 的映射、参数和模型生成 Swagger 2.0 描述，Knife4j 为文档提供增强界面。常见注解用于补充接口和模型说明：
 
-Springfox 扫描 Controller 的映射、请求参数和返回模型，生成 Swagger 2.0 描述；Knife4j 提供增强的浏览页面。项目通过自定义注解 `@EnableCustomSwagger2` 开启公共配置，并用 `swagger.base-package` 限定扫描包。这个注解属于课程的 `travel-common-swagger`，不是 Spring 框架自带注解。
+- `@Api` 描述 Controller。
+- `@ApiOperation` 描述接口操作。
+- `@ApiImplicitParam` 与 `@ApiImplicitParams` 补充简单类型参数。
+- `@ApiModel` 与 `@ApiModelProperty` 描述请求或响应模型。
+- `@ApiIgnore` 将指定接口或参数从文档中排除。
 
-常见说明注解包括：
+这些注解属于 Springfox 生态，不是 Spring MVC 的核心注解。扫描包范围、接口访问策略和文档暴露环境应由应用明确配置。文档页面可能暴露内部路径和数据结构，线上部署前应限制访问或关闭不需要的端点。
 
-- `@Api`：描述 Controller。
-- `@ApiOperation`：描述接口操作。
-- `@ApiImplicitParam`、`@ApiImplicitParams`：补充简单类型参数。
-- `@ApiModel`、`@ApiModelProperty`：描述请求或响应模型字段。
-- `@ApiIgnore`：从文档中隐藏指定接口或参数。
+## Spring Boot 版本兼容
 
-前期接口设计仍应明确请求路径、参数、状态码和权限；代码生成文档适合跟踪实现，不等于替代需求评审。线上环境应按权限和网络边界限制文档页面，避免暴露内部接口。
+Spring Boot 2.6 默认路径匹配策略改为 `PathPatternParser`，其发布说明记录了与部分 Springfox / Actuator 组合相关的启动问题。[Spring Boot 2.6 发布说明](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.6-Release-Notes)
 
-## 二、Spring Boot 版本兼容
+切换回 `AntPathMatcher` 曾用于缓解特定旧依赖的兼容问题，但它不是所有故障的通用修复。升级或新建应用时，应结合 Spring Boot 主版本、文档规范、维护状态和官方兼容矩阵选型；若迁移到 OpenAPI，可参考 [springdoc-openapi 官方项目](https://github.com/springdoc/springdoc-openapi)。
 
-Spring Boot 2.6 发布说明确认默认从 AntPathMatcher 切换为 PathPatternParser，并提示使用 Actuator 与 Springfox 时可能遇到启动问题。[Spring Boot 2.6 发布说明](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.6-Release-Notes)
+## SkyWalking Java Agent
 
-这个属性是旧栈的兼容处理思路，不保证解决所有 Springfox 问题，也不应为迁就旧依赖而不评估路由、安全配置和升级成本。新项目应依据所用 Spring Boot 主版本、API 描述规范和维护状态选择文档工具；例如 springdoc-openapi 项目提供 OpenAPI 集成，但具体 starter 版本仍要按官方兼容说明选择。[springdoc-openapi 官方项目](https://github.com/springdoc/springdoc-openapi)
-
-## 三、SkyWalking Java Agent
-
-课堂通过 Java Agent 在启动时注入探针，不要求在业务 Controller 中逐个手写调用链埋点。课程中的服务名示例是 `travel-canal`，OAP gRPC 接收地址使用 `127.0.0.1:11800`：
+Java Agent 在 JVM 启动时加载探针，按已安装插件的支持范围采集调用信息。它不要求在每个 Controller 中手动写追踪调用。以下命令展示参数位置和配置形式，服务名、文件路径及 OAP 地址需要按部署环境调整：
 
 ~~~bash
 java \
   -javaagent:/opt/skywalking/agent/skywalking-agent.jar \
-  -Dskywalking.agent.service_name=travel-canal \
+  -Dskywalking.agent.service_name=blog-api \
   -Dskywalking.collector.backend_service=127.0.0.1:11800 \
-  -jar travel-canal.jar
+  -jar blog-api.jar
 ~~~
 
-`-javaagent` 参数要放在 `-jar` 之前。服务名应在不同服务间保持可区分，collector 地址要匹配 OAP 的实际监听地址。Agent 只能采集其插件支持范围内的调用；接入后仍要确认拓扑、Trace、采样和敏感数据配置。[SkyWalking Java Agent 文档](https://skywalking.apache.org/docs/skywalking-java/latest/readme/)
+`-javaagent` 参数必须放在 `-jar` 之前。服务名应能区分不同应用，collector 地址要与 OAP 的实际监听地址一致。接入后还需检查拓扑、Trace、采样策略和敏感字段脱敏。[SkyWalking Java Agent 文档](https://skywalking.apache.org/docs/skywalking-java/latest/readme/)
 
-## 四、文档与链路追踪分别回答什么
+## 排查顺序
 
-Swagger 页面帮助调用方查看接口契约并在受控环境中试调；SkyWalking Trace 用于观察一次跨服务调用的路径和耗时。接口文档说明“怎么调用”，Trace 说明“这次调用经过了哪里”。两者不能替代日志、指标、权限控制和测试。
+1. 核对 Spring Boot、Springfox、Knife4j 的实际依赖版本及传递依赖。
+2. 检查 API 文档扫描范围、访问控制和被忽略的接口。
+3. 若启动失败，结合 Spring Boot 发布说明确认是否涉及路径匹配或 Actuator 兼容问题。
+4. 确认 OAP 已启动，再检查 Agent 参数、服务名、collector 地址和 Java 进程启动日志。
+5. 发起一次受控请求，验证服务拓扑、Trace 和敏感信息处理。
 
-## 五、课堂配置复现检查表
+旧依赖组合只能说明它曾经适用于某个版本边界；不能据此推断其他工程的兼容性。迁移时应通过目标版本的官方文档和构建结果逐项验证。
 
-1. 先读取项目 pom 与 Spring Boot 版本，确认 Springfox 和 Knife4j 依赖实际来自哪个公共模块。
-2. 检查 `@EnableCustomSwagger2` 的导入包，确认它是项目自定义注解。
-3. 确认 `swagger.base-package` 与 Controller 包路径匹配。
-5. 启动 OAP 后再运行 Java Agent，确认服务名和 collector 地址，并用一次请求检查 Trace。
-6. 不把课堂版本、端口或运行参数当成所有环境的默认值。
-
+## 参考资料
 
 - [Spring Boot 2.6 Release Notes](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.6-Release-Notes)
 - [springdoc-openapi 项目文档](https://github.com/springdoc/springdoc-openapi)

@@ -9,24 +9,18 @@ tags: [
 ]
 description: "用 JDBC 和 PreparedStatement 完成参数绑定、资源关闭与简单 DAO 封装。"
 plan_date: "2024-03-15"
-phase: "数据库与 Spring 基础"
+phase: "Spring 与数据持久化"
 ---
 
 # JDBC 预编译与 DAO：参数绑定和持久层边界
 
-### 学习目标
-
-- 了解 JDBC 中 Connection、PreparedStatement 和 ResultSet 的基本职责。
-- 用占位符绑定值参数，并通过 try-with-resources 关闭资源。
-- 理解 DAO 如何把 SQL 访问细节放在相对明确的边界中。
-
-## 一、为什么学习这个技术
+## 问题背景
 
 Java 程序需要通过数据库驱动和数据库通信。直接拼接 SQL 字符串容易在引号、类型转换和特殊输入上出错，也会把 SQL 结构与用户输入混在一起。
 
 JDBC 提供一组标准接口。MySQL Connector/J 实现这些接口，使 Java 程序能够连接 MySQL。把一组相关 SQL 放进 DAO，可以让调用方关注要完成的操作，而不是每次都处理连接、语句和结果集细节。
 
-## 二、技术原理
+## 核心原理
 
 Connection 表示数据库连接；PreparedStatement 表示带参数的 SQL 语句；ResultSet 表示查询结果。SQL 中的问号是值参数占位符，调用 setString、setLong 等方法按位置绑定参数。
 
@@ -34,9 +28,9 @@ Connection 表示数据库连接；PreparedStatement 表示带参数的 SQL 语�
 
 try-with-resources 会在代码块结束时关闭实现 AutoCloseable 的 JDBC 资源。示例里关闭 ResultSet、PreparedStatement 和 Connection。实际服务通常通过连接池复用连接，不会为每个小操作反复创建物理连接。
 
-## 三、核心代码实现
+## 实现示例
 
-示例使用 Maven 依赖和 MySQL 8.4 练习库。保存 Java 类为 JdbcDaoDemo.java。将 DB_URL、DB_USER、DB_PASSWORD 配置为环境变量后再运行；连接地址示例为 jdbc:mysql://localhost:3306/blog_demo。
+示例使用 Maven 依赖和 MySQL 8.4 示例数据库。保存 Java 类为 JdbcDaoDemo.java。将 DB_URL、DB_USER、DB_PASSWORD 配置为环境变量后再运行；连接地址示例为 jdbc:mysql://localhost:3306/blog_demo。
 
 ~~~xml
 <dependency>
@@ -52,7 +46,7 @@ MySQL 表结构：
 CREATE DATABASE IF NOT EXISTS blog_demo;
 USE blog_demo;
 
-CREATE TABLE student (
+CREATE TABLE sample_entry (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(60) NOT NULL,
     age INT NOT NULL
@@ -70,12 +64,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class JdbcDaoDemo {
-    static class Student {
+    static class Entry {
         private final long id;
         private final String name;
         private final int age;
 
-        Student(long id, String name, int age) {
+        Entry(long id, String name, int age) {
             this.id = id;
             this.name = name;
             this.age = age;
@@ -83,13 +77,13 @@ public class JdbcDaoDemo {
 
         @Override
         public String toString() {
-            return "Student{id=" + id + ", name='" + name + "', age=" + age + "}";
+            return "Entry{id=" + id + ", name='" + name + "', age=" + age + "}";
         }
     }
 
-    static class StudentDao {
+    static class EntryDao {
         long insert(Connection connection, String name, int age) throws SQLException {
-            String sql = "INSERT INTO student (name, age) VALUES (?, ?)";
+            String sql = "INSERT INTO sample_entry (name, age) VALUES (?, ?)";
             try (PreparedStatement statement = connection.prepareStatement(
                     sql, Statement.RETURN_GENERATED_KEYS)) {
                 statement.setString(1, name);
@@ -105,15 +99,15 @@ public class JdbcDaoDemo {
             }
         }
 
-        Student findById(Connection connection, long id) throws SQLException {
-            String sql = "SELECT id, name, age FROM student WHERE id = ?";
+        Entry findById(Connection connection, long id) throws SQLException {
+            String sql = "SELECT id, name, age FROM sample_entry WHERE id = ?";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setLong(1, id);
                 try (ResultSet result = statement.executeQuery()) {
                     if (!result.next()) {
                         return null;
                     }
-                    return new Student(
+                    return new Entry(
                             result.getLong("id"),
                             result.getString("name"),
                             result.getInt("age"));
@@ -127,11 +121,11 @@ public class JdbcDaoDemo {
         String user = requiredEnv("DB_USER");
         String password = requiredEnv("DB_PASSWORD");
 
-        StudentDao dao = new StudentDao();
+        EntryDao dao = new EntryDao();
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            long id = dao.insert(connection, "练习用户", 20);
-            Student student = dao.findById(connection, id);
-            System.out.println(student);
+            long id = dao.insert(connection, "示例记录", 20);
+            Entry entry = dao.findById(connection, id);
+            System.out.println(entry);
         }
     }
 
@@ -145,15 +139,15 @@ public class JdbcDaoDemo {
 }
 ~~~
 
-多次运行会插入多条练习记录，这是示例行为。生产代码通常由连接池管理连接，并将异常转换为调用方能处理的错误；DAO 的方法还需要根据项目规则决定如何表达“记录不存在”。
+多次运行会插入多条示例记录，这是示例行为。生产代码通常由连接池管理连接，并将异常转换为调用方能处理的错误；DAO 的方法还需要根据项目规则决定如何表达“记录不存在”。
 
-## 四、真实项目落地
+## 应用场景与边界
 
-在数据库课程练习中，可以用 DAO 把学生查询和新增语句集中起来，让上层代码不直接拼接 SQL。该代码是通用学习 Demo，不代表曾在企业项目中编写过该模块。
+将相关 SQL 封装在 DAO 中后，调用方可以通过明确的方法完成查询或新增，而不必直接拼接 SQL。
 
 进入 Spring 或 MyBatis 后，连接池、事务管理和映射框架会承担更多通用工作，但理解 JDBC 有助于看懂底层资源边界、参数绑定和 SQL 执行过程。
 
-## 五、遇到的问题
+## 边界与常见问题
 
 - PreparedStatement 的占位符从 1 开始编号，绑定顺序必须与 SQL 一致。
 - 查询结果集在有效生命周期内读取，并及时关闭。
@@ -161,7 +155,7 @@ public class JdbcDaoDemo {
 - 连接失败、SQL 执行失败和查无记录是不同情况，不能都用空对象掩盖。
 - 示例每次创建新连接只适合演示；服务端应用通常应使用连接池并正确管理事务。
 
-## 六、优化方案
+## 改进思路
 
 - SQL 与输入值分离，通过 PreparedStatement 绑定参数。
 - 使用 try-with-resources 管理连接和语句资源。
@@ -169,33 +163,19 @@ public class JdbcDaoDemo {
 - 生产环境从受控配置或密钥服务读取连接凭证，不提交真实密码。
 - 根据应用框架使用连接池和事务管理，避免重复造轮子。
 
-## 七、个人思考
+## 设计取舍与结论
 
-JDBC 练习让我看到数据库访问不是一条 SQL 就结束，还包括连接生命周期、参数类型、异常和事务边界。把这些细节放在明确的持久层入口里，后续换成 Spring JDBC 或 MyBatis 时也更容易辨认哪些工作由框架接管。
-
-## 延伸：面试问答
-
-### PreparedStatement 和字符串拼接 SQL 有什么区别？
-
-PreparedStatement 将 SQL 结构与值参数分开绑定，可以正确处理参数类型并降低输入被解释成 SQL 语法的风险；字符串拼接需要自行处理引号和转义，容易产生错误和注入问题。
-
-### 问号占位符可以代替表名吗？
-
-不可以。占位符绑定的是值，不是 SQL 标识符或语法片段。动态列名应由程序使用明确白名单选择。
-
-### 为什么要使用 try-with-resources？
-
-JDBC 资源使用完应关闭。try-with-resources 会在正常或异常离开代码块时执行关闭逻辑，减少资源泄漏风险。
+JDBC 数据访问还包括连接生命周期、参数类型、异常和事务边界。将这些细节放在明确的持久层入口，便于理解 Spring JDBC 或 MyBatis 接管了哪些工作。
 
 ## 补充：配置来源与驱动版本
 
 上面的示例选择环境变量，二者都是配置来源；若用 `db.properties`，只应提交不含真实密码的模板，实际口令从环境变量或受控密钥来源覆盖。`Properties.load` 可从类路径读取配置，但要明确流的字符编码与配置文件部署位置。不要把数据库口令写进博客或 Git 历史。
 
-课堂截图使用 Connector/J 5.1.49 和旧驱动名 `com.mysql.jdbc.Driver`，属于旧环境。本文 Maven 依赖为 26.7.0，驱动类名应使用 `com.mysql.cj.jdbc.Driver`；通过 JDBC 4 驱动自动注册时，上文 `DriverManager.getConnection` 不必手动 `Class.forName`。依赖版本和 MySQL/JDK 兼容范围应按[官方版本表](https://dev.mysql.com/doc/connector-j/en/connector-j-versions.html)核对，不能混抄不同代的连接 URL 和驱动参数。
+本文示例固定使用 Connector/J 26.7.0；官方兼容表列明该版本支持 MySQL Server 8.4 及以上和 JRE 8 及以上。驱动类名为 `com.mysql.cj.jdbc.Driver`；JDBC 4 驱动可自动注册，通常不必手动调用 `Class.forName`。升级 Connector/J 时应按[官方兼容表](https://dev.mysql.com/doc/connector-j/en/connector-j-versions.html)核对目标 Java 与 MySQL 版本。
 
 ## 补充：一条连接上的转账事务
 
-下面是修正后的独立练习：金额用 `DECIMAL`/`BigDecimal`，扣款语句同时检查余额，检查两条语句的影响行数。先在独立练习库建立表：
+下面是改进后的独立示例：金额用 `DECIMAL`/`BigDecimal`，扣款语句同时检查余额，检查两条语句的影响行数。先在隔离数据库建立表：
 
 ~~~sql
 CREATE TABLE account_demo (
@@ -264,7 +244,7 @@ public class JdbcTransferDemo {
 }
 ~~~
 
-保存为 `JdbcTransferDemo.java`，JDK 8+ 与上文 Connector/J 依赖可运行，前提是连接到含上述表的 MySQL 练习库。该单连接示例通过 `try-with-resources` 关闭连接；若连接来自连接池，还应由事务管理边界负责恢复连接状态。`SELECT` 也可以参与事务中的一致性读取或锁定，不能把“事务只用于增删改”当规则。转账的并发、幂等和审计还需另行设计，此处只演示原子提交与回滚。单表 SQL 入门见 [MySQL 基础](./mysql-basic-crud-notes.md)，将 DAO 放入业务流程的课堂案例见 [员工信息管理](./jdbc-employee-classroom-case.md)。
+保存为 `JdbcTransferDemo.java`，JDK 8+ 与上文 Connector/J 依赖可运行，前提是连接到含上述表的 MySQL 示例数据库。该单连接示例通过 `try-with-resources` 关闭连接；若连接来自连接池，还应由事务管理边界负责恢复连接状态。`SELECT` 也可以参与事务中的一致性读取或锁定，不能把“事务只用于增删改”当规则。转账的并发、幂等和审计还需另行设计，此处只演示原子提交与回滚。单表 SQL 入门见 [MySQL 基础](./mysql-basic-crud-notes.md)，将 DAO 放入分层示例见 [JDBC 数据访问边界](./jdbc-employee-classroom-case.md)。
 
 ## 参考资料
 

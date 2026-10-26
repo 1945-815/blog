@@ -3,14 +3,14 @@ title: "Tomcat 与 Servlet：从 URL 映射到生命周期"
 date: "2026-10-16"
 categories: ["Java 基础"]
 tags: ["Java Web", "Servlet", "Tomcat", "HTTP"]
-description: "沿用课堂 Java Web 练习说明容器、Servlet 映射、init/service/destroy，并标明 javax 与 jakarta 的版本边界。"
+description: "说明 Servlet 映射、容器生命周期，以及 javax.servlet 与 jakarta.servlet 的版本边界。"
 plan_date: "2026-10-16"
-phase: "数据库与 Spring 基础"
+phase: "Web 基础"
 ---
 
 # Tomcat 与 Servlet：从 URL 映射到生命周期
 
-这里用一个最小 WAR 练习把这些步骤连起来。它属于传统 Java Web 学习材料；Spring MVC 的 `DispatcherServlet` 在 Servlet 容器之上组织请求处理，可继续读 [Spring MVC 请求流程](/articles/spring-mvc-request-flow)。
+下面用一个最小 WAR 应用说明这些步骤。Spring MVC 的 `DispatcherServlet` 在 Servlet 容器之上组织请求处理，可继续读 [Spring MVC 请求流程](/articles/spring-mvc-request-flow)。
 
 ## 先看请求走到哪里
 
@@ -20,7 +20,7 @@ IP 地址、端口和协议分别回答“发往哪台主机”“交给哪个�
 
 ## 可运行的传统 Servlet 示例
 
-课堂材料使用 `javax.servlet` 包名。下面限定 **JDK 8、Tomcat 9、Servlet 4.0**。Maven 项目 `pom.xml` 的关键部分：
+以下示例使用 `javax.servlet` 包名，并限定 **JDK 8、Tomcat 9、Servlet 4.0**。Maven 项目 `pom.xml` 的关键部分：
 
 ```xml
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -109,6 +109,6 @@ Servlet 实例通常处理多个请求。上面的 `name` 是 `doGet` 的局部�
 
 Tomcat 10 起规范包名从 `javax.servlet` 改为 `jakarta.servlet`，旧代码不能只换 Tomcat 可执行文件就保证兼容；需要按对应 Servlet/JSP 版本重新编译并处理依赖。
 
-请求与响应、转发、作用域以及 JSP/EL/JSTL 的课堂练习见 [Servlet Web 组件与商品 CRUD](/articles/servlet-jsp-webcrud-classroom)。
+请求与响应、转发、作用域以及 JSP/EL/JSTL 的数据流示例见 [Servlet 与 JSP 列表查询示例](/articles/servlet-jsp-webcrud-classroom)。
 
 版本修正参考 [Tomcat 9 文档](https://tomcat.apache.org/tomcat-9.0-doc/)和 [Tomcat 10 迁移指南](https://tomcat.apache.org/migration-10)。

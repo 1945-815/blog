@@ -1,106 +1,102 @@
 ---
-title: "MySQL 基础 SQL：从建表到单表查询"
+title: "MySQL DDL、DML 与单表查询"
 date: "2026-10-16"
 categories: ["数据库"]
 tags: ["MySQL", "SQL", "数据库基础"]
-description: "梳理 MySQL DDL、DML、约束、过滤、排序、分页和聚合的练习顺序。"
+description: "从表结构和约束到增删改查，梳理 MySQL 单表 SQL 的基本语义与常见边界。"
 plan_date: "2026-10-16"
-phase: "数据库与 Spring 基础"
+phase: "Spring 与数据持久化"
 ---
 
-# MySQL 基础 SQL：从建表到单表查询
+# MySQL DDL、DML 与单表查询
 
-课堂讲了 DDL 建表、DML 增删改和 DQL 查询；下面把零散语句整理为可在**独立练习库**执行的最小流程。表与记录是学习数据，不对应真实公司员工。
+下面用目录记录演示建表、约束、增删改查和聚合。示例针对 MySQL 8.x 与 InnoDB，建议在专用数据库中执行；若已存在同名表，先检查结构，不要在共享环境删除数据。
 
 ## 建表与约束
 
-示例面向 MySQL 8.0/8.4 的 InnoDB。新建一个专门的练习库后执行；若已有同名表，先检查结构，不要在共享环境直接删除数据。`PRIMARY KEY` 唯一标识行，`UNIQUE` 约束工号，`NOT NULL` 限制必填，`DECIMAL` 保存精确金额。
-
 ~~~sql
-CREATE DATABASE IF NOT EXISTS java_sql_practice
+CREATE DATABASE IF NOT EXISTS java_sql_lab
   DEFAULT CHARACTER SET utf8mb4;
-USE java_sql_practice;
+USE java_sql_lab;
 
-CREATE TABLE IF NOT EXISTS employee_practice (
+CREATE TABLE IF NOT EXISTS catalog_entry (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    emp_no VARCHAR(20) NOT NULL UNIQUE,
-    name VARCHAR(60) NOT NULL,
-    department VARCHAR(40) NOT NULL,
-    salary DECIMAL(12, 2) NOT NULL,
-    hired_on DATE NOT NULL
+    entry_key VARCHAR(40) NOT NULL UNIQUE,
+    title VARCHAR(120) NOT NULL,
+    category VARCHAR(40) NOT NULL,
+    view_count BIGINT NOT NULL DEFAULT 0,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    KEY idx_category_created (category, created_at)
 ) ENGINE=InnoDB;
 
-INSERT INTO employee_practice
-    (emp_no, name, department, salary, hired_on)
+INSERT INTO catalog_entry (entry_key, title, category, view_count)
 VALUES
-    ('E001', '小林', '技术', 8500.00, '2026-03-01'),
-    ('E002', '小陈', '财务', 7200.00, '2026-03-02'),
-    ('E003', '小周', '技术', 9300.00, '2026-03-03');
+    ('guide-001', '索引设计基础', 'database', 12),
+    ('guide-002', '事务隔离级别', 'database', 8),
+    ('guide-003', '消息确认机制', 'messaging', 5);
 ~~~
 
-重复执行 `INSERT` 会触发工号唯一约束；这正好用来观察约束错误。`CREATE TABLE IF NOT EXISTS` 只避免同名建表错误，不检查旧表结构是否与这里相同。
+`PRIMARY KEY` 唯一标识行，`UNIQUE` 限制业务键重复，`NOT NULL` 表示必填，`DEFAULT` 提供默认值。`CREATE TABLE IF NOT EXISTS` 只避免同名表错误，不会检查已有表结构是否与定义一致。重复插入相同的 `entry_key` 会触发唯一约束错误。
 
 ## 增删改与查询
 
-先用 `SELECT` 确认条件再执行 `UPDATE`/`DELETE`，尤其注意 `WHERE`。下面的修改和删除都只作用于指定工号；若希望保留三条初始记录，可以只执行查询部分。
+先用 `SELECT` 检查目标行，再执行更新或删除。下面的写操作按业务键限定范围：
 
 ~~~sql
-SELECT id, emp_no, name, salary
-FROM employee_practice
-WHERE department = '技术' AND salary >= 8000.00
-ORDER BY salary DESC, id ASC;
+SELECT id, entry_key, title, view_count
+FROM catalog_entry
+WHERE category = 'database' AND view_count >= 8
+ORDER BY view_count DESC, id ASC;
 
-SELECT id, name
-FROM employee_practice
-WHERE name LIKE '小%'
+SELECT id, title
+FROM catalog_entry
+WHERE title LIKE '%事务%'
 ORDER BY id
-LIMIT 2 OFFSET 0;
+LIMIT 20 OFFSET 0;
 
-SELECT department, COUNT(*) AS employee_count,
-       SUM(salary) AS salary_total
-FROM employee_practice
-GROUP BY department
-ORDER BY department;
+UPDATE catalog_entry
+SET view_count = view_count + 1
+WHERE entry_key = 'guide-001';
 
-UPDATE employee_practice
-SET salary = 8800.00
-WHERE emp_no = 'E001';
-
-DELETE FROM employee_practice
-WHERE emp_no = 'E003';
+DELETE FROM catalog_entry
+WHERE entry_key = 'guide-003';
 ~~~
 
-`WHERE` 过滤行，`ORDER BY` 排序，`LIMIT`/`OFFSET` 取页面，聚合函数配合 `GROUP BY` 按部门汇总。分页需要稳定排序，否则数据变化时不同页可能重复或遗漏；大偏移分页还有额外扫描成本，后续可按索引和游标方案评估。
+`WHERE` 过滤行，`ORDER BY` 排序，`LIMIT` 与 `OFFSET` 截取结果。分页需要稳定排序，否则数据变化时翻页可能重复或遗漏；偏移量很大时还会增加扫描成本，可按索引和查询模式考虑游标分页。
 
-`DELETE` 删除符合条件的行；`DROP TABLE` 删除整张表及其定义，作用范围完全不同。实际应用从 Java 调用 SQL 时，应使用参数绑定，不把用户输入拼进字符串；具体示例见 [JDBC 与 DAO](./011-jdbc-preparedstatement-dao.md)。多表关联和分组报表另见 [表设计与 JOIN](./008-mysql-table-design-joins.md) 和 [分组统计](./062-mysql-grouped-reporting.md)。
+`DELETE` 删除符合条件的行；`DROP TABLE` 删除整张表及其定义，影响范围不同。应用从 Java 执行 SQL 时应使用参数绑定，不要把请求值拼进 SQL 字符串。示例见 [JDBC 与 DAO](./011-jdbc-preparedstatement-dao.md) 和 [JDBC 分层与事务边界](./jdbc-employee-classroom-case.md)。
 
-### 课堂单表查询的其他条件
-
-3 月 20 日的员工 SQL 练习还反复使用区间、集合、空值与模糊匹配。针对上面的练习表，可分别执行：
+## 条件、聚合与空值
 
 ~~~sql
-SELECT emp_no, name FROM employee_practice
-WHERE salary BETWEEN 7000.00 AND 9000.00;
+SELECT entry_key, title
+FROM catalog_entry
+WHERE view_count BETWEEN 5 AND 12;
 
-SELECT emp_no, name FROM employee_practice
-WHERE emp_no IN ('E001', 'E003');
+SELECT entry_key, title
+FROM catalog_entry
+WHERE entry_key IN ('guide-001', 'guide-003');
 
-SELECT emp_no, name FROM employee_practice
-WHERE name LIKE '%林%';
+SELECT MIN(view_count) AS lowest, MAX(view_count) AS highest,
+       AVG(view_count) AS average_count
+FROM catalog_entry;
 
-SELECT MIN(salary) AS lowest, MAX(salary) AS highest
-FROM employee_practice;
+SELECT category, COUNT(*) AS entry_count
+FROM catalog_entry
+GROUP BY category
+HAVING COUNT(*) >= 1
+ORDER BY category;
 ~~~
 
-`BETWEEN` 在此包含两端。`LIKE` 的 `%` 表示任意长度字符；前置通配符对普通 B 树索引的使用方式与前缀匹配不同，应结合执行计划判断。检查可空列要用 `IS NULL`，不能写 `= NULL`；例如 [员工课堂案例](./jdbc-employee-classroom-case.md) 的 `bonus` 可为空，可用 `WHERE bonus IS NULL` 找未设置奖金的行。聚合、排序和分页应根据真实需求组合，不把课堂 27 道查询机械复制成 27 篇文章。
+`BETWEEN` 在此包含两端。`LIKE` 的 `%` 表示任意长度字符；前置通配符与前缀匹配使用普通 B 树索引的方式不同，需结合执行计划判断。判断可空列要用 `IS NULL`，不能写 `= NULL`。`WHERE` 先筛选行，`HAVING` 则筛选分组后的聚合结果。多表关联和聚合报表见[表设计与 JOIN](./008-mysql-table-design-joins.md)和[分组统计](./062-mysql-grouped-reporting.md)。
 
 ## 自查问题
 
-- `salary` 为什么选择 `DECIMAL` 而非课堂原始案例中的 `DOUBLE`？
-- `UPDATE` 忘记 `WHERE` 会发生什么？如何用事务与事前查询降低操作风险？
-- `WHERE department = '技术'` 与 `HAVING COUNT(*) > 1` 分别在什么阶段筛选？
+- `UPDATE` 忘记 `WHERE` 会发生什么？如何通过事务和事前查询降低误操作风险？
+- `WHERE category = 'database'` 与 `HAVING COUNT(*) > 1` 分别在哪个阶段筛选？
+- 怎样从执行计划判断过滤和排序是否使用了预期索引？
 
-## 资料与参考
+## 参考资料
 
 - [MySQL 官方教程](https://dev.mysql.com/doc/refman/8.4/en/tutorial.html)
 - [MySQL SELECT](https://dev.mysql.com/doc/refman/8.4/en/select.html)

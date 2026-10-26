@@ -1,20 +1,20 @@
 ---
-title: "从商品筛选理解 Lambda、函数式接口与方法引用"
+title: "Java Lambda、函数式接口与方法引用：以目录项筛选为例"
 date: "2026-10-16"
 categories: ["Java 基础"]
 tags: ["Java", "Lambda", "函数式接口", "Stream"]
-description: "把匿名内部类改写为 Lambda，再用方法引用连接 Stream；示例以 JDK 8 课堂商品筛选为依据。"
+description: "从匿名内部类到 Lambda 和方法引用，解释 JDK 8 函数式接口与 Stream 的连接方式。"
 plan_date: "2026-10-16"
-phase: "Java 基础与数据结构"
+phase: "Java 与并发"
 ---
 
-# 从商品筛选理解 Lambda、函数式接口与方法引用
+# Java Lambda、函数式接口与方法引用：以目录项筛选为例
 
-这里保留这个课堂练习的输入与目标，代码重新整理为一个可运行的 JDK 8 示例；它不是企业商品系统的实现。
+下面通过目录项标题和浏览次数说明如何将筛选条件作为行为传入，并给出可直接运行的 JDK 8 示例。
 
 ## 从重复的筛选循环开始
 
-如果“名称包含手机”和“价格不低于 8000”各写一遍循环，循环本身完全相同，变化的是判断条件。可以把条件作为 `Predicate<Product>` 传入。`Predicate<T>` 是 JDK 提供的函数式接口，核心抽象方法 `test(T)` 返回布尔值。
+如果“标题包含并发”和“浏览次数不少于 8”各写一遍循环，循环本身完全相同，变化的是判断条件。可以把条件作为 `Predicate<CatalogEntry>` 传入。`Predicate<T>` 是 JDK 提供的函数式接口，核心抽象方法 `test(T)` 返回布尔值。
 
 ```java
 import java.util.ArrayList;
@@ -23,65 +23,65 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class ProductFilterDemo {
-    static final class Product {
-        private final String name;
-        private final int price;
-        private final String brand;
+public class CatalogEntryFilterDemo {
+    static final class CatalogEntry {
+        private final String title;
+        private final int viewCount;
 
-        Product(String name, int price, String brand) {
-            this.name = name;
-            this.price = price;
-            this.brand = brand;
+        CatalogEntry(String title, int viewCount) {
+            this.title = title;
+            this.viewCount = viewCount;
         }
 
-        String getName() { return name; }
-        int getPrice() { return price; }
-        String getBrand() { return brand; }
+        String getTitle() { return title; }
+        int getViewCount() { return viewCount; }
     }
 
-    static List<Product> filter(List<Product> source, Predicate<Product> condition) {
-        List<Product> result = new ArrayList<>();
-        for (Product product : source) {
-            if (condition.test(product)) {
-                result.add(product);
+    static List<CatalogEntry> filter(List<CatalogEntry> source,
+                                     Predicate<CatalogEntry> condition) {
+        List<CatalogEntry> result = new ArrayList<>();
+        for (CatalogEntry entry : source) {
+            if (condition.test(entry)) {
+                result.add(entry);
             }
         }
         return result;
     }
 
     public static void main(String[] args) {
-        List<Product> products = Arrays.asList(
-            new Product("苹果手机", 12000, "苹果"),
-            new Product("苹果电脑", 10000, "苹果"),
-            new Product("华为手机", 5000, "华为")
+        List<CatalogEntry> entries = Arrays.asList(
+            new CatalogEntry("Java 并发基础", 12),
+            new CatalogEntry("数据库索引", 8),
+            new CatalogEntry("消息确认机制", 5)
         );
 
         // 变化的条件可以直接写在调用处。
-        List<Product> phones = filter(products, product -> product.getName().contains("手机"));
-        List<Product> expensive = filter(products, product -> product.getPrice() >= 8000);
+        List<CatalogEntry> concurrency = filter(entries,
+            entry -> entry.getTitle().contains("并发"));
+        List<CatalogEntry> popular = filter(entries,
+            entry -> entry.getViewCount() >= 8);
 
-        // Product::getName 是方法引用，与 product -> product.getName() 对应。
-        List<String> phoneNames = phones.stream()
-            .map(Product::getName)
+        // CatalogEntry::getTitle 是方法引用，与 entry -> entry.getTitle() 对应。
+        List<String> titles = concurrency.stream()
+            .map(CatalogEntry::getTitle)
             .collect(Collectors.toList());
-        System.out.println(phoneNames); // [苹果手机, 华为手机]
-        System.out.println(expensive.size()); // 2
+        System.out.println(titles); // [Java 并发基础]
+        System.out.println(popular.size()); // 2
     }
 }
 ```
 
-用 `javac ProductFilterDemo.java && java ProductFilterDemo` 运行，要求 JDK 8 或更新版本。这里用 `int` 表达课堂练习中的整数价格；涉及实际金额计算时应按币种与精度要求选择 `BigDecimal`，不能直接套用这个字段类型。
+用 `javac CatalogEntryFilterDemo.java && java CatalogEntryFilterDemo` 运行，要求 JDK 8 或更新版本。示例中的浏览次数使用 `int`；若字段可能超出整数范围，应选择更合适的数值类型。
 
 ## Lambda 为什么能传给接口参数
 
 Lambda 需要一个明确的目标类型。函数式接口恰好只有一个抽象方法，因此编译器知道 Lambda 的参数和返回值对应哪一个方法。`@FunctionalInterface` 可以让编译器检查这一约束，但没有注解、仍满足条件的接口也可以接收 Lambda。接口的 `default` 或 `static` 方法不计入这一个抽象方法。
 
-课堂上先写匿名内部类、再改成 Lambda 很有帮助，因为这能看清楚“传入的是一个实现判断行为的对象”，而不是把 Lambda 当成独立执行的脚本。写成 `product -> product.getPrice() >= 8000` 后，也可以进一步把已有方法作为方法引用，但只有当目标函数式接口的参数和返回类型匹配时才成立。
+将匿名内部类改写为 Lambda 有助于看清楚“传入的是一个实现判断行为的对象”，而不是把 Lambda 当成独立执行的脚本。写成 `entry -> entry.getViewCount() >= 8` 后，也可以进一步把已有方法作为方法引用，但只有当目标函数式接口的参数和返回类型匹配时才成立。
 
 ## 与 Stream 的边界
 
-Lambda 是表达行为的一种语法，Stream 是组织集合处理步骤的 API，两者经常一起用，但不是同一概念。上例 `filter` 是普通循环加 Lambda；`phones.stream().map(Product::getName)` 则使用了 Stream。Stream 的惰性执行、分组统计和并行注意事项见 [Stream API 与副作用](/articles/stream-api-side-effects)。
+Lambda 是表达行为的一种语法，Stream 是组织集合处理步骤的 API，两者经常一起用，但不是同一概念。上例 `filter` 是普通循环加 Lambda；`concurrency.stream().map(CatalogEntry::getTitle)` 则使用了 Stream。Stream 的惰性执行、分组统计和并行注意事项见 [Stream API 与副作用](/articles/stream-api-side-effects)。
 
 ## 容易误解的地方
 

@@ -1,51 +1,161 @@
-# 博客升级审查与交付记录
+# 全站技术博客内容审计记录
 
-## 审查基线
+## 审计范围与处理原则
 
-- 仓库：`1945-815/blog`，改造从提交 `0a6afce` 开始，在本地分支 `codex/site-upgrade` 完成。没有提交、推送、合并或触发正式部署。
-- 技术栈：VitePress 1.6.4、Vue 3、`lucide-vue-next`；GitHub Pages 项目路径 `/blog/`，原部署工作流保持不变。
-- 内容：99 篇文章，`content-plan.json` 有 99 条；所有文章均有 `date` 与 `plan_date`，25 篇没有标签，Front Matter 中有 28 个真实分类。没有编辑文章正文、日期或原 Front Matter。
-- 原站已有本地搜索、分类页、标签筛选、阅读进度、移动端导航和上一篇/下一篇；归档页缺少正文全文筛选。原首页未清晰展示本次提供的实习与项目事实。
-- 在线 Pages 页面无法通过当前浏览器/网页抓取工具可靠读取，因此未声称完成线上视觉对比；以下验收以静态构建、生成文件扫描和本地 Edge/Playwright 浏览为准。
-- 本次可用附件只有任务文本，没有 DOCX 简历和联系按钮截图。职业事实据任务文本更新，无法与简历原件逐项比对或按截图像素还原。
+- 首轮审查覆盖 `docs/articles/` 下 99 篇技术文章（不含归档页 `index.md`），并核对关于页、导航、分类/标签、路线图、站点配置、README、维护说明及文章规划数据。
+- 首轮内容重构按文章内容和示例语义逐篇调整，当时保留了 99 篇文章和原文件名/slug；之后按用户要求删除了路线文章。旧 URL 中的历史标识继续保留以维持其他链接。
+- 首轮重构时，`date`、`plan_date`、`content-plan.json` 的 `planDate`、文章 ID 与 slug 均和当时的 `HEAD` 基线一致；文章 Frontmatter 标题、H1、规划标题与日期、主题分类已对齐。
+- 首轮重构时，文章原有 `phase` 字段在站点中用于主题展示与导航，不代表真实发布阶段；已按技术主题整理，并同步 `content-plan.json` 的 `topic` 与 `docs/roadmap.md`。
+- 首轮审计结束时未提交或推送；之后的提交 `878e399` 已推送到 `codex/music-library`。GitHub Pages 工作流只在 `main` 分支推送时自动部署，因此该分支推送没有更新线上站点。
 
-## 实施结果
+## 发现的问题与处理
 
-- **P0 审查与保护：完成。** 复核仓库、构建工作流、文章和静态资源；修正旧 `/blog/roadmap` 重复基础路径问题。新增 `/private-data/` 忽略规则。
-- **P1 职业展示：完成。** 首页和关于页加入教育、实习职责、技能分组及两项项目详情。架构示意均标注为概念方案；未增加成果百分比或额外经历。
-- **P2 文章阅读：完成。** 归档支持标题、摘要、分类、标签、正文检索；分类与标签组合、排序、分页和筛选条件写入 URL。正文索引首次搜索时才加载，首页不载入该索引。日期显示区分 `date` 与 `plan_date`。增加相关文章和文章图片灯箱，并保留文章代码与原内容。
-- **P3 社交内容：完成。** 新增四项联系胶囊、友链和说说页面，以及人工审核用友链 Issue 模板。仅 GitHub 有已核实链接；QQ、BiliBili、网易云入口保持禁用并说明待补充。友链和说说数据为空时显示空状态。
-- **P4 音乐与公开相册：完成框架。** 全局播放器支持列表、播放控制、音量、进度、循环、随机和偏好记忆；没有曲目时显示空状态，不自动播放。相册支持分类、照片网格、灯箱切换和手机滑动；当前真实相册为空，没有加入示例照片或音源。
-- **P5 私密空间：完成。** 本地脚本使用 PBKDF2-SHA-256（310,000 次）派生密钥并采用 AES-256-GCM 加密；无默认密码，不把密码写入代码或 localStorage。脚本拒绝外链照片和目录越界照片，照片以 data URI 加密进单一密文。浏览器错误密码不解密，锁定后移除页面数据引用。没有生成或发布真实私密数据。
-- **P6 跨端验收：完成本地检查。** `npm run docs:build` 成功；生成 122 个 HTML 页面，扫描 14,589 个本地资源/页面引用，无断链。`/blog/` 静态资源基础路径正确，站点地图使用博客域名且不包含私密记录。桌面首页在 375、390、768、1024、1440px 下无横向溢出；新增主要路由在 375px 下均无溢出。
+- 教学/培训式标题和段落结构：改为问题背景、原理、实现、边界、验证等按主题组织的章节；删除课程、课堂、作业语境。
+- 不可核验的组织、实习或项目叙述：改写为通用技术问题、数据模型和可复现示例，不引入工作经历或性能数据。
+- 示例中的业务命名与文章主题不一致：替换为目录记录、文档检索、RBAC 等中性模型，修正跨文档标题与示例引用。
+- 代码与版本边界：补充/校准 Connector/J、Spring Cloud Alibaba Nacos、Elasticsearch Java Client、RabbitMQ、Sentinel、MyBatis-Plus 等示例中的版本或适用边界；修正 JDBC Java 8 示例调用和 MyBatis-Plus 实体/SQL 不一致问题。
+- 元数据同步：修复 5 个规划标题与文章标题不一致项；重分主题路线图，并核实 99 个 slug、ID、标题和规划日期一一对应。
 
-## 浏览器与加密检查
+## 修改统计
 
-- Edge/Playwright：主页、归档、关于、项目、相册、友链、说说、音乐均返回 200；手机导航可打开；未观察到页面运行异常。
-- 正文搜索：用仅存在于文章正文的 `undo 信息` 搜到对应 MVCC 文章；刷新后搜索词和命中结果恢复。分类、`MySQL` 标签与 `date-desc` 排序组合后写入 URL，前进、后退和清除后返回均恢复状态。
-- 图片交互：测试 Markdown 正文灯箱可打开并由 Escape 关闭；修复了相册照片点击被正文灯箱遮挡的问题。加密相册测试照片可左右切换、Escape 关闭。
-- 私密流程：用仅在测试内生成并拦截返回的临时密文验证错误密码拒绝、正确密码解密、锁定后清除明文。测试内容未写入站点文件或版本控制。
-- Node 加密检查：加解密往返通过、错误密码解密失败、输出密文不含测试明文；加密脚本拒绝外链图片和路径越界图片。
-- 无真实曲目、照片或友链可用于确认授权媒体播放和外站目标；对应页面目前按真实空数据展示。
+以下分类与逐篇台账记录首轮审计的 99 篇基线；路线文章后续已删除。按每篇文章最主要的改动归类：
 
-## 性能与部署
+| 类别 | 篇数 | 判定口径 |
+| --- | ---: | --- |
+| A | 17 | 主体结构、业务语境或关键模型需要整体重构 |
+| B | 62 | 需要重写关键章节、代码示例、技术边界或版本说明 |
+| C | 20 | 主要调整标题、措辞、章节名或主题元数据 |
+| D | 0 | 本次没有文章被完全跳过；逐篇均完成了内容或主题元数据审查 |
+| 合计 | 99 | 与文章目录实际数量一致 |
 
-- 自定义主题入口从约 643 KiB 降至约 158 KiB；约 486 KiB 的自定义文章正文索引会在首次全文搜索时加载。构建仍有 VitePress “chunk 大于 500 KB”警告，输出中可见约 1.09 MiB 的 VitePress 本地搜索索引 chunk。
-- 新增的相册、友链、说说和音乐入口使用 `index.md` 目录页面，分别生成 `albums/index.html`、`friends/index.html`、`moments/index.html`、`music/index.html`，与 `/blog/.../` 目录 URL 对应。
-- 使用 `/blog/` 基础路径本地构建并检查了生成 HTML、资源引用和站点地图。没有对 GitHub Pages 执行正式部署，也没有声称已核实远端线上状态。
+## 逐篇审计台账
 
-## 主要修改范围
+“调整重点”按 A/B/C 类别说明本篇主要审查动作；文件名与 URL slug 保留原值。
 
-- 导航、主题和布局：`docs/.vitepress/config.mts`、`docs/.vitepress/theme/`
-- 个人与生活数据：`docs/.vitepress/theme/data/`
-- 新页面：`docs/albums/`、`docs/friends/`、`docs/moments/`、`docs/music/`、`docs/projects/`
-- 文章检索：`docs/article-search.data.ts` 与文章列表/阅读组件
-- 私密数据工具：`tools/encrypt-memories.mjs`、`docs/.vitepress/theme/utils/privateAlbumCrypto.js`
-- 维护说明：`MAINTAINING.md`
+| 文件 | 当前标题 | 分类 | 调整重点 |
+| --- | --- | :---: | --- |
+| `002-java-class-object.md` | Java 类和对象：字段、方法与封装 | C | 措辞、章节命名或主题元数据调整 |
+| `004-data-structures-basics.md` | 数据结构入门：数组、链表、栈、队列与复杂度 | C | 措辞、章节命名或主题元数据调整 |
+| `005-java-exceptions-file-io.md` | Java 异常与文件 IO：把失败路径写清楚 | B | 关键章节、代码一致性或技术边界重构 |
+| `007-java-concurrency-basics.md` | Java 多线程起步：共享状态、线程安全与同步 | C | 措辞、章节命名或主题元数据调整 |
+| `008-mysql-table-design-joins.md` | MySQL 表设计与多表查询：从实体关系写 SQL | A | 核心场景、数据模型或文章主干重构 |
+| `010-mysql-explain-index.md` | 用 EXPLAIN 理解 MySQL 索引：读懂一条查询计划 | B | 关键章节、代码一致性或技术边界重构 |
+| `011-jdbc-preparedstatement-dao.md` | JDBC 预编译与 DAO：参数绑定和持久层边界 | B | 关键章节、代码一致性或技术边界重构 |
+| `013-spring-ioc-di.md` | Spring IoC 与 DI：对象创建和依赖管理 | C | 措辞、章节命名或主题元数据调整 |
+| `015-spring-aop-transactions.md` | Spring AOP 与事务：横切逻辑和事务边界 | C | 措辞、章节命名或主题元数据调整 |
+| `016-mybatis-dynamic-sql.md` | MyBatis 参数映射与动态 SQL：完成条件查询 | C | 措辞、章节命名或主题元数据调整 |
+| `019-redis-types-ttl.md` | Redis 基础数据结构与 TTL：临时状态和 key 设计 | C | 措辞、章节命名或主题元数据调整 |
+| `021-springboot-crud-project.md` | Spring Boot 分层 CRUD 示例：从表结构到分页接口 | A | 核心场景、数据模型或文章主干重构 |
+| `043-spring-ai-ollama.md` | Spring AI 与 Ollama：配置和本地模型调用 | B | 关键章节、代码一致性或技术边界重构 |
+| `044-elasticsearch-embedding-knn.md` | Embedding 接入 Elasticsearch：dense_vector、KNN 与维度核对 | B | 关键章节、代码一致性或技术边界重构 |
+| `045-agent-tool-boundaries.md` | Agent 工具调用：输入校验、权限边界与失败处理 | A | 核心场景、数据模型或文章主干重构 |
+| `046-java-polymorphism-interface.md` | 从接口到运行时分派：用多态组织可扩展的 Java 业务 | C | 措辞、章节命名或主题元数据调整 |
+| `047-mybatis-query-batch-performance.md` | MyBatis 查询与批量写入性能：识别 N+1 并控制数据库往返 | B | 关键章节、代码一致性或技术边界重构 |
+| `048-maven-multi-module.md` | Maven 多模块项目：聚合、依赖管理与团队构建边界 | B | 关键章节、代码一致性或技术边界重构 |
+| `049-springboot-auto-configuration.md` | Spring Boot 启动与自动配置：从条件装配到问题诊断 | B | 关键章节、代码一致性或技术边界重构 |
+| `050-ruoyi-rbac-permission-model.md` | RBAC 权限模型：角色、菜单与接口授权 | B | 关键章节、代码一致性或技术边界重构 |
+| `051-completablefuture-async-orchestration.md` | CompletableFuture 异步编排：线程池隔离、超时与异常边界 | B | 关键章节、代码一致性或技术边界重构 |
+| `052-jvm-memory-oom-diagnosis.md` | JVM 内存与 OOM 排查：从运行时区域到堆转储证据 | B | 关键章节、代码一致性或技术边界重构 |
+| `053-java-spi-classloader.md` | Java 类加载与 SPI：从类身份到可控的扩展发现 | B | 关键章节、代码一致性或技术边界重构 |
+| `054-redis-distributed-lock.md` | Redis 分布式锁实践：租约、唯一标识与数据库兜底 | B | 关键章节、代码一致性或技术边界重构 |
+| `055-quartz-scheduled-jobs.md` | Spring 定时任务与 Quartz：从单机触发到多实例调度 | B | 关键章节、代码一致性或技术边界重构 |
+| `056-java-reflection-bean-introspection.md` | Java 反射与内省：理解框架如何读取对象属性 | B | 关键章节、代码一致性或技术边界重构 |
+| `057-redis-daily-quota-lua.md` | Redis Lua 实现每日点赞配额：把检查和计数放进同一次操作 | B | 关键章节、代码一致性或技术边界重构 |
+| `058-nginx-java-load-balancing.md` | Nginx 反向代理与负载均衡：把请求稳妥地交给 Spring Boot | B | 关键章节、代码一致性或技术边界重构 |
+| `059-springboot-docker-multistage.md` | Spring Boot 应用容器化发布：从可执行 JAR 到多阶段镜像 | B | 关键章节、代码一致性或技术边界重构 |
+| `060-rag-retrieval-evaluation.md` | RAG 检索评估：用黄金问题集定位召回与回答问题 | B | 关键章节、代码一致性或技术边界重构 |
+| `061-java-time-zone-boundaries.md` | Java 日期时间处理：用 java.time 解决时区与区间边界 | B | 关键章节、代码一致性或技术边界重构 |
+| `062-mysql-grouped-reporting.md` | MySQL 分组统计：从订单明细到分类报表 | B | 关键章节、代码一致性或技术边界重构 |
+| `063-gateway-filter-order-timing.md` | Spring Cloud Gateway 过滤器顺序与耗时统计 | B | 关键章节、代码一致性或技术边界重构 |
+| `064-elasticsearch-bool-highlight.md` | Elasticsearch bool 查询与高亮：组合过滤条件并返回可展示片段 | B | 关键章节、代码一致性或技术边界重构 |
+| `065-linux-springboot-jar-systemd.md` | Linux 上运行 Spring Boot JAR：systemd 管理与故障排查 | B | 关键章节、代码一致性或技术边界重构 |
+| `066-java-string-stringbuilder.md` | Java 字符串实践：String 不可变性与 StringBuilder | B | 关键章节、代码一致性或技术边界重构 |
+| `067-mysql-innodb-mvcc-consistent-read.md` | MySQL InnoDB MVCC：一致性读与事务快照 | B | 关键章节、代码一致性或技术边界重构 |
+| `068-transactional-outbox-mysql-rabbitmq.md` | Transactional Outbox：让 MySQL 写入与 RabbitMQ 事件可靠衔接 | B | 关键章节、代码一致性或技术边界重构 |
+| `069-spring-ai-streaming-sse.md` | Spring AI 流式响应：用 WebFlux 与 SSE 逐段返回模型内容 | B | 关键章节、代码一致性或技术边界重构 |
+| `070-spring-ai-chat-memory-session.md` | Spring AI 会话记忆：会话隔离、窗口裁剪与 JDBC 持久化 | B | 关键章节、代码一致性或技术边界重构 |
+| `071-java-generics-type-erasure.md` | Java 泛型为什么不能随便强转：类型擦除、通配符与分页 DTO | B | 关键章节、代码一致性或技术边界重构 |
+| `072-bigdecimal-money-rounding.md` | BigDecimal 金额计算：从舍入规则到分摊尾差 | B | 关键章节、代码一致性或技术边界重构 |
+| `073-springboot-file-upload-quarantine.md` | Spring Boot 文件上传：大小校验、隔离存储与失败补偿 | B | 关键章节、代码一致性或技术边界重构 |
+| `074-elasticsearch-pit-search-after.md` | Elasticsearch 深分页：用 PIT 与 search_after 稳定翻页 | B | 关键章节、代码一致性或技术边界重构 |
+| `075-redis-persistence-recovery.md` | Redis 持久化与恢复：RDB、AOF 和缓存重建的边界 | B | 关键章节、代码一致性或技术边界重构 |
+| `097-spring-ai-mcp-client-server.md` | Spring AI MCP：用标准协议连接 Java 工具服务 | C | 措辞、章节命名或主题元数据调整 |
+| `098-spring-ai-multi-agent-patterns.md` | 多智能体协同的几种编排模式：路由、串联、并行与评估 | C | 措辞、章节命名或主题元数据调整 |
+| `099-hutool-java-utilities.md` | Hutool 常用工具类：字符串、标识符与 JSON | C | 措辞、章节命名或主题元数据调整 |
+| `activiti-comment-report-approval.md` | 评论或举报审批如何接入 Activiti 流程 | B | 关键章节、代码一致性或技术边界重构 |
+| `activiti7-approval-flow.md` | Activiti 7 审批流程：从流程定义到任务处理 | C | 措辞、章节命名或主题元数据调整 |
+| `ai-coding-tools-workflow.md` | Codex 和 Cursor 如何辅助接口开发与代码理解 | B | 关键章节、代码一致性或技术边界重构 |
+| `api-doc-security-checklist.md` | Java 后端项目中的接口文档与安全检查清单 | B | 关键章节、代码一致性或技术边界重构 |
+| `appointment-order-state-idempotency.md` | 预约和服务订单中的状态流转与重复提交 | B | 关键章节、代码一致性或技术边界重构 |
+| `approval-and-business-status.md` | 审批状态、任务状态与业务状态如何对应 | B | 关键章节、代码一致性或技术边界重构 |
+| `bloom-filter-fundamentals.md` | 布隆过滤器入门：用概率结构拦截不存在的数据 | B | 关键章节、代码一致性或技术边界重构 |
+| `canal-mysql-to-elasticsearch.md` | 用 Canal 同步 MySQL 变更到搜索索引 | B | 关键章节、代码一致性或技术边界重构 |
+| `clinic-appointment-approval-redacted.md` | 预约与审批的状态建模：业务状态、任务状态与幂等 | A | 核心场景、数据模型或文章主干重构 |
+| `dau-mau-metrics.md` | DAU 与 MAU：先统一活跃口径，再看留存和频率 | B | 关键章节、代码一致性或技术边界重构 |
+| `docker-local-backend-environment.md` | 用 Docker 搭建本地后端开发环境 | B | 关键章节、代码一致性或技术边界重构 |
+| `document-retrieval-platform-redacted.md` | 文档检索系统设计：MySQL、Elasticsearch 与 RAG 的边界 | A | 核心场景、数据模型或文章主干重构 |
+| `document-search-api-design.md` | 文档检索服务的接口设计：上传、分类与分页 | B | 关键章节、代码一致性或技术边界重构 |
+| `elasticsearch-document-search-mapping.md` | Elasticsearch 标题与内容检索的索引设计 | B | 关键章节、代码一致性或技术边界重构 |
+| `gateway-openfeign-responsibilities.md` | Gateway 与 OpenFeign 在服务调用中的分工 | B | 关键章节、代码一致性或技术边界重构 |
+| `git-version-control-classroom.md` | Git 版本控制：工作区、暂存与分支合并 | C | 措辞、章节命名或主题元数据调整 |
+| `html-css-form-notes.md` | HTML 与 CSS 入门：表格、表单和提交方式 | C | 措辞、章节命名或主题元数据调整 |
+| `internship-api-collaboration-retro.md` | 后端接口协作：契约、联调与问题定位 | A | 核心场景、数据模型或文章主干重构 |
+| `java-backend-learning-route.md`（后续删除） | Java 后端技术地图：语言基础、工程实践与 AI 应用 | A | 核心场景、数据模型或文章主干重构 |
+| `java-collections.md` | Java 集合的选择：List、Set、Map 分别解决什么问题 | B | 关键章节、代码一致性或技术边界重构 |
+| `java-design-patterns-overview.md` | Java 设计模式总览：按创建、结构与行为梳理 | C | 措辞、章节命名或主题元数据调整 |
+| `java-lambda-functional-interface.md` | Java Lambda、函数式接口与方法引用：以目录项筛选为例 | A | 核心场景、数据模型或文章主干重构 |
+| `java-object-wrapper-notes.md` | Object 与包装类：判等、装箱和类型转换 | C | 措辞、章节命名或主题元数据调整 |
+| `java-syntax-control-flow-notes.md` | Java 基础语法：变量、输入与流程控制 | C | 措辞、章节命名或主题元数据调整 |
+| `javascript-dom-events-notes.md` | JavaScript 基础与 DOM：用事件更新页面 | B | 关键章节、代码一致性或技术边界重构 |
+| `jdbc-employee-classroom-case.md` | JDBC 分层与数据访问：DAO、Service 与事务边界 | A | 核心场景、数据模型或文章主干重构 |
+| `linux-command-basics.md` | Linux 常用命令：文件、权限与网络排查 | A | 核心场景、数据模型或文章主干重构 |
+| `maven-environment-config.md` | Maven 配置文件与多环境配置的使用整理 | C | 措辞、章节命名或主题元数据调整 |
+| `mybatis-association-mapping.md` | MyBatis 关联映射：分类文档的一对多与文档标签的多对多 | A | 核心场景、数据模型或文章主干重构 |
+| `mybatis-plus-filter-pagination.md` | 用 MyBatis-Plus 实现条件筛选和分页查询 | B | 关键章节、代码一致性或技术边界重构 |
+| `mybatis-session-mapper-basics.md` | MyBatis Mapper 与 SqlSession：配置、执行与事务边界 | B | 关键章节、代码一致性或技术边界重构 |
+| `mysql-basic-crud-notes.md` | MySQL DDL、DML 与单表查询 | A | 核心场景、数据模型或文章主干重构 |
+| `mysql-transaction-index-idempotency.md` | 数据库事务、索引与重复提交问题 | B | 关键章节、代码一致性或技术边界重构 |
+| `nacos-service-discovery-config.md` | Nacos 在微服务中的注册发现与配置管理 | B | 关键章节、代码一致性或技术边界重构 |
+| `rabbitmq-consumer-boundary.md` | RabbitMQ 异步处理的基本流程与消费者边界 | B | 关键章节、代码一致性或技术边界重构 |
+| `rag-chunking-vector-search-demo.md` | RAG 文档切分与向量检索：实现和评估边界 | B | 关键章节、代码一致性或技术边界重构 |
+| `rag-document-qa.md` | RAG 文档问答的基本链路：文档、检索与模型 API | B | 关键章节、代码一致性或技术边界重构 |
+| `redis-hot-document-cache.md` | 热门文档访问场景下的 Redis 缓存设计 | B | 关键章节、代码一致性或技术边界重构 |
+| `redis-ttl.md` | Redis TTL 在验证码和临时状态管理中的应用 | B | 关键章节、代码一致性或技术边界重构 |
+| `restful-employee-api-design.md` | REST 接口设计：资源路径、HTTP 方法与状态码 | A | 核心场景、数据模型或文章主干重构 |
+| `sentinel-flow-control.md` | Sentinel 限流实践：规则、入口与降级边界 | B | 关键章节、代码一致性或技术边界重构 |
+| `servlet-jsp-webcrud-classroom.md` | Servlet 与 JSP 请求流程：列表查询、转发和数据绑定 | A | 核心场景、数据模型或文章主干重构 |
+| `servlet-tomcat-lifecycle.md` | Tomcat 与 Servlet：从 URL 映射到生命周期 | C | 措辞、章节命名或主题元数据调整 |
+| `software-development-workflow-scrum.md` | 软件开发流程与 Scrum：从需求到迭代反馈 | B | 关键章节、代码一致性或技术边界重构 |
+| `spring-mvc-request-flow.md` | Spring MVC 请求从进入到返回的大致流程 | C | 措辞、章节命名或主题元数据调整 |
+| `spring-security-jwt-flow.md` | Spring Security 与 JWT 的认证授权流程 | B | 关键章节、代码一致性或技术边界重构 |
+| `spring-validation-error-response.md` | Spring Boot 接口中的参数校验与统一错误响应 | B | 关键章节、代码一致性或技术边界重构 |
+| `stream-api-side-effects.md` | Stream API 的常见用法与容易忽略的副作用 | B | 关键章节、代码一致性或技术边界重构 |
+| `swagger2-skywalking-observability.md` | Swagger 2 接口文档与 SkyWalking 链路追踪：兼容边界 | A | 核心场景、数据模型或文章主干重构 |
+| `vue2-admin-learning-notes.md` | Vue 2 单页应用：响应式、路由与请求拦截 | A | 核心场景、数据模型或文章主干重构 |
+| `wolf2w-course-project-flow.md` | 微服务中的内容发布链路：服务边界、互动统计与搜索同步 | A | 核心场景、数据模型或文章主干重构 |
 
-## 仍需本人补充
+## 验证记录
 
-- 最新 DOCX 简历与联系按钮参考截图，以完成事实和视觉逐项核对。
-- QQ 联系方式或 HTTPS 链接、BiliBili 主页、网易云主页。
-- 获准公开的友链、照片与描述、说说内容、音乐曲目。
-- 若启用私密记录：本人本地准备的真实 JSON、照片和自设密码；只加密后发布输出文件。
+- `npm run docs:build`：通过。VitePress 构建并渲染 118 个 HTML 页面；包含 99 篇文章路由和归档页。Rollup 提示存在超过 500 KB 的压缩 JS 分块，未阻断构建。
+- 构建产物本地链接扫描：检查 14,272 个同站 `href`/`src` 引用（含片段锚点），未发现缺失目标；渲染页面可见文本的禁用语境扫描为 0 命中。外部链接未做全站可达性探测。
+- 日期/规划元数据比对：99 篇文章的 `date`、`plan_date`、`planDate`、ID 和 slug 与基线一致；当前文章标题、H1、规划标题、主题和规划日期一致。`git -c core.whitespace=cr-at-eol diff --check` 没有空白错误。
+- 关键词复查：未发现课程、课堂、培训、教师/学员、实习经历或“项目真实落地”等培训叙述残留。业务词如订单、预约、商品只保留为通用技术场景。旧 slug 中的历史词保留仅为 URL 兼容。
+- `package.json` 未配置独立单元/集成测试脚本。使用 JDK 17 编译了 14 个自包含 Java 示例，0 个编译失败；`ClassObjectDemo`、`DateMigrationDemo` 和 `GenericPageDemo` 也已运行并正常退出。需要数据库、Redis、消息代理或模型服务的片段没有在真实依赖环境运行。
+- 本地预览服务可启动，但桌面自动化工具未能可靠确认浏览器当前 URL，按其规则停止了 UI 操作；因此没有完成实际浏览器及移动端宽度验收。
+
+## 后续清理（2026-10-26）
+
+- 删除 `docs/articles/java-backend-learning-route.md`，并从 `content-plan.json` 与 `docs/roadmap.md` 移除对应条目。当前保留 98 篇技术文章，归档索引页不计入。
+- 从 78 篇文章中删除问答式“常见问题/常见追问”章节。8 篇文章的“常见问题”内容是边界/易错点清单而非问答，内容保留并改成描述性标题。
+- 线上页面仍显示旧内容：`.github/workflows/deploy.yml` 仅在 `main` 分支推送或手动触发时部署；`codex/music-library` 分支的推送不会触发 Pages。
+
+## 当前状态
+
+- 当前保留 98 篇技术文章；文章 slug 与规划数据 98 对 98 一致，已删除文章不再出现在文件、侧栏、路线索引或规划数据中。
+- 从 78 篇文章中移除了问答章节；构建前检查没有残留的问答标题或问答式小节。
+- npm run docs:build：通过，共生成 117 个 HTML 页面。仍有一个超过 500 KB 的 JS 分块警告，不影响构建。
+- 线上站点仍是旧版。当前分支为 codex/music-library，而 .github/workflows/deploy.yml 只对 main 的推送自动部署；需要将本次内容合入 main 才会更新 Pages。
+
+## 首轮最终状态（历史快照）
+
+内容重构、主题与元数据同步、全站构建和静态内链扫描已完成。没有发布或部署。实际浏览器交互和窄屏视觉检查尚未完成；超过 500 KB 的 JS 分块构建警告仍存在。
