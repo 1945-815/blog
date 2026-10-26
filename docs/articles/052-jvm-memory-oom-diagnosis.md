@@ -36,8 +36,7 @@ phase: "Java 与并发"
 CREATE TABLE export_record (
   id BIGINT PRIMARY KEY,
   record_name VARCHAR(120) NOT NULL,
-  created_at DATETIME NOT NULL,
-  KEY idx_created_id (created_at, id)
+  created_at DATETIME NOT NULL
 );
 SELECT id, record_name
 FROM export_record

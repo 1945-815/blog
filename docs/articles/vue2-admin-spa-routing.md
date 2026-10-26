@@ -93,7 +93,7 @@ router.beforeEach((to, from, next) => {
 
 组件内部状态适合由组件自己维护；多个页面共享的用户信息、角色和权限路由可以放进 Vuex 模块。Vuex 权限模块可以保存常量路由、动态路由、侧边栏路由和顶部路由，并在 `fetchAuthorizedRoutes` action 中请求后端的授权导航数据，再将其转换为前端路由。
 
-请求封装创建 Axios 实例时设置基础 URL 和超时，并在请求拦截器中按请求标记决定是否附加 Bearer token。
+从页面发起请求开始，依次跟踪 action、Axios 拦截器、后端响应和状态更新。出现跳转异常时，分别检查 token 附加、状态码映射、路由守卫的 `next` 调用次数和授权路由注册。
 
 ```javascript
 const service = axios.create({
@@ -117,7 +117,7 @@ service.interceptors.request.use(config => {
 
 请求封装创建 Axios 实例时设置基础 URL 和超时，并在请求拦截器中按请求标记决定是否附加 Bearer token。
 
-前端路由和按钮权限只决定界面如何呈现，用户可以直接构造 HTTP 请求；真正的接口权限必须由后端重新校验。这个边界和博客已有的 [RBAC 权限模型](/articles/050-ruoyi-rbac-permission-model) 是同一条认证后授权链路。
+前端路由和按钮权限只决定界面如何呈现，用户可以直接构造 HTTP 请求；真正的接口权限必须由后端重新校验。这个边界和 [RBAC 权限模型](/articles/050-rbac-permission-model) 一样，都要求服务端在身份认证后执行授权。
 
 ## 常见问题与兼容边界
 

@@ -109,6 +109,6 @@ Servlet 实例通常处理多个请求。上面的 `name` 是 `doGet` 的局部�
 
 Tomcat 10 起规范包名从 `javax.servlet` 改为 `jakarta.servlet`，旧代码不能只换 Tomcat 可执行文件就保证兼容；需要按对应 Servlet/JSP 版本重新编译并处理依赖。
 
-请求与响应、转发、作用域以及 JSP/EL/JSTL 的数据流示例见 [Servlet 与 JSP 列表查询示例](/articles/servlet-jsp-webcrud-classroom)。
+请求与响应、转发、作用域以及 JSP/EL/JSTL 的数据流示例见 [Servlet 与 JSP 列表查询示例](/articles/servlet-jsp-request-flow)。
 
 版本修正参考 [Tomcat 9 文档](https://tomcat.apache.org/tomcat-9.0-doc/)和 [Tomcat 10 迁移指南](https://tomcat.apache.org/migration-10)。

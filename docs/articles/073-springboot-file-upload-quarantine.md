@@ -1,7 +1,7 @@
 ---
 title: "Spring Boot 文件上传：大小校验、隔离存储与失败补偿"
 date: "2027-08-10"
-categories: ["项目实践"]
+categories: ["工程实践"]
 tags: ["Spring Boot", "MultipartFile", "文件上传", "权限控制", "补偿"]
 description: "围绕 MultipartFile 实现大小限制、隔离状态、数据库登记与下载授权。"
 plan_date: "2026-05-12"

@@ -1,7 +1,7 @@
 ---
 title: "预约和服务订单中的状态流转与重复提交"
 date: "2026-10-13"
-categories: ["项目实践"]
+categories: ["工程实践"]
 tags: ["MySQL","幂等","状态机"]
 description: "围绕预约与服务订单讨论状态图、重复请求和事务约束。"
 plan_date: "2026-02-12"

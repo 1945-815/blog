@@ -1,7 +1,7 @@
 ---
 title: "评论或举报审批如何接入 Activiti 流程"
 date: "2026-10-13"
-categories: ["项目实践"]
+categories: ["工程实践"]
 tags: ["Activiti","审批","接口设计"]
 description: "用评论或举报审核示例说明业务记录与流程任务之间的关联。"
 plan_date: "2026-05-27"

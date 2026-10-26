@@ -1,5 +1,5 @@
 ---
-title: "Maven 配置文件与多环境配置的使用整理"
+title: "Maven 构建配置与 Spring 多环境配置：职责和加载优先级"
 date: "2026-10-13"
 categories: ["工程基础"]
 tags: [
@@ -7,12 +7,12 @@ tags: [
   "配置管理",
   "Java"
 ]
-description: "说明 Maven 构建配置与应用运行配置的边界，并整理本地多环境实践。"
+description: "区分 Maven 构建配置与应用运行配置，说明 profile、依赖范围和环境变量的职责。"
 plan_date: "2024-05-10"
 phase: "后端工程实践"
 ---
 
-# Maven 配置文件与多环境配置的使用整理
+# Maven 构建配置与 Spring 多环境配置：职责和加载优先级
 
 ## 问题背景
 

@@ -109,7 +109,7 @@ export default defineConfig({
             { text: "EXPLAIN 与索引", link: "/articles/010-mysql-explain-index" },
             { text: "JDBC 预编译与 DAO", link: "/articles/011-jdbc-preparedstatement-dao" },
             { text: "Tomcat 与 Servlet", link: "/articles/servlet-tomcat-lifecycle" },
-            { text: "Servlet 请求与 JSP 页面", link: "/articles/servlet-jsp-webcrud-classroom" },
+            { text: "Servlet 请求与 JSP 页面", link: "/articles/servlet-jsp-request-flow" },
             { text: "Spring MVC 请求流程", link: "/articles/spring-mvc-request-flow" },
             { text: "REST 接口设计", link: "/articles/restful-employee-api-design" },
             { text: "Spring IoC 与 DI", link: "/articles/013-spring-ioc-di" },
@@ -128,7 +128,7 @@ export default defineConfig({
             { text: "Redis 数据结构与 TTL", link: "/articles/019-redis-types-ttl" },
             { text: "Docker 本地环境", link: "/articles/docker-local-backend-environment" },
             { text: "Spring Boot 分层 CRUD", link: "/articles/021-springboot-crud-project" },
-            { text: "Git 版本控制", link: "/articles/git-version-control-classroom" },
+            { text: "Git 版本控制", link: "/articles/git-version-control-basics" },
           ]
         },
         {
@@ -153,9 +153,9 @@ export default defineConfig({
           items: [
             { text: "接口文档与安全清单", link: "/articles/api-doc-security-checklist" },
             { text: "预约与订单状态", link: "/articles/appointment-order-state-idempotency" },
-            { text: "预约与审批状态建模", link: "/articles/clinic-appointment-approval-redacted" },
+            { text: "预约与审批状态建模", link: "/articles/appointment-approval-state-model" },
             { text: "Redis TTL 与验证码", link: "/articles/redis-ttl" },
-            { text: "RBAC 权限模型", link: "/articles/050-ruoyi-rbac-permission-model" },
+            { text: "RBAC 权限模型", link: "/articles/050-rbac-permission-model" },
             { text: "Redis 分布式锁", link: "/articles/054-redis-distributed-lock" },
             { text: "Spring 定时任务与 Quartz", link: "/articles/055-quartz-scheduled-jobs" },
             { text: "Redis 每日点赞配额", link: "/articles/057-redis-daily-quota-lua" },
@@ -171,8 +171,8 @@ export default defineConfig({
             { text: "审批、任务与业务状态", link: "/articles/approval-and-business-status" },
             { text: "Canal 同步搜索索引", link: "/articles/canal-mysql-to-elasticsearch" },
             { text: "Codex 与 Cursor", link: "/articles/ai-coding-tools-workflow" },
-            { text: "文档检索系统设计", link: "/articles/document-retrieval-platform-redacted" },
-            { text: "后端接口协作与联调", link: "/articles/internship-api-collaboration-retro" },
+            { text: "文档检索系统设计", link: "/articles/document-retrieval-system-design" },
+            { text: "后端接口协作与联调", link: "/articles/backend-api-collaboration" },
           ]
         },
         {
@@ -196,9 +196,9 @@ export default defineConfig({
           text: "Web 基础",
           collapsed: true,
           items: [
-            { text: "HTML 与 CSS 表单", link: "/articles/html-css-form-notes" },
-            { text: "JavaScript 与 DOM 事件", link: "/articles/javascript-dom-events-notes" },
-            { text: "Vue 2 路由与请求拦截", link: "/articles/vue2-admin-learning-notes" },
+            { text: "HTML 与 CSS 表单", link: "/articles/html-css-form-and-submission" },
+            { text: "JavaScript 与 DOM 事件", link: "/articles/javascript-dom-events" },
+            { text: "Vue 2 路由与请求拦截", link: "/articles/vue2-admin-spa-routing" },
           ]
         },
         ...(automaticArticleLinks.length ? [{ text: "其他文章", collapsed: true, items: automaticArticleLinks }] : [])

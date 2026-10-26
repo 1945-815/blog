@@ -34,7 +34,7 @@ Java 进程启动成功只说明 JVM 开始执行。Spring Boot 还要创建容�
 
 ## 代码案例
 
-下面给出 Spring Boot 健康接口示例；生产项目可以由 Actuator 管理健康端点，不应把详细依赖状态暴露给未授权用户。
+下面给出 Spring Boot 健康接口示例；生产环境可以由 Actuator 管理健康端点，不应把详细依赖状态暴露给未授权用户。
 
 ~~~java
 @RestController

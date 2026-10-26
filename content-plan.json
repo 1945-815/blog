@@ -297,7 +297,7 @@
     "id": 29,
     "planDate": "2026-03-05",
     "topic": "后端工程实践",
-    "slug": "clinic-appointment-approval-redacted",
+    "slug": "appointment-approval-state-model",
     "title": "预约与审批的状态建模：业务状态、任务状态与幂等"
   },
   {
@@ -353,7 +353,7 @@
     "id": 50,
     "planDate": "2026-04-15",
     "topic": "后端工程实践",
-    "slug": "050-ruoyi-rbac-permission-model",
+    "slug": "050-rbac-permission-model",
     "title": "RBAC 权限模型：角色、菜单与接口授权"
   },
   {
@@ -444,7 +444,7 @@
     "id": 28,
     "planDate": "2026-08-19",
     "topic": "后端工程实践",
-    "slug": "document-retrieval-platform-redacted",
+    "slug": "document-retrieval-system-design",
     "title": "文档检索系统设计：MySQL、Elasticsearch 与 RAG 的边界"
   },
   {
@@ -458,7 +458,7 @@
     "id": 30,
     "planDate": "2026-09-30",
     "topic": "后端工程实践",
-    "slug": "internship-api-collaboration-retro",
+    "slug": "backend-api-collaboration",
     "title": "后端接口协作：契约、联调与问题定位"
   },
   {
@@ -521,42 +521,42 @@
     "id": 76,
     "planDate": "2026-10-16",
     "topic": "Java 与并发",
-    "slug": "java-syntax-control-flow-notes",
+    "slug": "java-syntax-control-flow",
     "title": "Java 基础语法：变量、输入与流程控制"
   },
   {
     "id": 77,
     "planDate": "2026-10-16",
     "topic": "Java 与并发",
-    "slug": "java-object-wrapper-notes",
+    "slug": "java-object-wrapper-types",
     "title": "Object 与包装类：判等、装箱和类型转换"
   },
   {
     "id": 78,
     "planDate": "2026-10-16",
     "topic": "Spring 与数据持久化",
-    "slug": "mysql-basic-crud-notes",
+    "slug": "mysql-basic-crud",
     "title": "MySQL DDL、DML 与单表查询"
   },
   {
     "id": 79,
     "planDate": "2026-10-16",
     "topic": "Spring 与数据持久化",
-    "slug": "jdbc-employee-classroom-case",
+    "slug": "jdbc-data-access-layer",
     "title": "JDBC 分层与数据访问：DAO、Service 与事务边界"
   },
   {
     "id": 80,
     "planDate": "2026-10-16",
     "topic": "Web 基础",
-    "slug": "html-css-form-notes",
+    "slug": "html-css-form-and-submission",
     "title": "HTML 与 CSS 入门：表格、表单和提交方式"
   },
   {
     "id": 81,
     "planDate": "2026-10-16",
     "topic": "Web 基础",
-    "slug": "javascript-dom-events-notes",
+    "slug": "javascript-dom-events",
     "title": "JavaScript 基础与 DOM：用事件更新页面"
   },
   {
@@ -591,7 +591,7 @@
     "id": 86,
     "planDate": "2026-10-16",
     "topic": "Web 基础",
-    "slug": "servlet-jsp-webcrud-classroom",
+    "slug": "servlet-jsp-request-flow",
     "title": "Servlet 与 JSP 请求流程：列表查询、转发和数据绑定"
   },
   {
@@ -605,14 +605,14 @@
     "id": 88,
     "planDate": "2026-10-16",
     "topic": "后端工程实践",
-    "slug": "git-version-control-classroom",
+    "slug": "git-version-control-basics",
     "title": "Git 版本控制：工作区、暂存与分支合并"
   },
   {
     "id": 89,
     "planDate": "2026-10-16",
     "topic": "Web 基础",
-    "slug": "vue2-admin-learning-notes",
+    "slug": "vue2-admin-spa-routing",
     "title": "Vue 2 单页应用：响应式、路由与请求拦截"
   },
   {
@@ -633,7 +633,7 @@
     "id": 92,
     "planDate": "2026-10-16",
     "topic": "分布式与中间件",
-    "slug": "wolf2w-course-project-flow",
+    "slug": "content-publishing-service-design",
     "title": "微服务中的内容发布链路：服务边界、互动统计与搜索同步"
   },
   {

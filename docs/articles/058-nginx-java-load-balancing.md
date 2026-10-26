@@ -22,7 +22,7 @@ Spring Boot 项目开发时通常直接访问应用端口。部署到一台或�
 
 location 决定哪些 URI 进入某个处理块。proxy_pass 是否带 URI 会影响路径：在 /api/ 下使用不带 URI 的 proxy_pass，通常把原请求 URI 继续传给后端；配置替换 URI 时，匹配到的前缀会被替换。斜杠不同会导致后端收到不同地址，因此要用真实请求验证。
 
-例如 location /api/ 配合 proxy_pass http://document_api，后端接收 /api/documents/42；如果 proxy_pass 写成 http://document_api/，匹配到的 /api/ 前缀会映射到 URI 的根路径，后端可能收到 /strategies/42。location 还存在精确、前缀和正则匹配规则，配置静态资源、管理端和 API 时要检查最终命中的块，而不是只看配置文件里是否出现了某个路径。
+例如 `location /api/` 配合 `proxy_pass http://document_api`，后端接收 `/api/documents/42`；如果写成 `proxy_pass http://document_api/`，匹配到的 `/api/` 前缀会替换为 URI 根路径，后端接收 `/documents/42`。`location` 还存在精确、前缀和正则匹配规则，配置静态资源、管理端和 API 时要检查最终命中的块，而不是只看配置文件里是否出现了某个路径。
 
 X-Forwarded-For、X-Real-IP 和 X-Forwarded-Proto 描述客户端地址与外部协议。它们是 HTTP 头，客户端可以伪造；只有在应用明确只接受可信代理写入的头时，才能用于审计或生成跳转链接。不要直接把任意客户端传来的身份头当作已认证用户身份。
 
@@ -68,7 +68,7 @@ Spring Boot 侧的配置示例：
 ~~~yaml
 server:
   port: 8081
-  forward-headers-document: framework
+  forward-headers-strategy: framework
 ~~~
 
 后端接口可以继续使用 MyBatis 查询数据库：

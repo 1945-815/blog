@@ -1,7 +1,7 @@
 ---
 title: "Transactional Outbox：让 MySQL 写入与 RabbitMQ 事件可靠衔接"
 date: "2027-07-06"
-categories: ["项目实践"]
+categories: ["工程实践"]
 tags: ["Java", "MySQL", "RabbitMQ", "Outbox", "最终一致性"]
 description: "围绕数据库与消息双写的失败窗口，设计 Outbox 表、轮询发布、消费幂等和故障恢复边界。"
 plan_date: "2026-07-06"

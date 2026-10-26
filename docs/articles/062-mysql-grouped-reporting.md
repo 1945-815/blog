@@ -72,7 +72,8 @@ MySQL 8.0 起分组不再隐式保证排序；上面的 `ORDER BY total_amount D
 ~~~sql
 SELECT id, order_id, user_id, amount
 FROM order_item
-WHERE user_id IN (
+WHERE status = 'PAID'
+  AND user_id IN (
     SELECT user_id
     FROM order_item
     WHERE status = 'PAID'

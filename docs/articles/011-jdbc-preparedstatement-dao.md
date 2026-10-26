@@ -36,7 +36,7 @@ try-with-resources 会在代码块结束时关闭实现 AutoCloseable 的 JDBC �
 <dependency>
     <groupId>com.mysql</groupId>
     <artifactId>mysql-connector-j</artifactId>
-    <version>26.7.0</version>
+    <version>26.10.0</version>
 </dependency>
 ~~~
 
@@ -171,7 +171,7 @@ JDBC 数据访问还包括连接生命周期、参数类型、异常和事务边
 
 上面的示例选择环境变量，二者都是配置来源；若用 `db.properties`，只应提交不含真实密码的模板，实际口令从环境变量或受控密钥来源覆盖。`Properties.load` 可从类路径读取配置，但要明确流的字符编码与配置文件部署位置。不要把数据库口令写进博客或 Git 历史。
 
-本文示例固定使用 Connector/J 26.7.0；官方兼容表列明该版本支持 MySQL Server 8.4 及以上和 JRE 8 及以上。驱动类名为 `com.mysql.cj.jdbc.Driver`；JDBC 4 驱动可自动注册，通常不必手动调用 `Class.forName`。升级 Connector/J 时应按[官方兼容表](https://dev.mysql.com/doc/connector-j/en/connector-j-versions.html)核对目标 Java 与 MySQL 版本。
+本文示例固定使用 Connector/J 26.10.0；官方兼容表列明其支持 MySQL Server 8.0 及以上。驱动类名为 `com.mysql.cj.jdbc.Driver`；JDBC 4 驱动可自动注册，通常不必手动调用 `Class.forName`。升级 Connector/J 时应按[官方兼容表](https://dev.mysql.com/doc/connector-j/en/connector-j-versions.html)核对目标 Java 与 MySQL 版本。
 
 ## 补充：一条连接上的转账事务
 
@@ -244,7 +244,7 @@ public class JdbcTransferDemo {
 }
 ~~~
 
-保存为 `JdbcTransferDemo.java`，JDK 8+ 与上文 Connector/J 依赖可运行，前提是连接到含上述表的 MySQL 示例数据库。该单连接示例通过 `try-with-resources` 关闭连接；若连接来自连接池，还应由事务管理边界负责恢复连接状态。`SELECT` 也可以参与事务中的一致性读取或锁定，不能把“事务只用于增删改”当规则。转账的并发、幂等和审计还需另行设计，此处只演示原子提交与回滚。单表 SQL 入门见 [MySQL 基础](./mysql-basic-crud-notes.md)，将 DAO 放入分层示例见 [JDBC 数据访问边界](./jdbc-employee-classroom-case.md)。
+保存为 `JdbcTransferDemo.java`，JDK 8+ 与上文 Connector/J 依赖可运行，前提是连接到含上述表的 MySQL 示例数据库。该单连接示例通过 `try-with-resources` 关闭连接；若连接来自连接池，还应由事务管理边界负责恢复连接状态。`SELECT` 也可以参与事务中的一致性读取或锁定，不能把“事务只用于增删改”当规则。转账的并发、幂等和审计还需另行设计，此处只演示原子提交与回滚。单表 SQL 入门见 [MySQL 基础](./mysql-basic-crud.md)，将 DAO 放入分层示例见 [JDBC 数据访问边界](./jdbc-data-access-layer.md)。
 
 ## 参考资料
 

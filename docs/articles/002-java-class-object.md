@@ -123,7 +123,7 @@ public void setPrice(String decimal) {
 
 ~~~
 
-字符串格式错误会从 `BigDecimal` 构造器抛出 `NumberFormatException`。`Book` 用带参数构造器和受控操作维护不变量；它不必为了满足 JavaBean 的无参构造器与读写属性约定而开放所有字段。JavaBean 是一种约定，并非所有类都必须遵守。要了解引用判等可看 [Object 与包装类](./java-object-wrapper-notes.md)；接口/继承下的方法分派见 [多态与接口](./046-java-polymorphism-interface.md)。
+字符串格式错误会从 `BigDecimal` 构造器抛出 `NumberFormatException`。`Book` 用带参数构造器和受控操作维护不变量；它不必为了满足 JavaBean 的无参构造器与读写属性约定而开放所有字段。JavaBean 是一种约定，并非所有类都必须遵守。要了解引用判等可看 [Object 与包装类](./java-object-wrapper-types.md)；接口/继承下的方法分派见 [多态与接口](./046-java-polymorphism-interface.md)。
 
 ## 参考资料
 

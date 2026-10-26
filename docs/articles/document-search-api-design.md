@@ -1,7 +1,7 @@
 ---
 title: "文档检索服务的接口设计：上传、分类与分页"
 date: "2026-10-13"
-categories: ["项目实践"]
+categories: ["工程实践"]
 tags: ["Spring Boot","Elasticsearch","API 设计"]
 description: "围绕文档上传、分类筛选和分页检索设计稳定的后端接口。"
 plan_date: "2026-05-06"

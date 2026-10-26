@@ -17,11 +17,11 @@ phase: "Java 与并发"
 <dependency>
     <groupId>cn.hutool</groupId>
     <artifactId>hutool-all</artifactId>
-    <version>5.8.34</version>
+    <version>5.8.48</version>
 </dependency>
 ~~~
 
-示例使用 Hutool 5.8.34。新项目应使用项目统一管理的版本，并核对对应 API 文档、Java 版本要求和安全更新；不要因为示例中出现某个版本就直接复制到所有工程。
+示例固定使用 Hutool 5.8.48。依赖升级时应核对对应 API 文档、Java 版本要求和安全更新；不要因为示例中出现某个版本就直接复制到所有应用。
 
 ## 把常见工具放到一次输入处理中
 
@@ -81,3 +81,4 @@ Hutool 把字符串、集合、日期、ID、Bean 和 JSON 的常见操作放进
 - [Hutool StrUtil 文档](https://doc.hutool.cn/pages/StrUtil/)
 - [Hutool IdUtil 文档](https://doc.hutool.cn/pages/IdUtil/)
 - [Hutool JSONUtil API](https://plus.hutool.cn/apidocs/cn/hutool/json/JSONUtil.html)
+- [Hutool 5.8.48 发布说明](https://github.com/chinabugotech/hutool/releases/tag/5.8.48)

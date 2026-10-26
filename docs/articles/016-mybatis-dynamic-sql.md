@@ -141,7 +141,7 @@ public class ProfileUpdate {
 }
 ~~~
 
-这里假定项目已经配置了 XML Mapper 扫描、数据源和对应实体类。调用前还应校验更新对象的 userId 有效且至少包含一个可更新字段，避免只剩 WHERE 而没有有效 SET 子句。真实项目的表名和字段名以自己的 schema 为准。
+这里假定应用已经配置了 XML Mapper 扫描、数据源和对应实体类。调用前还应校验更新对象的 userId 有效且至少包含一个可更新字段，避免只剩 WHERE 而没有有效 SET 子句。表名和字段名应以应用使用的 schema 为准。
 
 ## 实际应用
 

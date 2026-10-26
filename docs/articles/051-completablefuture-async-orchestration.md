@@ -30,7 +30,7 @@ Future 完成时会触发依赖它的完成动作。任务可能尚未启动，�
 
 ## 代码案例
 
-下面以商品和库存两条独立查询为例。SQL 展示服务所依赖的数据形状，真实项目应由 Mapper 或 Repository 执行：
+下面以商品和库存两条独立查询为例。SQL 展示服务所依赖的数据形状，应用的数据访问层应由 Mapper 或 Repository 执行：
 
 ~~~sql
 CREATE TABLE product (

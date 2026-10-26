@@ -15,9 +15,9 @@ phase: "Spring 与数据持久化"
 ## 建表与约束
 
 ~~~sql
-CREATE DATABASE IF NOT EXISTS java_sql_lab
+CREATE DATABASE IF NOT EXISTS backend_demo
   DEFAULT CHARACTER SET utf8mb4;
-USE java_sql_lab;
+USE backend_demo;
 
 CREATE TABLE IF NOT EXISTS catalog_entry (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -64,7 +64,7 @@ WHERE entry_key = 'guide-003';
 
 `WHERE` 过滤行，`ORDER BY` 排序，`LIMIT` 与 `OFFSET` 截取结果。分页需要稳定排序，否则数据变化时翻页可能重复或遗漏；偏移量很大时还会增加扫描成本，可按索引和查询模式考虑游标分页。
 
-`DELETE` 删除符合条件的行；`DROP TABLE` 删除整张表及其定义，影响范围不同。应用从 Java 执行 SQL 时应使用参数绑定，不要把请求值拼进 SQL 字符串。示例见 [JDBC 与 DAO](./011-jdbc-preparedstatement-dao.md) 和 [JDBC 分层与事务边界](./jdbc-employee-classroom-case.md)。
+`DELETE` 删除符合条件的行；`DROP TABLE` 删除整张表及其定义，影响范围不同。应用从 Java 执行 SQL 时应使用参数绑定，不要把请求值拼进 SQL 字符串。示例见 [JDBC 与 DAO](./011-jdbc-preparedstatement-dao.md) 和 [JDBC 数据访问边界](./jdbc-data-access-layer.md)。
 
 ## 条件、聚合与空值
 

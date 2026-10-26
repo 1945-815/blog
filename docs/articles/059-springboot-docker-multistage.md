@@ -117,7 +117,7 @@ Compose 文件版本字段的含义取决于 Docker Compose 实现版本。部�
 使用 `ENTRYPOINT` 的 exec form 启动 JAR。普通 JAR 文件通常用 `COPY` 表达复制意图更清晰；生产镜像还应固定并维护基础镜像版本。
 
 ~~~dockerfile
-FROM openjdk:17.0.2
+FROM eclipse-temurin:17-jre
 VOLUME /tmp
 COPY target/*.jar /app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]

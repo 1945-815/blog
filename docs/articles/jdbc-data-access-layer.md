@@ -67,4 +67,4 @@ public class CatalogEntryDao {
 
 查询列表应限制页大小，并使用稳定排序键；大偏移量分页可能需要扫描大量记录，可以根据索引和访问模式评估基于游标的分页。筛选值使用参数绑定。动态排序只能接受有限的排序字段和方向，不能把原始请求拼进 `ORDER BY`。
 
-JDBC 的连接与事务配置见[预编译、DAO 与事务](./011-jdbc-preparedstatement-dao.md)。MySQL 的 DDL、DML 和单表查询见 [MySQL 基础 SQL](./mysql-basic-crud-notes.md)。
+JDBC 的连接与事务配置见[预编译、DAO 与事务](./011-jdbc-preparedstatement-dao.md)。MySQL 的 DDL、DML 和单表查询见 [MySQL 基础 SQL](./mysql-basic-crud.md)。

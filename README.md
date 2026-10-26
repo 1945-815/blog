@@ -21,7 +21,7 @@ npm run docs:preview
 ## 目录
 
 - `docs/`：网站页面与 Markdown 内容
-- `docs/articles/`：99 篇技术文章
+- `docs/articles/`：98 篇技术文章
 - `content-plan.json`：文章路径、标题与内容编排参考信息
 - `docs/.vitepress/`：站点和主题配置
 - `.github/workflows/deploy.yml`：GitHub Pages 自动部署
