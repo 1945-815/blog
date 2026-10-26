@@ -205,7 +205,7 @@ export default defineConfig({
       ]
     },
     footer: {
-      copyright: '© 2026 张耘璨（Cyzee） · 用文字记录技术与日常'
+      copyright: '© 2026 Cyzee · 用文字记录技术与日常'
     },
     outline: { label: '文章目录', level: [2, 3] },
     docFooter: { prev: '上一篇', next: '下一篇' }

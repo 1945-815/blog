@@ -139,22 +139,26 @@ onMounted(() => { void startPlaybackOnLoad() })
     <audio ref="audio" :src="currentTrack ? sourceUrl(currentTrack.src) : undefined" :loop="repeatMode === 'one'" preload="none" @play="isPlaying = true" @pause="isPlaying = false" @timeupdate="onTimeUpdate" @loadedmetadata="onMetadata" @ended="onEnded" @error="error = '当前音源暂不可用。'" />
 
     <section v-if="panelOpen" id="music-player-panel" class="music-player-panel" aria-label="音乐播放器">
-      <header><div><p class="section-eyebrow">MUSIC PLAYER</p><h2>音乐</h2></div><button type="button" aria-label="收起播放器" @click="panelOpen = false"><X :size="18" /></button></header>
-      <div v-if="currentTrack" class="music-now-playing">
-        <img v-if="coverUrl(currentTrack)" :src="coverUrl(currentTrack)" :alt="`${currentTrack.title} 封面`" loading="lazy" />
-        <span v-else class="music-cover-fallback"><Music2 :size="23" aria-hidden="true" /></span>
-        <div><strong>{{ currentTrack.title }}</strong><span>{{ currentTrack.artist }}</span></div>
+      <div class="music-player-fixed">
+        <header><div><p class="section-eyebrow">MUSIC PLAYER</p><h2>音乐</h2></div><button type="button" aria-label="收起播放器" @click="panelOpen = false"><X :size="18" /></button></header>
+        <div v-if="currentTrack" class="music-now-playing">
+          <img v-if="coverUrl(currentTrack)" :src="coverUrl(currentTrack)" :alt="`${currentTrack.title} 封面`" loading="lazy" />
+          <span v-else class="music-cover-fallback"><Music2 :size="23" aria-hidden="true" /></span>
+          <div><strong>{{ currentTrack.title }}</strong><span>{{ currentTrack.artist }}</span></div>
+        </div>
+        <p v-else class="music-empty-state">还没有添加可用曲目。请在音乐数据配置中加入拥有使用权的音源。</p>
+        <div v-if="tracks.length" class="music-controls">
+          <input class="music-progress" type="range" min="0" :max="duration || 0" step="1" :value="currentTime" aria-label="播放进度" @input="seek(($event.target as HTMLInputElement).value)" />
+          <div class="music-time-row"><time>{{ formatTime(currentTime) }}</time><time>{{ formatTime(duration) }}</time></div>
+          <div class="music-button-row"><button type="button" aria-label="上一首" @click="previousTrack"><SkipBack :size="17" /></button><button type="button" class="music-play-button" :aria-label="isPlaying ? '暂停' : '播放'" @click="togglePlay"><Pause v-if="isPlaying" :size="18" /><Play v-else :size="18" /></button><button type="button" aria-label="下一首" @click="nextTrack()"><SkipForward :size="17" /></button><button type="button" :class="{ active: shuffle }" :aria-pressed="shuffle" aria-label="随机播放" @click="shuffle = !shuffle; persist()"><Shuffle :size="16" /></button><button type="button" :class="{ active: repeatMode !== 'off' }" :aria-label="`循环模式：${repeatMode === 'all' ? '列表循环' : repeatMode === 'one' ? '单曲循环' : '关闭'}`" @click="cycleRepeat"><Repeat :size="16" /><small v-if="repeatMode === 'one'">1</small></button></div>
+          <label class="music-volume"><Volume2 :size="16" aria-hidden="true" /><input type="range" min="0" max="1" step="0.01" :value="volume" aria-label="音量" @input="setVolume(($event.target as HTMLInputElement).value)" /></label>
+          <p v-if="error" class="music-error" role="status">{{ error }}</p>
+        </div>
       </div>
-      <p v-else class="music-empty-state">还没有添加可用曲目。请在音乐数据配置中加入拥有使用权的音源。</p>
-      <div v-if="tracks.length" class="music-controls">
-        <input class="music-progress" type="range" min="0" :max="duration || 0" step="1" :value="currentTime" aria-label="播放进度" @input="seek(($event.target as HTMLInputElement).value)" />
-        <div class="music-time-row"><time>{{ formatTime(currentTime) }}</time><time>{{ formatTime(duration) }}</time></div>
-        <div class="music-button-row"><button type="button" aria-label="上一首" @click="previousTrack"><SkipBack :size="17" /></button><button type="button" class="music-play-button" :aria-label="isPlaying ? '暂停' : '播放'" @click="togglePlay"><Pause v-if="isPlaying" :size="18" /><Play v-else :size="18" /></button><button type="button" aria-label="下一首" @click="nextTrack()"><SkipForward :size="17" /></button><button type="button" :class="{ active: shuffle }" :aria-pressed="shuffle" aria-label="随机播放" @click="shuffle = !shuffle; persist()"><Shuffle :size="16" /></button><button type="button" :class="{ active: repeatMode !== 'off' }" :aria-label="`循环模式：${repeatMode === 'all' ? '列表循环' : repeatMode === 'one' ? '单曲循环' : '关闭'}`" @click="cycleRepeat"><Repeat :size="16" /><small v-if="repeatMode === 'one'">1</small></button></div>
-        <label class="music-volume"><Volume2 :size="16" aria-hidden="true" /><input type="range" min="0" max="1" step="0.01" :value="volume" aria-label="音量" @input="setVolume(($event.target as HTMLInputElement).value)" /></label>
-        <p v-if="error" class="music-error" role="status">{{ error }}</p>
-        <details class="music-playlist"><summary><ListMusic :size="15" />播放列表（{{ tracks.length }}）</summary><ol><li v-for="(track, index) in tracks" :key="`${track.src}-${index}`"><button type="button" :class="{ current: currentIndex === index }" @click="playTrack(index, true)"><span>{{ track.title }}</span><small>{{ track.artist }}</small></button></li></ol></details>
+      <div class="music-player-scroll">
+        <details v-if="tracks.length" class="music-playlist"><summary><ListMusic :size="15" />播放列表（{{ tracks.length }}）</summary><ol><li v-for="(track, index) in tracks" :key="`${track.src}-${index}`"><button type="button" :class="{ current: currentIndex === index }" @click="playTrack(index, true)"><span>{{ track.title }}</span><small>{{ track.artist }}</small></button></li></ol></details>
+        <a class="music-page-link" :href="withBase('/music/')">音乐页面 <span aria-hidden="true">↗</span></a>
       </div>
-      <a class="music-page-link" :href="withBase('/music/')">音乐页面 <span aria-hidden="true">↗</span></a>
     </section>
   </div>
 </template>
