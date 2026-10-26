@@ -2,11 +2,11 @@
 
 ## 审计范围与处理原则
 
-- 审查 `docs/articles/` 下 99 篇技术文章（不含归档页 `index.md`），并核对关于页、导航、分类/标签、路线图、站点配置、README、维护说明及文章规划数据。
-- 按文章内容和示例语义逐篇调整，保留全部文章和原文件名/slug；旧 URL 中的历史标识保留以维持既有链接。
-- `date`、`plan_date`、`content-plan.json` 的 `planDate`、文章 ID 与 slug 均和 `HEAD` 基线一致；文章 Frontmatter 标题、H1、规划标题与日期、主题分类已对齐。
-- 文章原有 `phase` 字段在站点中用于主题展示与导航，不代表真实发布阶段；已按技术主题整理，并同步 `content-plan.json` 的 `topic` 与 `docs/roadmap.md`。
-- 未提交、推送或部署任何内容。
+- 首轮审查覆盖 `docs/articles/` 下 99 篇技术文章（不含归档页 `index.md`），并核对关于页、导航、分类/标签、路线图、站点配置、README、维护说明及文章规划数据。
+- 首轮内容重构按文章内容和示例语义逐篇调整，当时保留了 99 篇文章和原文件名/slug；之后按用户要求删除了路线文章。旧 URL 中的历史标识继续保留以维持其他链接。
+- 首轮重构时，`date`、`plan_date`、`content-plan.json` 的 `planDate`、文章 ID 与 slug 均和当时的 `HEAD` 基线一致；文章 Frontmatter 标题、H1、规划标题与日期、主题分类已对齐。
+- 首轮重构时，文章原有 `phase` 字段在站点中用于主题展示与导航，不代表真实发布阶段；已按技术主题整理，并同步 `content-plan.json` 的 `topic` 与 `docs/roadmap.md`。
+- 首轮审计结束时未提交或推送；之后的提交 `878e399` 已推送到 `codex/music-library`。GitHub Pages 工作流只在 `main` 分支推送时自动部署，因此该分支推送没有更新线上站点。
 
 ## 发现的问题与处理
 
@@ -18,7 +18,7 @@
 
 ## 修改统计
 
-按每篇文章最主要的改动归类：
+以下分类与逐篇台账记录首轮审计的 99 篇基线；路线文章后续已删除。按每篇文章最主要的改动归类：
 
 | 类别 | 篇数 | 判定口径 |
 | --- | ---: | --- |
@@ -100,7 +100,7 @@
 | `git-version-control-classroom.md` | Git 版本控制：工作区、暂存与分支合并 | C | 措辞、章节命名或主题元数据调整 |
 | `html-css-form-notes.md` | HTML 与 CSS 入门：表格、表单和提交方式 | C | 措辞、章节命名或主题元数据调整 |
 | `internship-api-collaboration-retro.md` | 后端接口协作：契约、联调与问题定位 | A | 核心场景、数据模型或文章主干重构 |
-| `java-backend-learning-route.md` | Java 后端技术地图：语言基础、工程实践与 AI 应用 | A | 核心场景、数据模型或文章主干重构 |
+| `java-backend-learning-route.md`（后续删除） | Java 后端技术地图：语言基础、工程实践与 AI 应用 | A | 核心场景、数据模型或文章主干重构 |
 | `java-collections.md` | Java 集合的选择：List、Set、Map 分别解决什么问题 | B | 关键章节、代码一致性或技术边界重构 |
 | `java-design-patterns-overview.md` | Java 设计模式总览：按创建、结构与行为梳理 | C | 措辞、章节命名或主题元数据调整 |
 | `java-lambda-functional-interface.md` | Java Lambda、函数式接口与方法引用：以目录项筛选为例 | A | 核心场景、数据模型或文章主干重构 |
@@ -143,6 +143,19 @@
 - `package.json` 未配置独立单元/集成测试脚本。使用 JDK 17 编译了 14 个自包含 Java 示例，0 个编译失败；`ClassObjectDemo`、`DateMigrationDemo` 和 `GenericPageDemo` 也已运行并正常退出。需要数据库、Redis、消息代理或模型服务的片段没有在真实依赖环境运行。
 - 本地预览服务可启动，但桌面自动化工具未能可靠确认浏览器当前 URL，按其规则停止了 UI 操作；因此没有完成实际浏览器及移动端宽度验收。
 
-## 最终状态
+## 后续清理（2026-10-26）
+
+- 删除 `docs/articles/java-backend-learning-route.md`，并从 `content-plan.json` 与 `docs/roadmap.md` 移除对应条目。当前保留 98 篇技术文章，归档索引页不计入。
+- 从 78 篇文章中删除问答式“常见问题/常见追问”章节。8 篇文章的“常见问题”内容是边界/易错点清单而非问答，内容保留并改成描述性标题。
+- 线上页面仍显示旧内容：`.github/workflows/deploy.yml` 仅在 `main` 分支推送或手动触发时部署；`codex/music-library` 分支的推送不会触发 Pages。
+
+## 当前状态
+
+- 当前保留 98 篇技术文章；文章 slug 与规划数据 98 对 98 一致，已删除文章不再出现在文件、侧栏、路线索引或规划数据中。
+- 从 78 篇文章中移除了问答章节；构建前检查没有残留的问答标题或问答式小节。
+- npm run docs:build：通过，共生成 117 个 HTML 页面。仍有一个超过 500 KB 的 JS 分块警告，不影响构建。
+- 线上站点仍是旧版。当前分支为 codex/music-library，而 .github/workflows/deploy.yml 只对 main 的推送自动部署；需要将本次内容合入 main 才会更新 Pages。
+
+## 首轮最终状态（历史快照）
 
 内容重构、主题与元数据同步、全站构建和静态内链扫描已完成。没有发布或部署。实际浏览器交互和窄屏视觉检查尚未完成；超过 500 KB 的 JS 分块构建警告仍存在。

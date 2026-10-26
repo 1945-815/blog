@@ -54,23 +54,6 @@ Spring Security 的 Servlet 集成通过过滤器链处理认证和授权。Auth
 
 Spring Security 负责组织过滤链和安全上下文，JWT 只是令牌格式选择。生产级安全还需考虑撤销、密钥管理、传输安全与最小权限。
 
-## 常见问题
-
-### 认证和授权的区别？
-
-认证建立身份，授权依据身份和资源规则决定是否允许操作。
-
-### JWT 如何注销？
-
-无状态令牌不会因客户端删除而自动失效，可通过较短有效期、服务端撤销列表或令牌版本策略处理，需权衡状态和运维复杂度。
-
-### JWT 载荷能放敏感信息吗？
-
-不能把它视为加密存储；除非采用专门加密方案，否则载荷只放必要且可公开的声明。
-
-
-
-
 ## 参考资料
 
 - [Spring Security Authentication Architecture](https://docs.spring.io/spring-security/reference/servlet/authentication/architecture.html)

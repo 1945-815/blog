@@ -11,7 +11,6 @@
 - [Java 多线程起步：共享状态、线程安全与同步](/articles/007-java-concurrency-basics)
 - [Java 反射与内省：理解框架如何读取对象属性](/articles/056-java-reflection-bean-introspection)
 - [Java 泛型为什么不能随便强转：类型擦除、通配符与分页 DTO](/articles/071-java-generics-type-erasure)
-- [Java 后端技术地图：语言基础、工程实践与 AI 应用](/articles/java-backend-learning-route)
 - [Java 基础语法：变量、输入与流程控制](/articles/java-syntax-control-flow-notes)
 - [Java 集合的选择：List、Set、Map 分别解决什么问题](/articles/java-collections)
 - [Java 类和对象：字段、方法与封装](/articles/002-java-class-object)

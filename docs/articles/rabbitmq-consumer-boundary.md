@@ -60,23 +60,6 @@ RabbitMQ 支持 Direct、Fanout、Topic 等交换机路由类型，并提供 pub
 
 异步消息不是免费提速。先定义消息所有者、确认边界、幂等键、失败策略和积压处理，再实现生产与消费。
 
-## 常见问题
-
-### publisher confirm 与 consumer ack 区别？
-
-前者确认 broker 对发布的处理，后者确认消费者对投递消息的处理，不能互相替代。
-
-### RabbitMQ 会不会重复投递？
-
-在连接或确认边界故障下可能重复，消费者应设计幂等操作。
-
-### 何时异步化？
-
-当操作允许延后且可容忍最终一致，并且团队具备监控、重试和补偿能力时再考虑。
-
-
-
-
 ## 参考资料
 
 - [RabbitMQ Publisher Confirms](https://www.rabbitmq.com/docs/confirms)

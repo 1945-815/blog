@@ -82,7 +82,6 @@ export default defineConfig({
           text: "Java 与并发",
           collapsed: true,
           items: [
-            { text: "Java 后端技术地图", link: "/articles/java-backend-learning-route" },
             { text: "Java 类和对象", link: "/articles/002-java-class-object" },
             { text: "Java 字符串与 StringBuilder", link: "/articles/066-java-string-stringbuilder" },
             { text: "Java 集合的选择", link: "/articles/java-collections" },

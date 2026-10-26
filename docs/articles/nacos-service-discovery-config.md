@@ -58,23 +58,6 @@ Spring Cloud Alibaba 2025.1.x 已不再支持通过 `bootstrap.yml` 或 `bootstr
 
 Nacos 提供基础设施能力，团队仍需规范配置分类、环境隔离、健康检查、密钥管理和故障降级。
 
-## 常见问题
-
-### 注册发现解决什么问题？
-
-消费者依赖服务名和可用实例集合，减少把单个实例地址硬编码在调用方。
-
-### 配置变更会自动安全生效吗？
-
-是否动态刷新、何时生效和失败行为依赖客户端配置及应用代码，需要针对关键配置验证。
-
-### namespace 与 group 如何使用？
-
-用它们建立清晰的环境和业务隔离，命名约定应统一并纳入部署文档。
-
-
-
-
 ## 参考资料
 
 - [Nacos Service Discovery](https://nacos.io/en/docs/latest/manual/user/naming/overview/)

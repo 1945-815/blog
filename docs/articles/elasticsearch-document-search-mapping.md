@@ -62,23 +62,6 @@ Elasticsearch Java 客户端与服务端版本应按官方兼容策略选择；S
 
 搜索质量从数据模型和分析器开始。用真实代表性文本验证 mapping、分词、过滤和排序，再讨论索引维护。
 
-## 常见问题
-
-### text 与 keyword 区别？
-
-text 面向分析后的全文检索，keyword 保持整体值，常用于精确匹配、聚合或排序。
-
-### 为什么先检查分词？
-
-分析器决定索引和查询中的 token；分词不符合语言内容时，查询结果会偏离预期。
-
-### 字段类型改错怎么办？
-
-通常新建正确 mapping 的索引、重建数据并切换别名或读写目标，而不是期待已有字段自动变类型。
-
-
-
-
 ## 参考资料
 
 - [Elasticsearch text fields](https://www.elastic.co/guide/en/elasticsearch/reference/current/text.html)

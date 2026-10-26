@@ -61,20 +61,6 @@ Scrum Guide 2020 定义了三种问责角色：Product Owner、Scrum Master 和 
 
 评估开发流程时，可以记录目标、输入、产物、参与角色和退出条件。例如，需求评审以用户问题和原型为输入，产出确认的范围与验收条件；提测以可复现版本和测试说明为输入，产出验证结果及待处理问题。明确这些边界有助于区分流程约定、团队实践和实际交付证据。
 
-## 常见问题
-
-### 敏捷和 Scrum 的关系是什么？
-
-敏捷描述一组价值观和原则；Scrum 是在复杂产品工作中使用的一种轻量框架。采用 Scrum 不代表团队自动满足敏捷价值，还要看如何交付价值、获取反馈并调整。
-
-### Sprint Review 和 Retrospective 有什么区别？
-
-Review 面向产品结果和下一步方向，与利益相关者检查增量；Retrospective 面向团队协作、流程和质量实践，决定如何改进。
-
-### Scrum 是否需要项目经理？
-
-Scrum Guide 规定 Scrum Team 的三种问责角色，没有把项目经理列为框架角色。组织中仍可能有项目管理岗位，但应说明其工作与 Product Owner、Scrum Master 和团队的职责如何协作。
-
 ## 参考资料
 
 博客 [Activiti 7 审批流程](/articles/activiti7-approval-flow)。

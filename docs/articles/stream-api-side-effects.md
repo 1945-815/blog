@@ -63,23 +63,6 @@ System.out.println(concurrencyArticles); // [Java 并发基础]
 
 优先保证转换过程无副作用、步骤可读。选择 Stream 是表达方式的选择，不应把它当作默认性能优化。
 
-## 常见问题
-
-### 中间操作什么时候执行？
-
-通常在终止操作触发遍历时执行，这就是惰性求值的常见表现。
-
-### 什么时候不适合 Stream？
-
-状态复杂、需要频繁跳出、调试要求高或流程本身是命令式步骤时，循环可能更清楚。
-
-### 并行流一定更快吗？
-
-不一定；数据量、拆分成本、任务粒度、共享状态和线程池环境都会影响结果，需要测量。
-
-
-
-
 ## 参考资料
 
 - [Java Stream API](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/package-summary.html)

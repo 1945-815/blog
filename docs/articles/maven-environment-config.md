@@ -59,20 +59,6 @@ Maven 解析项目模型、依赖图与插件执行计划后运行生命周期�
 
 构建与运行配置分开管理，敏感值外置，默认配置可安全启动。这样开发者、CI 和部署环境才能对齐。
 
-## 常见问题
-
-### Maven profile 和 Spring profile 有何区别？
-
-Maven profile 参与构建模型，Spring profile 影响应用运行时配置选择；两者可以协同，但不是同一个开关。
-
-### 密钥放在哪里？
-
-使用本地环境变量、受控密钥管理或部署平台注入；仓库只提供不含秘密的样例。
-
-### 如何避免本机能构建、CI 失败？
-
-检查依赖来源和构建命令，避免依赖个人缓存或未提交配置，并让 CI 使用相同的 Maven 生命周期。
-
 ## 参考资料
 
 - [Maven Profiles](https://maven.apache.org/guides/introduction/introduction-to-profiles.html)

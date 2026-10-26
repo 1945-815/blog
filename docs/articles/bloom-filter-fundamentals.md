@@ -78,14 +78,3 @@ BF.EXISTS users:bf user-2002
 标准 Bloom filter 只把位从 0 改为 1，不记录某一位由哪个元素设置，所以不能安全地按元素删除；清除一个位可能影响其他元素的判断。需要支持删除时，可以考虑计数型变体、周期性重建，或选择支持删除的索引结构，并评估额外空间和并发更新。
 
 过滤器通常是派生索引，不是权威数据。初始化、增量更新和重建策略需要与真实数据源保持可恢复关系。
-
-## 常见问题
-**布隆过滤器为什么会误判？** 不同元素的多个哈希位置可能碰撞，使未添加元素的检查位也全为 1。
-
-**为什么不能把正向判断当作命中？** 正向结果只表示可能存在，仍要查权威数据源。
-
-**标准 Bloom filter 能否删除元素？** 不能安全删除单个元素；清位可能影响其他元素的判断。
-
-
-- [Redis Bloom filter 文档](https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/)
-- [Guava BloomFilter API](https://guava.dev/releases/20.0/api/docs/com/google/common/hash/BloomFilter.html)

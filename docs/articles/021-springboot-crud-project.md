@@ -248,20 +248,6 @@ public class CatalogEntryController {
 
 从一张表到一个接口，看起来是 CRUD，但真正需要解释的是请求如何经过各层、参数如何进入 SQL、失败如何表达，以及分页如何控制成本。能把这条链路讲清楚，才算形成了后端开发的基本闭环。
 
-## 常见问题
-
-### 为什么分页需要稳定排序？
-
-数据库不保证没有 ORDER BY 时的返回顺序。稳定排序能让不同页面的边界更可预测。
-
-### 为什么限制 pageSize？
-
-防止单次请求读取和序列化过多数据，保护数据库、应用内存和网络带宽。
-
-### MyBatis 如何把数据库主键回填到对象？
-
-可以使用生成主键选项并指定 keyProperty，具体数据库和驱动行为需在当前配置中验证。
-
 ## 参考资料
 
 - [Spring Boot：Developing Your First Spring Boot Application](https://docs.spring.io/spring-boot/reference/using/index.html)

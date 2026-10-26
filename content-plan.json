@@ -1,12 +1,5 @@
 [
   {
-    "id": 1,
-    "planDate": "2023-10-20",
-    "topic": "Java 与并发",
-    "slug": "java-backend-learning-route",
-    "title": "Java 后端技术地图：语言基础、工程实践与 AI 应用"
-  },
-  {
     "id": 31,
     "planDate": "2023-10-30",
     "topic": "Java 与并发",

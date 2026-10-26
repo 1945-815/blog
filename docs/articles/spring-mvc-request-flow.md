@@ -94,20 +94,6 @@ public class DemoController {
 
 遇到请求问题时沿容器、过滤器、DispatcherServlet、handler 和消息转换器分层观察，能更快定位问题所在。
 
-## 常见问题
-
-### DispatcherServlet 扮演什么角色？
-
-它是 MVC 前端控制器，负责协调 handler 查找、调用、结果处理与异常解析。
-
-### 过滤器和拦截器差异是什么？
-
-过滤器属于 Servlet 规范链路，拦截器围绕 Spring MVC handler；选择时看需要的运行层和可访问信息。
-
-### JSON 是在哪里序列化的？
-
-通常由配置的 HttpMessageConverter 根据返回值与媒体类型处理。
-
 ## 参考资料
 
 - [Spring MVC DispatcherServlet](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-servlet.html)

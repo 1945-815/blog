@@ -52,20 +52,6 @@ GET  /documents/search?q=  -> 检索结果与来源摘要
 
 文档服务接口要定义元数据、文件生命周期、索引延迟和访问控制。字段设计应从业务契约出发，而不是照搬存储结构。
 
-## 常见问题
-
-### 上传接口应同步建好搜索索引吗？
-
-取决于一致性要求和处理耗时；异步方案要公开处理状态并提供失败重试或重新索引。
-
-### 分页接口为什么限制 size？
-
-限制单次资源消耗，防止过大的响应和下游查询负担。
-
-### 分类权限在检索哪里处理？
-
-在服务端查询约束中执行，并确保过滤在返回前生效，不能依赖前端隐藏。
-
 ## 参考资料
 
 - [Spring MVC Multipart](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/multipart-forms.html)
