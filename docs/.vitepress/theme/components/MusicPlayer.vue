@@ -51,9 +51,33 @@ async function playTrack(index: number, autoplay: boolean) {
   await nextTick()
   if (autoplay && audio.value) {
     try { await audio.value.play() }
-    catch { error.value = '当前音源无法播放，请检查地址或授权。' }
+    catch (cause) { setPlaybackError(cause) }
   }
   persist()
+}
+
+function setPlaybackError(cause: unknown) {
+  const name = typeof cause === 'object' && cause !== null && 'name' in cause
+    ? String((cause as { name?: unknown }).name)
+    : ''
+  error.value = name === 'NotAllowedError'
+    ? '浏览器阻止了自动播放，请点击播放键开始。'
+    : '当前音源无法播放，请检查地址或授权。'
+}
+
+async function startPlaybackOnLoad() {
+  restore()
+  if (!tracks.length) return
+  if (currentIndex.value < 0) currentIndex.value = 0
+  await nextTick()
+  if (!audio.value) return
+  audio.value.volume = volume.value
+  try {
+    await audio.value.play()
+    error.value = ''
+  } catch (cause) {
+    setPlaybackError(cause)
+  }
 }
 
 async function togglePlay() {
@@ -62,7 +86,7 @@ async function togglePlay() {
   if (!audio.value) return
   if (audio.value.paused) {
     try { await audio.value.play(); error.value = '' }
-    catch { error.value = '当前音源无法播放，请检查地址或授权。' }
+    catch (cause) { setPlaybackError(cause) }
   } else audio.value.pause()
 }
 
@@ -89,7 +113,7 @@ function onEnded() {
   if (repeatMode.value === 'all' && tracks.length > 1) { nextTrack(true); return }
   if (repeatMode.value === 'all' && tracks.length === 1 && audio.value) {
     audio.value.currentTime = 0
-    void audio.value.play().catch(() => { error.value = '当前音源无法播放，请检查地址或授权。' })
+    void audio.value.play().catch(setPlaybackError)
     return
   }
   isPlaying.value = false
@@ -105,7 +129,7 @@ function restore() {
 }
 watch(volume, (value) => { if (audio.value) audio.value.volume = value })
 watch(currentTrack, () => { if (audio.value) audio.value.volume = volume.value })
-onMounted(() => { restore(); if (audio.value) audio.value.volume = volume.value })
+onMounted(() => { void startPlaybackOnLoad() })
 </script>
 
 <template>
@@ -121,7 +145,7 @@ onMounted(() => { restore(); if (audio.value) audio.value.volume = volume.value 
         <span v-else class="music-cover-fallback"><Music2 :size="23" aria-hidden="true" /></span>
         <div><strong>{{ currentTrack.title }}</strong><span>{{ currentTrack.artist }}</span></div>
       </div>
-      <p v-else class="music-empty-state">还没有添加可用曲目。请在音乐数据配置中加入拥有使用权的音源；本站不会自动播放或伪造歌曲。</p>
+      <p v-else class="music-empty-state">还没有添加可用曲目。请在音乐数据配置中加入拥有使用权的音源。</p>
       <div v-if="tracks.length" class="music-controls">
         <input class="music-progress" type="range" min="0" :max="duration || 0" step="1" :value="currentTime" aria-label="播放进度" @input="seek(($event.target as HTMLInputElement).value)" />
         <div class="music-time-row"><time>{{ formatTime(currentTime) }}</time><time>{{ formatTime(duration) }}</time></div>
