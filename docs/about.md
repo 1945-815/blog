@@ -1,6 +1,6 @@
 ---
 title: 关于我
-description: 张耘璨（Cyzee）的技术方向、教育背景与联系方式。
+description: Cyzee 的技术方向、教育背景与联系方式。
 ---
 
 <script setup lang="ts">
@@ -12,7 +12,7 @@ import ContactCard from './.vitepress/theme/components/ContactCard.vue'
 
 # 关于我
 
-<p class="about-lead">你好，我是 <strong>张耘璨（Cyzee）</strong>。这里整理 Java 后端、分布式系统与 AI 应用开发中的原理、代码实践和问题分析。</p>
+<p class="about-lead">你好，我是 <strong>Cyzee</strong>。这里整理 Java 后端、分布式系统与 AI 应用开发中的原理、代码实践和问题分析。</p>
 
 ## 关注的技术
 

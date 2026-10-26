@@ -67,13 +67,12 @@ onUnmounted(() => window.removeEventListener('popstate', syncFromUrl))
           <a :href="withBase('/tags/')">所有标签 <span aria-hidden="true">↗</span></a>
         </div>
         <p v-if="activeTag" class="home-filter-status" role="status">「{{ activeTag }}」相关记录 · {{ visible.length }} 篇 <button type="button" @click="selectTag('')">清除筛选</button></p>
-        <div v-if="visible.length" class="article-list home-article-list" :class="{ 'has-compact': visible.length > 1 }">
+        <div v-if="visible.length" class="article-list home-article-list">
           <ArticleCard
-            v-for="(article, index) in visible"
+            v-for="article in visible"
             :key="article.url"
             :article="article"
-            :featured="index === 0"
-            :compact="index > 0"
+            compact
             inline-tags
             @tag-select="selectTag"
           />
@@ -83,7 +82,7 @@ onUnmounted(() => window.removeEventListener('popstate', syncFromUrl))
       </section>
 
       <section v-reveal class="home-about" aria-labelledby="home-about-title">
-        <div><p class="section-eyebrow">A LITTLE ABOUT ME</p><h2 id="home-about-title">关于 {{ profile.name }} <span>（Cyzee）</span></h2></div>
+        <div><p class="section-eyebrow">A LITTLE ABOUT ME</p><h2 id="home-about-title">关于我</h2></div>
         <p>{{ profile.introduction }}</p>
         <a :href="withBase('/about')">认识我 <span aria-hidden="true">↗</span></a>
       </section>
