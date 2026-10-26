@@ -10,15 +10,15 @@ phase: "Web 基础"
 
 # JavaScript 基础与 DOM：用事件更新页面
 
-笔记从变量、运算符、数组、函数走到 `document` 查找元素、修改内容以及点击/表单事件。下例只在浏览器中运行，是静态页面练习。
+笔记从变量、运算符、数组、函数走到 `document` 查找元素、修改内容以及点击/表单事件。下例只在浏览器中运行，是静态页面示例。
 
 ## 语言与运行环境
 
 `let` 定义可重新赋值的块级变量，`const` 定义不可重新赋值的绑定；数组可用 `push` 添加元素，函数把重复操作封装起来。优先使用 `===` 避免隐式类型转换。JavaScript 语言可以运行在浏览器，也可以运行在 Node.js 等环境；`document`、DOM 和页面事件是浏览器提供的 API，普通 Node.js 进程没有浏览器 DOM。
 
-## 一个完整的 DOM 与事件练习
+## 用事件更新页面内容
 
-保存为 `dom-practice.html` 后直接用浏览器打开。输入课程名、点击按钮，列表会更新；空白输入给出提示。示例只修改当前页面，刷新后数据消失。
+保存为 `dom-events.html` 后直接用浏览器打开。输入记录标题、点击按钮，列表会更新；空白输入给出提示。示例只修改当前页面，刷新后数据消失。
 
 ~~~html
 <!doctype html>
@@ -26,45 +26,45 @@ phase: "Web 基础"
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>课程列表练习</title>
+  <title>记录列表示例</title>
 </head>
 <body>
   <main>
-    <h1>课程列表</h1>
-    <form id="course-form">
-      <label for="course-name">课程名称</label>
-      <input id="course-name" name="course" maxlength="40" required>
+    <h1>记录列表</h1>
+    <form id="entry-form">
+      <label for="entry-title">记录标题</label>
+      <input id="entry-title" name="title" maxlength="40" required>
       <button type="submit">添加</button>
     </form>
     <p id="message" role="status"></p>
-    <ul id="course-list"></ul>
+    <ul id="entry-list"></ul>
   </main>
   <script>
-    const courses = ["Java 基础", "MySQL 入门"];
-    const form = document.querySelector("#course-form");
-    const input = document.querySelector("#course-name");
-    const list = document.querySelector("#course-list");
+    const entries = ["索引设计", "事务隔离"];
+    const form = document.querySelector("#entry-form");
+    const input = document.querySelector("#entry-title");
+    const list = document.querySelector("#entry-list");
     const message = document.querySelector("#message");
 
     function render() {
       list.replaceChildren();
-      for (const course of courses) {
+      for (const entry of entries) {
         const item = document.createElement("li");
-        item.textContent = course;
+        item.textContent = entry;
         list.appendChild(item);
       }
     }
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      const name = input.value.trim();
-      if (name.length === 0) {
-        message.textContent = "请输入课程名称";
+      const title = input.value.trim();
+      if (title.length === 0) {
+        message.textContent = "请输入记录标题";
         return;
       }
-      courses.push(name);
+      entries.push(title);
       render();
-      message.textContent = "已添加：" + name;
+      message.textContent = "已添加：" + title;
       form.reset();
       input.focus();
     });
@@ -74,7 +74,7 @@ phase: "Web 基础"
 </html>
 ~~~
 
-`querySelector` 按 CSS 选择器返回第一个匹配元素；这里脚本放在页面末尾，执行时目标元素已解析。`addEventListener` 将事件与处理函数关联，`event.preventDefault()` 阻止表单默认导航。课堂截图还练习了复选框、下拉框与普通属性读写；不同控件应使用其对应属性（如复选框的 `checked`），不能都按文本处理。
+`querySelector` 按 CSS 选择器返回第一个匹配元素；这里脚本放在页面末尾，执行时目标元素已解析。`addEventListener` 将事件与处理函数关联，`event.preventDefault()` 阻止表单默认导航。不同控件应使用对应属性（如复选框的 `checked`），不能都按文本处理。
 
 将用户输入显示为纯文本时用 `textContent`，避免把输入解释为 HTML。`innerHTML` 只应在内容可信且明确需要解析标签时使用。这个小程序没有持久化、服务器校验或登录；若接入后端，还需要请求失败提示、输入限制和授权机制。
 

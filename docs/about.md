@@ -1,6 +1,6 @@
 ---
 title: 关于我
-description: 张耘璨（Cyzee）的技术方向、学习记录与联系方式。
+description: 张耘璨（Cyzee）的技术方向、教育背景与联系方式。
 ---
 
 <script setup lang="ts">
@@ -12,7 +12,7 @@ import ContactCard from './.vitepress/theme/components/ContactCard.vue'
 
 # 关于我
 
-<p class="about-lead">你好，我是 <strong>张耘璨（Cyzee）</strong>。这里记录我对 Java 后端、Spring 生态和 AI 应用开发的学习，也留一些日常思考。</p>
+<p class="about-lead">你好，我是 <strong>张耘璨（Cyzee）</strong>。这里整理 Java 后端、分布式系统与 AI 应用开发中的原理、代码实践和问题分析。</p>
 
 ## 关注的技术
 
@@ -23,11 +23,10 @@ import ContactCard from './.vitepress/theme/components/ContactCard.vue'
   <section><h3>工程习惯</h3><p>Linux、Docker、Git 和可维护的开发流程。</p></section>
 </div>
 
-## 学习与工作背景
+## 教育背景
 
 <dl class="about-facts">
   <div><dt>教育</dt><dd>{{ profile.education.school }} · {{ profile.education.major }} · {{ profile.education.degree }}（{{ profile.education.period }}）</dd></div>
-  <div><dt>实习</dt><dd>{{ profile.internship.company }} · {{ profile.internship.role }}（{{ profile.internship.period }}）</dd></div>
 </dl>
 
 ## 联系

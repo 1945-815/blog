@@ -152,13 +152,13 @@ onUnmounted(() => window.removeEventListener('popstate', syncFromUrl))
       <p class="section-eyebrow">ALL ARTICLES</p>
       <h1>技术文章</h1>
       <p>共 {{ articles.length }} 篇文章。搜索标题、摘要、分类、标签与正文，也可以组合分类和标签筛选。</p>
-      <p class="date-field-note">日期筛选使用文章 frontmatter 的 <code>date</code> 字段；“阶段参考”使用 <code>plan_date</code>，不代表公开发布日期。</p>
+      <p class="date-field-note">日期筛选使用文章 frontmatter 的 <code>date</code> 字段；“编排参考”使用 <code>plan_date</code>，不代表首次公开日期。</p>
     </header>
 
     <section class="article-filter-panel" aria-label="文章筛选条件">
       <div class="article-search-row">
         <label class="article-search-control"><span>全文搜索</span><input v-model="query" type="search" placeholder="搜索标题、摘要或正文…" autocomplete="off" @input="onQueryInput" /></label>
-        <label class="article-sort-control"><span>排序</span><select :value="sort" @change="setSort(($event.target as HTMLSelectElement).value as SortOrder)"><option value="plan">阶段参考顺序</option><option value="date-desc">文章 date 字段：新到旧</option><option value="date-asc">文章 date 字段：旧到新</option></select></label>
+        <label class="article-sort-control"><span>排序</span><select :value="sort" @change="setSort(($event.target as HTMLSelectElement).value as SortOrder)"><option value="plan">内容编排顺序</option><option value="date-desc">记录日期：新到旧</option><option value="date-asc">记录日期：旧到新</option></select></label>
       </div>
 
       <div class="article-filter-group">

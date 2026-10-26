@@ -72,7 +72,7 @@ watch(() => props.topic, () => {
         <div v-if="visiblePosts.length" class="article-list"><ArticleCard v-for="article in visiblePosts" :key="article.url" :article="article" :topic="topic" /></div>
         <div v-else class="empty-card">
           <h2>{{ selectedTag ? '这个标签还没有文章' : '这个方向还没有文章' }}</h2>
-          <p>目前没有可公开的相关内容，后续学习与实践会逐步补充。</p>
+          <p>目前还没有匹配的文章。</p>
           <button v-if="selectedTag" type="button" class="clear-tags" @click="setCategoryTag(topic)">清除筛选 →</button>
           <a v-else :href="withBase('/articles/')">先读全部文章 →</a>
         </div>

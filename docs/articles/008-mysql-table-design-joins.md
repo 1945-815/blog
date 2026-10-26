@@ -6,123 +6,117 @@ tags: [
   "MySQL",
   "业务设计"
 ]
-description: "用学生、课程和选课关系练习主外键、关系表以及 INNER JOIN 与 LEFT JOIN。"
+description: "用用户、文档与收藏关系说明主外键、中间表以及 INNER JOIN 与 LEFT JOIN 的结果差异。"
 plan_date: "2024-01-20"
-phase: "数据库与 Spring 基础"
+phase: "Spring 与数据持久化"
 ---
 
 # MySQL 表设计与多表查询：从实体关系写 SQL
 
-### 学习目标
+## 问题背景
 
-- 从实体和关系推导表结构。
-- 用主键、外键和唯一约束表达数据规则。
-- 区分 INNER JOIN 与 LEFT JOIN 在结果集上的差异。
-
-## 一、为什么学习这个技术
-
-如果把学生姓名、课程名和成绩都写进同一张表，学生选多门课时姓名会重复，课程名也会重复。名称变更时要更新多行，漏掉某些行就会留下互相矛盾的数据。
+如果把用户名称、文档标题和收藏时间都放进一张表，同一用户收藏多篇文档时名称会重复，同一文档被多人收藏时标题也会重复。名称变更需要更新多行，遗漏会留下不一致的数据。
 
 把实体和关系分开建模，可以减少重复，并让数据库约束负责拦截一部分无效数据。设计表后再写查询，也更容易判断结果为什么会重复或缺失。
 
-## 二、技术原理
+## 核心原理
 
 示例包含三个实体关系：
 
-- student 保存学生自身信息。
-- course 保存课程自身信息。
-- enrollment 表示学生选了哪门课程，并保存该关系上的成绩。
+- user_account 保存用户自身信息。
+- document 保存文档自身信息。
+- bookmark 表示用户收藏了哪篇文档，并保存关系建立时间。
 
-一个学生可以选多门课程，一门课程也可以有多个学生，因此 student 和 course 是多对多关系，需要一张关系表。选课记录用 student_id 与 course_id 组成联合主键，防止同一学生重复选同一门课程。外键要求引用的学生和课程存在。
+一个用户可以收藏多篇文档，一篇文档也可以被多个用户收藏，因此用户与文档是多对多关系，需要一张关系表。收藏记录用 user_id 与 document_id 组成联合主键，防止同一用户重复收藏同一文档。外键要求引用的用户和文档存在。
 
-关系表在 Java 对象中如何映射，可继续看 [MyBatis 关联映射的课堂练习](/articles/mybatis-association-mapping)。
+关系表在 Java 对象中如何映射，可继续看 [MyBatis 关联映射](/articles/mybatis-association-mapping)。
 
 规范化的目标是减少不必要的重复和更新异常。范式是分析依赖关系的工具，不是要求所有场景都拆成尽可能多的表；查询需求、约束和维护成本仍要一起考虑。
 
-第二范式检查非主属性是否完全依赖候选键，联合键尤其容易出现只依赖其中一列的字段；第三范式进一步检查非主属性对键的传递依赖。学生姓名放在选课表里，会随着同一学生的多门课程重复，改名时可能只更新了部分行。把姓名保留在 `student`、把成绩放在 `enrollment`，是这一练习的具体取舍，而非所有数据库都必须机械拆表。
+第二范式检查非主属性是否完全依赖候选键，联合键尤其容易出现只依赖其中一列的字段；第三范式进一步检查非主属性对键的传递依赖。用户名称不依赖收藏关系，应该保留在 `user_account`；收藏时间则属于 `bookmark`。这是该关系模型的取舍，不意味着所有场景都要机械拆表。
 
-## 三、核心代码实现
+## 实现示例
 
-下面的 SQL 面向 MySQL 8.0+，可在练习数据库中依次执行。生产库执行 DDL 前应先评估已有数据和迁移方式。
+下面的 SQL 面向 MySQL 8.0+，可在独立测试数据库中依次执行。生产库执行 DDL 前应先评估已有数据和迁移方式。
 
 ~~~sql
-CREATE TABLE student (
+CREATE TABLE user_account (
     id BIGINT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
+    display_name VARCHAR(50) NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE course (
+CREATE TABLE document (
     id BIGINT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
+    title VARCHAR(200) NOT NULL
 );
 
-CREATE TABLE enrollment (
-    student_id BIGINT NOT NULL,
-    course_id BIGINT NOT NULL,
-    score DECIMAL(5, 2),
-    PRIMARY KEY (student_id, course_id),
-    CONSTRAINT fk_enrollment_student
-        FOREIGN KEY (student_id) REFERENCES student (id),
-    CONSTRAINT fk_enrollment_course
-        FOREIGN KEY (course_id) REFERENCES course (id)
+CREATE TABLE bookmark (
+    user_id BIGINT NOT NULL,
+    document_id BIGINT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, document_id),
+    CONSTRAINT fk_bookmark_user
+        FOREIGN KEY (user_id) REFERENCES user_account (id),
+    CONSTRAINT fk_bookmark_document
+        FOREIGN KEY (document_id) REFERENCES document (id)
 );
 
-INSERT INTO student (id, name) VALUES
-    (1, '小林'),
-    (2, '小周'),
-    (3, '小陈');
+INSERT INTO user_account (id, display_name) VALUES
+    (1, 'Lin'),
+    (2, 'Zhou'),
+    (3, 'Chen');
 
-INSERT INTO course (id, name) VALUES
-    (101, 'Java 基础'),
-    (102, '数据库基础');
+INSERT INTO document (id, title) VALUES
+    (101, 'Index Design'),
+    (102, 'Transaction Boundaries');
 
-INSERT INTO enrollment (student_id, course_id, score) VALUES
-    (1, 101, 92.00),
-    (1, 102, 88.00),
-    (2, 101, 81.00);
+INSERT INTO bookmark (user_id, document_id) VALUES
+    (1, 101),
+    (1, 102),
+    (2, 101);
 
--- 只看至少选过一门课的学生和课程
-SELECT s.name AS student_name, c.name AS course_name, e.score
-FROM student AS s
-INNER JOIN enrollment AS e ON e.student_id = s.id
-INNER JOIN course AS c ON c.id = e.course_id
-ORDER BY s.id, c.id;
+-- 只看至少收藏过一篇文档的用户和文档
+SELECT u.display_name, d.title, b.created_at AS bookmarked_at
+FROM user_account AS u
+INNER JOIN bookmark AS b ON b.user_id = u.id
+INNER JOIN document AS d ON d.id = b.document_id
+ORDER BY u.id, d.id;
 
--- 统计所有学生的选课数，包括尚未选课的学生
-SELECT s.id, s.name, COUNT(e.course_id) AS course_count
-FROM student AS s
-LEFT JOIN enrollment AS e ON e.student_id = s.id
-GROUP BY s.id, s.name
-ORDER BY s.id;
+-- 统计所有用户的收藏数，包括尚未收藏文档的用户
+SELECT u.id, u.display_name, COUNT(b.document_id) AS bookmark_count
+FROM user_account AS u
+LEFT JOIN bookmark AS b ON b.user_id = u.id
+GROUP BY u.id, u.display_name
+ORDER BY u.id;
 ~~~
 
-INNER JOIN 只返回两侧都能匹配的记录；第二条查询从 student 出发做 LEFT JOIN，所以小陈仍会出现，选课数为 0。这里用 COUNT(e.course_id)，因为未匹配时右侧 course_id 为 NULL，COUNT 不会把它计入。
+INNER JOIN 只返回两侧都能匹配的记录；第二条查询从 user_account 出发做 LEFT JOIN，所以 Chen 仍会出现，收藏数为 0。这里用 COUNT(b.document_id)，因为未匹配时右侧 document_id 为 NULL，COUNT 不会把它计入。
 
-## 四、真实项目落地
+## 应用场景与边界
 
-课程数据库练习中，可以先画出学生、课程与选课之间的关系，再将关系映射成表和外键，最后用查询验证数据是否符合预期。上述例子是个人学习 Demo，不代表在职期间设计过选课系统。
+建模时可以先画出用户、文档与收藏关系，再映射为表和外键，最后用查询验证关联结果。该示例只说明关系结构和 JOIN 语义。
 
-实际开发时还要讨论主键策略、删除规则、索引、字段长度、字符集、数据量以及迁移方案。外键是否由数据库强制也要看团队规范，不能只凭一个练习例子套到所有系统。
+还要结合实际约束讨论主键策略、删除规则、索引、字段长度、字符集、数据量和迁移方案。是否由数据库强制外键取决于系统边界和一致性策略。
 
-## 五、遇到的问题
+## 边界与常见问题
 
-LEFT JOIN 后统计时，如果使用 COUNT(*)，即使右侧没有匹配记录，左侧行仍然存在，计数可能得到 1。统计右表匹配数量时，应该选择右侧非空键，例如 COUNT(e.course_id)。
+LEFT JOIN 后统计时，如果使用 COUNT(*)，即使右侧没有匹配记录，左侧行仍然存在，计数可能得到 1。统计右表匹配数量时，应选择右侧非空键，例如 `COUNT(b.document_id)`。
 
-多表查询重复行不一定是数据库错误，可能是关系本身是一对多。需要先明确结果粒度：每条选课记录一行，还是每个学生一行；再决定是否聚合或去重。
+多表查询重复行不一定是数据库错误，可能是关系本身是一对多。需要先明确结果粒度：每条收藏关系一行，还是每个用户一行；再决定是否聚合或去重。
 
-## 六、优化方案
+## 改进思路
 
 - 主外键字段的数据类型和长度保持一致。
 - 为常用连接和筛选条件设计索引，并用执行计划验证。
 - 避免用 DISTINCT 掩盖错误的连接条件或错误的结果粒度。
 - DDL 变更使用迁移脚本并考虑回滚与存量数据校验。
 
-## 七、个人思考
+## 设计取舍与结论
 
-写查询前先描述“一行结果代表什么”，能帮助我检查连接是否正确。表设计和 SQL 查询是一件事的两面：设计决定数据如何表达，查询检验我们是否理解这些关系。
+写查询前先定义“一行结果代表什么”，再检查关联是否保持了这个粒度。表设计决定数据如何表达，查询则检验关系是否按预期组合。
 
-## 延伸：面试问答
+## 常见问题
 
 ### 多对多关系为什么通常需要中间表？
 

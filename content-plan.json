@@ -2,792 +2,693 @@
   {
     "id": 1,
     "planDate": "2023-10-20",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "java-backend-learning-route",
-    "title": "我的 Java 后端学习路线：学过什么，哪些还在实践"
+    "title": "Java 后端技术地图：语言基础、工程实践与 AI 应用"
   },
   {
     "id": 31,
     "planDate": "2023-10-30",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "002-java-class-object",
-    "title": "第一次理解 Java 类和对象：字段、方法与封装"
+    "title": "Java 类和对象：字段、方法与封装"
   },
   {
     "id": 66,
     "planDate": "2023-11-05",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "066-java-string-stringbuilder",
     "title": "Java 字符串实践：String 不可变性与 StringBuilder"
   },
   {
     "id": 2,
     "planDate": "2023-11-18",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "java-collections",
     "title": "Java 集合的选择：List、Set、Map 分别解决什么问题"
   },
   {
     "id": 32,
     "planDate": "2023-11-28",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "004-data-structures-basics",
     "title": "数据结构入门：数组、链表、栈、队列与复杂度"
   },
   {
     "id": 36,
     "planDate": "2023-12-10",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "005-java-exceptions-file-io",
     "title": "Java 异常与文件 IO：把失败路径写清楚"
   },
   {
     "id": 3,
     "planDate": "2023-12-25",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "stream-api-side-effects",
     "title": "Stream API 的常见用法与容易忽略的副作用"
   },
   {
     "id": 37,
     "planDate": "2023-12-28",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "007-java-concurrency-basics",
     "title": "Java 多线程起步：共享状态、线程安全与同步"
   },
   {
     "id": 71,
     "planDate": "2024-01-08",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "071-java-generics-type-erasure",
     "title": "Java 泛型为什么不能随便强转：类型擦除、通配符与分页 DTO"
   },
   {
     "id": 33,
     "planDate": "2024-01-20",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "008-mysql-table-design-joins",
     "title": "MySQL 表设计与多表查询：从实体关系写 SQL"
   },
   {
     "id": 8,
     "planDate": "2024-02-10",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "mysql-transaction-index-idempotency",
     "title": "数据库事务、索引与重复提交问题"
   },
   {
     "id": 67,
     "planDate": "2024-02-17",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "067-mysql-innodb-mvcc-consistent-read",
     "title": "MySQL InnoDB MVCC：一致性读与事务快照"
   },
   {
     "id": 34,
     "planDate": "2024-02-25",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "010-mysql-explain-index",
     "title": "用 EXPLAIN 理解 MySQL 索引：读懂一条查询计划"
   },
   {
     "id": 35,
     "planDate": "2024-03-15",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "011-jdbc-preparedstatement-dao",
     "title": "JDBC 预编译与 DAO：参数绑定和持久层边界"
   },
   {
     "id": 6,
     "planDate": "2024-04-05",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "spring-mvc-request-flow",
     "title": "Spring MVC 请求从进入到返回的大致流程"
   },
   {
     "id": 38,
     "planDate": "2024-04-20",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "013-spring-ioc-di",
     "title": "Spring IoC 与 DI：对象创建和依赖管理"
   },
   {
     "id": 5,
     "planDate": "2024-05-10",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "后端工程实践",
     "slug": "maven-environment-config",
     "title": "Maven 配置文件与多环境配置的使用整理"
   },
   {
     "id": 39,
     "planDate": "2024-05-25",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "015-spring-aop-transactions",
     "title": "Spring AOP 与事务：横切逻辑和事务边界"
   },
   {
     "id": 40,
     "planDate": "2024-06-10",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "016-mybatis-dynamic-sql",
     "title": "MyBatis 参数映射与动态 SQL：完成条件查询"
   },
   {
     "id": 4,
     "planDate": "2024-06-20",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "spring-validation-error-response",
     "title": "Spring Boot 接口中的参数校验与统一错误响应"
   },
   {
     "id": 7,
     "planDate": "2024-07-20",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "mybatis-plus-filter-pagination",
     "title": "用 MyBatis-Plus 实现条件筛选和分页查询"
   },
   {
     "id": 41,
     "planDate": "2024-07-30",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "019-redis-types-ttl",
     "title": "Redis 基础数据结构与 TTL：临时状态和 key 设计"
   },
   {
     "id": 20,
     "planDate": "2024-08-20",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "后端工程实践",
     "slug": "docker-local-backend-environment",
     "title": "用 Docker 搭建本地后端开发环境"
   },
   {
     "id": 42,
     "planDate": "2024-08-30",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "021-springboot-crud-project",
-    "title": "Spring Boot 练习项目：从表结构到分页 CRUD 接口"
+    "title": "Spring Boot 分层 CRUD 示例：从表结构到分页接口"
   },
   {
     "id": 17,
     "planDate": "2025-01-15",
-    "stage": 3,
-    "stageName": "企业开发技术学习",
+    "topic": "分布式与中间件",
     "slug": "nacos-service-discovery-config",
     "title": "Nacos 在微服务中的注册发现与配置管理"
   },
   {
     "id": 18,
     "planDate": "2025-02-12",
-    "stage": 3,
-    "stageName": "企业开发技术学习",
+    "topic": "分布式与中间件",
     "slug": "gateway-openfeign-responsibilities",
     "title": "Gateway 与 OpenFeign 在服务调用中的分工"
   },
   {
     "id": 10,
     "planDate": "2025-03-10",
-    "stage": 3,
-    "stageName": "企业开发技术学习",
+    "topic": "分布式与中间件",
     "slug": "redis-hot-document-cache",
     "title": "热门文档访问场景下的 Redis 缓存设计"
   },
   {
     "id": 72,
     "planDate": "2025-03-18",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "072-bigdecimal-money-rounding",
     "title": "BigDecimal 金额计算：从舍入规则到分摊尾差"
   },
   {
     "id": 16,
     "planDate": "2025-05-18",
-    "stage": 3,
-    "stageName": "企业开发技术学习",
+    "topic": "分布式与中间件",
     "slug": "rabbitmq-consumer-boundary",
     "title": "RabbitMQ 异步处理的基本流程与消费者边界"
   },
   {
     "id": 56,
     "planDate": "2025-06-07",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "056-java-reflection-bean-introspection",
     "title": "Java 反射与内省：理解框架如何读取对象属性"
   },
   {
     "id": 14,
     "planDate": "2025-07-20",
-    "stage": 3,
-    "stageName": "企业开发技术学习",
+    "topic": "分布式与中间件",
     "slug": "elasticsearch-document-search-mapping",
     "title": "Elasticsearch 标题与内容检索的索引设计"
   },
   {
     "id": 61,
     "planDate": "2025-08-02",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "061-java-time-zone-boundaries",
     "title": "Java 日期时间处理：用 java.time 解决时区与区间边界"
   },
   {
     "id": 19,
     "planDate": "2025-09-10",
-    "stage": 3,
-    "stageName": "企业开发技术学习",
+    "topic": "分布式与中间件",
     "slug": "sentinel-flow-control",
     "title": "Sentinel 限流实践：规则、入口与降级边界"
   },
   {
     "id": 62,
     "planDate": "2025-09-13",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "062-mysql-grouped-reporting",
-    "title": "MySQL 分组统计实战：从订单明细到分类报表"
+    "title": "MySQL 分组统计：从订单明细到分类报表"
   },
   {
     "id": 11,
     "planDate": "2025-10-08",
-    "stage": 3,
-    "stageName": "企业开发技术学习",
+    "topic": "分布式与中间件",
     "slug": "spring-security-jwt-flow",
     "title": "Spring Security 与 JWT 的认证授权流程"
   },
   {
     "id": 51,
     "planDate": "2025-11-20",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "051-completablefuture-async-orchestration",
     "title": "CompletableFuture 异步编排：线程池隔离、超时与异常边界"
   },
   {
     "id": 52,
     "planDate": "2025-11-30",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "052-jvm-memory-oom-diagnosis",
     "title": "JVM 内存与 OOM 排查：从运行时区域到堆转储证据"
   },
   {
     "id": 53,
     "planDate": "2025-12-12",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "053-java-spi-classloader",
     "title": "Java 类加载与 SPI：从类身份到可控的扩展发现"
   },
   {
     "id": 46,
     "planDate": "2025-12-20",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "046-java-polymorphism-interface",
     "title": "从接口到运行时分派：用多态组织可扩展的 Java 业务"
   },
   {
     "id": 24,
     "planDate": "2026-01-20",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "api-doc-security-checklist",
     "title": "Java 后端项目中的接口文档与安全检查清单"
   },
   {
     "id": 47,
     "planDate": "2026-02-10",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "047-mybatis-query-batch-performance",
     "title": "MyBatis 查询与批量写入性能：识别 N+1 并控制数据库往返"
   },
   {
     "id": 27,
     "planDate": "2026-02-12",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "appointment-order-state-idempotency",
     "title": "预约和服务订单中的状态流转与重复提交"
   },
   {
     "id": 48,
     "planDate": "2026-02-24",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "048-maven-multi-module",
     "title": "Maven 多模块项目：聚合、依赖管理与团队构建边界"
   },
   {
     "id": 29,
     "planDate": "2026-03-05",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "clinic-appointment-approval-redacted",
-    "title": "诊所预约与审批平台的业务流程设计（脱敏）"
+    "title": "预约与审批的状态建模：业务状态、任务状态与幂等"
   },
   {
     "id": 49,
     "planDate": "2026-03-10",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "049-springboot-auto-configuration",
     "title": "Spring Boot 启动与自动配置：从条件装配到问题诊断"
   },
   {
     "id": 63,
     "planDate": "2026-03-11",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "分布式与中间件",
     "slug": "063-gateway-filter-order-timing",
     "title": "Spring Cloud Gateway 过滤器顺序与耗时统计"
   },
   {
     "id": 57,
     "planDate": "2026-03-18",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "057-redis-daily-quota-lua",
     "title": "Redis Lua 实现每日点赞配额：把检查和计数放进同一次操作"
   },
   {
     "id": 54,
     "planDate": "2026-03-22",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "054-redis-distributed-lock",
     "title": "Redis 分布式锁实践：租约、唯一标识与数据库兜底"
   },
   {
     "id": 9,
     "planDate": "2026-03-26",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "redis-ttl",
     "title": "Redis TTL 在验证码和临时状态管理中的应用"
   },
   {
     "id": 55,
     "planDate": "2026-04-12",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "055-quartz-scheduled-jobs",
     "title": "Spring 定时任务与 Quartz：从单机触发到多实例调度"
   },
   {
     "id": 12,
     "planDate": "2026-04-15",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "activiti7-approval-flow",
     "title": "Activiti 7 审批流程：从流程定义到任务处理"
   },
   {
     "id": 50,
     "planDate": "2026-04-15",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "050-ruoyi-rbac-permission-model",
-    "title": "RuoYi RBAC 权限模型：从角色菜单到后端接口校验"
+    "title": "RBAC 权限模型：角色、菜单与接口授权"
   },
   {
     "id": 25,
     "planDate": "2026-05-06",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "document-search-api-design",
     "title": "文档检索服务的接口设计：上传、分类与分页"
   },
   {
     "id": 73,
     "planDate": "2026-05-12",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "073-springboot-file-upload-quarantine",
     "title": "Spring Boot 文件上传：大小校验、隔离存储与失败补偿"
   },
   {
     "id": 26,
     "planDate": "2026-05-27",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "activiti-comment-report-approval",
     "title": "评论或举报审批如何接入 Activiti 流程"
   },
   {
     "id": 58,
     "planDate": "2026-06-02",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "058-nginx-java-load-balancing",
     "title": "Nginx 反向代理与负载均衡：把请求稳妥地交给 Spring Boot"
   },
   {
     "id": 59,
     "planDate": "2026-06-10",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "059-springboot-docker-multistage",
     "title": "Spring Boot 应用容器化发布：从可执行 JAR 到多阶段镜像"
   },
   {
     "id": 13,
     "planDate": "2026-06-17",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "approval-and-business-status",
     "title": "审批状态、任务状态与业务状态如何对应"
   },
   {
     "id": 68,
     "planDate": "2026-07-06",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "068-transactional-outbox-mysql-rabbitmq",
     "title": "Transactional Outbox：让 MySQL 写入与 RabbitMQ 事件可靠衔接"
   },
   {
     "id": 15,
     "planDate": "2026-07-08",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "canal-mysql-to-elasticsearch",
     "title": "用 Canal 同步 MySQL 变更到搜索索引"
   },
   {
     "id": 64,
     "planDate": "2026-07-22",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "064-elasticsearch-bool-highlight",
     "title": "Elasticsearch bool 查询与高亮：组合过滤条件并返回可展示片段"
   },
   {
     "id": 74,
     "planDate": "2026-07-28",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "074-elasticsearch-pit-search-after",
     "title": "Elasticsearch 深分页：用 PIT 与 search_after 稳定翻页"
   },
   {
     "id": 23,
     "planDate": "2026-07-29",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "ai-coding-tools-workflow",
     "title": "Codex 和 Cursor 如何辅助接口开发与代码理解"
   },
   {
     "id": 65,
     "planDate": "2026-08-16",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "065-linux-springboot-jar-systemd",
     "title": "Linux 上运行 Spring Boot JAR：systemd 管理与故障排查"
   },
   {
     "id": 28,
     "planDate": "2026-08-19",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "document-retrieval-platform-redacted",
-    "title": "企业文档检索平台的模块划分与技术选型（脱敏）"
+    "title": "文档检索系统设计：MySQL、Elasticsearch 与 RAG 的边界"
   },
   {
     "id": 75,
     "planDate": "2026-08-25",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "075-redis-persistence-recovery",
     "title": "Redis 持久化与恢复：RDB、AOF 和缓存重建的边界"
   },
   {
     "id": 30,
     "planDate": "2026-09-30",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "internship-api-collaboration-retro",
-    "title": "从实习项目中复盘接口开发、联调与问题定位"
+    "title": "后端接口协作：契约、联调与问题定位"
   },
   {
     "id": 21,
     "planDate": "2026-10-15",
-    "stage": 5,
-    "stageName": "AI 应用探索",
+    "topic": "AI 应用开发",
     "slug": "rag-document-qa",
     "title": "RAG 文档问答的基本链路：文档、检索与模型 API"
   },
   {
     "id": 69,
     "planDate": "2026-10-20",
-    "stage": 5,
-    "stageName": "AI 应用探索",
+    "topic": "AI 应用开发",
     "slug": "069-spring-ai-streaming-sse",
     "title": "Spring AI 流式响应：用 WebFlux 与 SSE 逐段返回模型内容"
   },
   {
     "id": 70,
     "planDate": "2026-10-27",
-    "stage": 5,
-    "stageName": "AI 应用探索",
+    "topic": "AI 应用开发",
     "slug": "070-spring-ai-chat-memory-session",
     "title": "Spring AI 会话记忆：会话隔离、窗口裁剪与 JDBC 持久化"
   },
   {
     "id": 60,
     "planDate": "2026-10-28",
-    "stage": 5,
-    "stageName": "AI 应用探索",
+    "topic": "AI 应用开发",
     "slug": "060-rag-retrieval-evaluation",
     "title": "RAG 检索评估：用黄金问题集定位召回与回答问题"
   },
   {
     "id": 22,
     "planDate": "2026-11-05",
-    "stage": 5,
-    "stageName": "AI 应用探索",
+    "topic": "AI 应用开发",
     "slug": "rag-chunking-vector-search-demo",
-    "title": "文档切分和向量检索：一个小型 RAG Demo 的实现"
+    "title": "RAG 文档切分与向量检索：实现和评估边界"
   },
   {
     "id": 43,
     "planDate": "2026-11-20",
-    "stage": 5,
-    "stageName": "AI 应用探索",
+    "topic": "AI 应用开发",
     "slug": "043-spring-ai-ollama",
-    "title": "用 Spring AI 和 Ollama 完成第一次本地模型调用"
+    "title": "Spring AI 与 Ollama：配置和本地模型调用"
   },
   {
     "id": 44,
     "planDate": "2026-12-10",
-    "stage": 5,
-    "stageName": "AI 应用探索",
+    "topic": "AI 应用开发",
     "slug": "044-elasticsearch-embedding-knn",
     "title": "Embedding 接入 Elasticsearch：dense_vector、KNN 与维度核对"
   },
   {
     "id": 45,
     "planDate": "2027-01-10",
-    "stage": 5,
-    "stageName": "AI 应用探索",
+    "topic": "AI 应用开发",
     "slug": "045-agent-tool-boundaries",
     "title": "Agent 工具调用：输入校验、权限边界与失败处理"
   },
   {
     "id": 76,
     "planDate": "2026-10-16",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "java-syntax-control-flow-notes",
-    "title": "Java 基础语法练习：变量、输入与流程控制"
+    "title": "Java 基础语法：变量、输入与流程控制"
   },
   {
     "id": 77,
     "planDate": "2026-10-16",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "java-object-wrapper-notes",
     "title": "Object 与包装类：判等、装箱和类型转换"
   },
   {
     "id": 78,
     "planDate": "2026-10-16",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "mysql-basic-crud-notes",
-    "title": "MySQL 基础 SQL：从建表到单表查询"
+    "title": "MySQL DDL、DML 与单表查询"
   },
   {
     "id": 79,
     "planDate": "2026-10-16",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "jdbc-employee-classroom-case",
-    "title": "员工信息管理：原生 JDBC 课堂案例的分层与边界"
+    "title": "JDBC 分层与数据访问：DAO、Service 与事务边界"
   },
   {
     "id": 80,
     "planDate": "2026-10-16",
-    "stage": 6,
-    "stageName": "Web 基础",
+    "topic": "Web 基础",
     "slug": "html-css-form-notes",
     "title": "HTML 与 CSS 入门：表格、表单和提交方式"
   },
   {
     "id": 81,
     "planDate": "2026-10-16",
-    "stage": 6,
-    "stageName": "Web 基础",
+    "topic": "Web 基础",
     "slug": "javascript-dom-events-notes",
     "title": "JavaScript 基础与 DOM：用事件更新页面"
   },
   {
     "id": 82,
     "planDate": "2026-10-16",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "java-lambda-functional-interface",
-    "title": "从商品筛选理解 Lambda、函数式接口与方法引用"
+    "title": "Java Lambda、函数式接口与方法引用：以目录项筛选为例"
   },
   {
     "id": 83,
     "planDate": "2026-10-16",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "mybatis-session-mapper-basics",
-    "title": "MyBatis 入门：从商品 Mapper 到 SqlSession 的一次工作单元"
+    "title": "MyBatis Mapper 与 SqlSession：配置、执行与事务边界"
   },
   {
     "id": 84,
     "planDate": "2026-10-16",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "mybatis-association-mapping",
-    "title": "MyBatis 关联映射：部门员工的一对多与学生教师的多对多"
+    "title": "MyBatis 关联映射：分类文档的一对多与文档标签的多对多"
   },
   {
     "id": 85,
     "planDate": "2026-10-16",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Web 基础",
     "slug": "servlet-tomcat-lifecycle",
     "title": "Tomcat 与 Servlet：从 URL 映射到生命周期"
   },
   {
     "id": 86,
     "planDate": "2026-10-16",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Web 基础",
     "slug": "servlet-jsp-webcrud-classroom",
-    "title": "Servlet Web 组件练习：请求、转发、JSP 与商品列表"
+    "title": "Servlet 与 JSP 请求流程：列表查询、转发和数据绑定"
   },
   {
     "id": 87,
     "planDate": "2026-10-16",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "Spring 与数据持久化",
     "slug": "restful-employee-api-design",
-    "title": "用员工资源练习 REST 接口：路径、方法与状态码"
+    "title": "REST 接口设计：资源路径、HTTP 方法与状态码"
   },
   {
     "id": 88,
     "planDate": "2026-10-16",
-    "stage": 2,
-    "stageName": "数据库与 Spring 基础",
+    "topic": "后端工程实践",
     "slug": "git-version-control-classroom",
-    "title": "Git 课堂笔记整理：暂存、提交、分支与冲突处理"
+    "title": "Git 版本控制：工作区、暂存与分支合并"
   },
   {
     "id": 89,
     "planDate": "2026-10-16",
-    "stage": 6,
-    "stageName": "Web 基础",
+    "topic": "Web 基础",
     "slug": "vue2-admin-learning-notes",
-    "title": "Vue 2 管理后台学习记录：组件、路由与请求拦截"
+    "title": "Vue 2 单页应用：响应式、路由与请求拦截"
   },
   {
     "id": 90,
     "planDate": "2026-10-16",
-    "stage": 3,
-    "stageName": "企业开发技术学习",
+    "topic": "后端工程实践",
     "slug": "software-development-workflow-scrum",
-    "title": "软件项目开发流程笔记：从需求评审到 Scrum 迭代"
+    "title": "软件开发流程与 Scrum：从需求到迭代反馈"
   },
   {
     "id": 91,
     "planDate": "2026-10-16",
-    "stage": 3,
-    "stageName": "企业开发技术学习",
+    "topic": "后端工程实践",
     "slug": "linux-command-basics",
-    "title": "Linux 基础操作笔记：命令、权限与网络排查"
+    "title": "Linux 常用命令：文件、权限与网络排查"
   },
   {
     "id": 92,
     "planDate": "2026-10-16",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "分布式与中间件",
     "slug": "wolf2w-course-project-flow",
-    "title": "旅游分享微服务课程流程：注册、攻略与内容检索"
+    "title": "微服务中的内容发布链路：服务边界、互动统计与搜索同步"
   },
   {
     "id": 93,
     "planDate": "2026-10-16",
-    "stage": 3,
-    "stageName": "企业开发技术学习",
+    "topic": "分布式与中间件",
     "slug": "bloom-filter-fundamentals",
     "title": "布隆过滤器入门：用概率结构拦截不存在的数据"
   },
   {
     "id": 94,
     "planDate": "2026-10-16",
-    "stage": 1,
-    "stageName": "Java 基础与数据结构",
+    "topic": "Java 与并发",
     "slug": "java-design-patterns-overview",
     "title": "Java 设计模式总览：按创建、结构与行为梳理"
   },
   {
     "id": 95,
     "planDate": "2026-10-16",
-    "stage": 4,
-    "stageName": "Java 后端实习与业务实践",
+    "topic": "后端工程实践",
     "slug": "dau-mau-metrics",
     "title": "DAU 与 MAU：先统一活跃口径，再看留存和频率"
   },
   {
     "id": 96,
     "planDate": "2026-10-16",
-    "stage": 3,
-    "stageName": "企业开发技术学习",
+    "topic": "后端工程实践",
     "slug": "swagger2-skywalking-observability",
-    "title": "Swagger2 接口文档与 SkyWalking 链路追踪：课堂配置和版本边界"
+    "title": "Swagger 2 接口文档与 SkyWalking 链路追踪：兼容边界"
   },
   {
     "id": 97,
     "planDate": "2026-10-17",
-    "stage": 5,
-    "stageName": "AI 应用探索",
+    "topic": "AI 应用开发",
     "slug": "097-spring-ai-mcp-client-server",
     "title": "Spring AI MCP：用标准协议连接 Java 工具服务"
   },
   {
     "id": 98,
     "planDate": "2026-10-17",
-    "stage": 5,
-    "stageName": "AI 应用探索",
+    "topic": "AI 应用开发",
     "slug": "098-spring-ai-multi-agent-patterns",
     "title": "多智能体协同的几种编排模式：路由、串联、并行与评估"
   },
   {
     "id": 99,
     "planDate": "2026-10-17",
-    "stage": 5,
-    "stageName": "AI 应用探索",
+    "topic": "Java 与并发",
     "slug": "099-hutool-java-utilities",
     "title": "Hutool 常用工具类：字符串、标识符与 JSON"
   }

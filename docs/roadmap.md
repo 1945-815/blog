@@ -1,145 +1,120 @@
-# 内容路线图
+# 技术主题索引
 
-## 学习路线
+按技术领域浏览博客文章。内容编排参考日期用于文章排序，不代表首次公开时间；文章源记录日期保持原值。
 
-文章按五个阶段组织，顺序用于主题导航。
-
-
-## 五个阶段
-
-| 阶段 | 学习重点 |
-|---|---|
-| 阶段一：Java 基础与数据结构 | 从 Java 语法、对象和集合开始，建立可解释的基础。 |
-| 阶段二：数据库与 Spring 基础 | 把数据持久化、请求链路和工程配置连成一个小型后端应用。 |
-| 阶段三：企业开发技术学习 | 通过个人 Demo 认识微服务、缓存、消息与搜索的边界。 |
-| 阶段四：Java 后端实习与业务实践 | 结合简历可支撑的接口、预约、文档检索与审批职责做脱敏复盘。 |
-| 阶段五：AI 应用探索 | 沿文档处理、检索、模型 API 的链路继续学习。 |
-
-## 主线文章
-
-| 文章 | 阶段 |
-|---|---|
-| [我的 Java 后端学习路线：学过什么，哪些还在实践](/articles/java-backend-learning-route) | Java 基础与数据结构 |
-| [第一次理解 Java 类和对象：字段、方法与封装](/articles/002-java-class-object) | Java 基础与数据结构 |
-| [Java 集合的选择：List、Set、Map 分别解决什么问题](/articles/java-collections) | Java 基础与数据结构 |
-| [数据结构入门：数组、链表、栈、队列与复杂度](/articles/004-data-structures-basics) | Java 基础与数据结构 |
-| [Java 异常与文件 IO：把失败路径写清楚](/articles/005-java-exceptions-file-io) | Java 基础与数据结构 |
-| [Stream API 的常见用法与容易忽略的副作用](/articles/stream-api-side-effects) | Java 基础与数据结构 |
-| [Java 多线程起步：共享状态、线程安全与同步](/articles/007-java-concurrency-basics) | Java 基础与数据结构 |
-| [MySQL 表设计与多表查询：从实体关系写 SQL](/articles/008-mysql-table-design-joins) | 数据库与 Spring 基础 |
-| [数据库事务、索引与重复提交问题](/articles/mysql-transaction-index-idempotency) | 数据库与 Spring 基础 |
-| [用 EXPLAIN 理解 MySQL 索引：读懂一条查询计划](/articles/010-mysql-explain-index) | 数据库与 Spring 基础 |
-| [JDBC 预编译与 DAO：参数绑定和持久层边界](/articles/011-jdbc-preparedstatement-dao) | 数据库与 Spring 基础 |
-| [Spring MVC 请求从进入到返回的大致流程](/articles/spring-mvc-request-flow) | 数据库与 Spring 基础 |
-| [Spring IoC 与 DI：对象创建和依赖管理](/articles/013-spring-ioc-di) | 数据库与 Spring 基础 |
-| [Maven 配置文件与多环境配置的使用整理](/articles/maven-environment-config) | 数据库与 Spring 基础 |
-| [Spring AOP 与事务：横切逻辑和事务边界](/articles/015-spring-aop-transactions) | 数据库与 Spring 基础 |
-| [MyBatis 参数映射与动态 SQL：完成条件查询](/articles/016-mybatis-dynamic-sql) | 数据库与 Spring 基础 |
-| [Spring Boot 接口中的参数校验与统一错误响应](/articles/spring-validation-error-response) | 数据库与 Spring 基础 |
-| [用 MyBatis-Plus 实现条件筛选和分页查询](/articles/mybatis-plus-filter-pagination) | 数据库与 Spring 基础 |
-| [Redis 基础数据结构与 TTL：临时状态和 key 设计](/articles/019-redis-types-ttl) | 数据库与 Spring 基础 |
-| [用 Docker 搭建本地后端开发环境](/articles/docker-local-backend-environment) | 数据库与 Spring 基础 |
-| [Spring Boot 练习项目：从表结构到分页 CRUD 接口](/articles/021-springboot-crud-project) | 数据库与 Spring 基础 |
-| [Nacos 在微服务中的注册发现与配置管理](/articles/nacos-service-discovery-config) | 企业开发技术学习 |
-| [Gateway 与 OpenFeign 在服务调用中的分工](/articles/gateway-openfeign-responsibilities) | 企业开发技术学习 |
-| [热门文档访问场景下的 Redis 缓存设计](/articles/redis-hot-document-cache) | 企业开发技术学习 |
-| [RabbitMQ 异步处理的基本流程与消费者边界](/articles/rabbitmq-consumer-boundary) | 企业开发技术学习 |
-| [Elasticsearch 标题与内容检索的索引设计](/articles/elasticsearch-document-search-mapping) | 企业开发技术学习 |
-| [Sentinel 限流实践：规则、入口与降级边界](/articles/sentinel-flow-control) | 企业开发技术学习 |
-| [Spring Security 与 JWT 的认证授权流程](/articles/spring-security-jwt-flow) | 企业开发技术学习 |
-| [Java 后端项目中的接口文档与安全检查清单](/articles/api-doc-security-checklist) | Java 后端实习与业务实践 |
-| [预约和服务订单中的状态流转与重复提交](/articles/appointment-order-state-idempotency) | Java 后端实习与业务实践 |
-| [诊所预约与审批平台的业务流程设计（脱敏）](/articles/clinic-appointment-approval-redacted) | Java 后端实习与业务实践 |
-| [Redis TTL 在验证码和临时状态管理中的应用](/articles/redis-ttl) | Java 后端实习与业务实践 |
-| [Activiti 7 审批流程：从流程定义到任务处理](/articles/activiti7-approval-flow) | Java 后端实习与业务实践 |
-| [文档检索服务的接口设计：上传、分类与分页](/articles/document-search-api-design) | Java 后端实习与业务实践 |
-| [评论或举报审批如何接入 Activiti 流程](/articles/activiti-comment-report-approval) | Java 后端实习与业务实践 |
-| [审批状态、任务状态与业务状态如何对应](/articles/approval-and-business-status) | Java 后端实习与业务实践 |
-| [用 Canal 同步 MySQL 变更到搜索索引](/articles/canal-mysql-to-elasticsearch) | Java 后端实习与业务实践 |
-| [Codex 和 Cursor 如何辅助接口开发与代码理解](/articles/ai-coding-tools-workflow) | Java 后端实习与业务实践 |
-| [企业文档检索平台的模块划分与技术选型（脱敏）](/articles/document-retrieval-platform-redacted) | Java 后端实习与业务实践 |
-| [从实习项目中复盘接口开发、联调与问题定位](/articles/internship-api-collaboration-retro) | Java 后端实习与业务实践 |
-| [RAG 文档问答的基本链路：文档、检索与模型 API](/articles/rag-document-qa) | AI 应用探索 |
-| [文档切分和向量检索：一个小型 RAG Demo 的实现](/articles/rag-chunking-vector-search-demo) | AI 应用探索 |
-| [用 Spring AI 和 Ollama 完成第一次本地模型调用](/articles/043-spring-ai-ollama) | AI 应用探索 |
-| [Embedding 接入 Elasticsearch：dense_vector、KNN 与维度核对](/articles/044-elasticsearch-embedding-knn) | AI 应用探索 |
-| [Agent 工具调用：输入校验、权限边界与失败处理](/articles/045-agent-tool-boundaries) | AI 应用探索 |
-
-## 主题补充文章
-
-下面补充文章归档中的其他文章，按主题提供导航入口。主线学习顺序以上表为准。
-
-### Java 语言、并发与 JVM
+## Java 与并发
 
 - [从接口到运行时分派：用多态组织可扩展的 Java 业务](/articles/046-java-polymorphism-interface)
-- [CompletableFuture 异步编排：线程池隔离、超时与异常边界](/articles/051-completablefuture-async-orchestration)
-- [JVM 内存与 OOM 排查：从运行时区域到堆转储证据](/articles/052-jvm-memory-oom-diagnosis)
-- [Java 类加载与 SPI：从类身份到可控的扩展发现](/articles/053-java-spi-classloader)
-- [Java 反射与内省：理解框架如何读取对象属性](/articles/056-java-reflection-bean-introspection)
-- [Java 日期时间处理：用 java.time 解决时区与区间边界](/articles/061-java-time-zone-boundaries)
-- [Java 字符串实践：String 不可变性与 StringBuilder](/articles/066-java-string-stringbuilder)
-- [Java 泛型为什么不能随便强转：类型擦除、通配符与分页 DTO](/articles/071-java-generics-type-erasure)
+- [数据结构入门：数组、链表、栈、队列与复杂度](/articles/004-data-structures-basics)
 - [BigDecimal 金额计算：从舍入规则到分摊尾差](/articles/072-bigdecimal-money-rounding)
+- [CompletableFuture 异步编排：线程池隔离、超时与异常边界](/articles/051-completablefuture-async-orchestration)
+- [Java 多线程起步：共享状态、线程安全与同步](/articles/007-java-concurrency-basics)
+- [Java 反射与内省：理解框架如何读取对象属性](/articles/056-java-reflection-bean-introspection)
+- [Java 泛型为什么不能随便强转：类型擦除、通配符与分页 DTO](/articles/071-java-generics-type-erasure)
+- [Java 后端技术地图：语言基础、工程实践与 AI 应用](/articles/java-backend-learning-route)
+- [Java 基础语法：变量、输入与流程控制](/articles/java-syntax-control-flow-notes)
+- [Java 集合的选择：List、Set、Map 分别解决什么问题](/articles/java-collections)
+- [Java 类和对象：字段、方法与封装](/articles/002-java-class-object)
+- [Java 类加载与 SPI：从类身份到可控的扩展发现](/articles/053-java-spi-classloader)
+- [Java 日期时间处理：用 java.time 解决时区与区间边界](/articles/061-java-time-zone-boundaries)
+- [Java 设计模式总览：按创建、结构与行为梳理](/articles/java-design-patterns-overview)
+- [Java 异常与文件 IO：把失败路径写清楚](/articles/005-java-exceptions-file-io)
+- [Java 字符串实践：String 不可变性与 StringBuilder](/articles/066-java-string-stringbuilder)
+- [Java Lambda、函数式接口与方法引用：以目录项筛选为例](/articles/java-lambda-functional-interface)
+- [JVM 内存与 OOM 排查：从运行时区域到堆转储证据](/articles/052-jvm-memory-oom-diagnosis)
+- [Object 与包装类：判等、装箱和类型转换](/articles/java-object-wrapper-notes)
+- [Stream API 的常见用法与容易忽略的副作用](/articles/stream-api-side-effects)
+- [Hutool 常用工具类：字符串、标识符与 JSON](/articles/099-hutool-java-utilities)
 
-### Spring、工程化与微服务
+## Spring 与数据持久化
 
-- [MyBatis 查询与批量写入性能：识别 N+1 并控制数据库往返](/articles/047-mybatis-query-batch-performance)
-- [Maven 多模块项目：聚合、依赖管理与团队构建边界](/articles/048-maven-multi-module)
-- [Spring Boot 启动与自动配置：从条件装配到问题诊断](/articles/049-springboot-auto-configuration)
-- [RuoYi RBAC 权限模型：从角色菜单到后端接口校验](/articles/050-ruoyi-rbac-permission-model)
-- [Spring 定时任务与 Quartz：从单机触发到多实例调度](/articles/055-quartz-scheduled-jobs)
-- [Nginx 反向代理与负载均衡：把请求稳妥地交给 Spring Boot](/articles/058-nginx-java-load-balancing)
-- [Spring Boot 应用容器化发布：从可执行 JAR 到多阶段镜像](/articles/059-springboot-docker-multistage)
+- [数据库事务、索引与重复提交问题](/articles/mysql-transaction-index-idempotency)
+- [用 EXPLAIN 理解 MySQL 索引：读懂一条查询计划](/articles/010-mysql-explain-index)
+- [用 MyBatis-Plus 实现条件筛选和分页查询](/articles/mybatis-plus-filter-pagination)
+- [JDBC 分层与数据访问：DAO、Service 与事务边界](/articles/jdbc-employee-classroom-case)
+- [JDBC 预编译与 DAO：参数绑定和持久层边界](/articles/011-jdbc-preparedstatement-dao)
+- [MyBatis 参数映射与动态 SQL：完成条件查询](/articles/016-mybatis-dynamic-sql)
+- [MyBatis 关联映射：分类文档的一对多与文档标签的多对多](/articles/mybatis-association-mapping)
+- [MyBatis Mapper 与 SqlSession：配置、执行与事务边界](/articles/mybatis-session-mapper-basics)
+- [MySQL 表设计与多表查询：从实体关系写 SQL](/articles/008-mysql-table-design-joins)
+- [MySQL 分组统计：从订单明细到分类报表](/articles/062-mysql-grouped-reporting)
+- [MySQL DDL、DML 与单表查询](/articles/mysql-basic-crud-notes)
+- [MySQL InnoDB MVCC：一致性读与事务快照](/articles/067-mysql-innodb-mvcc-consistent-read)
+- [Redis 基础数据结构与 TTL：临时状态和 key 设计](/articles/019-redis-types-ttl)
+- [REST 接口设计：资源路径、HTTP 方法与状态码](/articles/restful-employee-api-design)
+- [Spring AOP 与事务：横切逻辑和事务边界](/articles/015-spring-aop-transactions)
+- [Spring Boot 分层 CRUD 示例：从表结构到分页接口](/articles/021-springboot-crud-project)
+- [Spring Boot 接口中的参数校验与统一错误响应](/articles/spring-validation-error-response)
+- [Spring IoC 与 DI：对象创建和依赖管理](/articles/013-spring-ioc-di)
+- [Spring MVC 请求从进入到返回的大致流程](/articles/spring-mvc-request-flow)
+
+## 分布式与中间件
+
+- [布隆过滤器入门：用概率结构拦截不存在的数据](/articles/bloom-filter-fundamentals)
+- [热门文档访问场景下的 Redis 缓存设计](/articles/redis-hot-document-cache)
+- [微服务中的内容发布链路：服务边界、互动统计与搜索同步](/articles/wolf2w-course-project-flow)
+- [Elasticsearch 标题与内容检索的索引设计](/articles/elasticsearch-document-search-mapping)
+- [Gateway 与 OpenFeign 在服务调用中的分工](/articles/gateway-openfeign-responsibilities)
+- [Nacos 在微服务中的注册发现与配置管理](/articles/nacos-service-discovery-config)
+- [RabbitMQ 异步处理的基本流程与消费者边界](/articles/rabbitmq-consumer-boundary)
+- [Sentinel 限流实践：规则、入口与降级边界](/articles/sentinel-flow-control)
+- [Spring Security 与 JWT 的认证授权流程](/articles/spring-security-jwt-flow)
 - [Spring Cloud Gateway 过滤器顺序与耗时统计](/articles/063-gateway-filter-order-timing)
+
+## 后端工程实践
+
+- [用 Docker 搭建本地后端开发环境](/articles/docker-local-backend-environment)
+- [Git 版本控制：工作区、暂存与分支合并](/articles/git-version-control-classroom)
+- [Maven 配置文件与多环境配置的使用整理](/articles/maven-environment-config)
+- [软件开发流程与 Scrum：从需求到迭代反馈](/articles/software-development-workflow-scrum)
+- [Linux 常用命令：文件、权限与网络排查](/articles/linux-command-basics)
+- [Swagger 2 接口文档与 SkyWalking 链路追踪：兼容边界](/articles/swagger2-skywalking-observability)
+- [后端接口协作：契约、联调与问题定位](/articles/internship-api-collaboration-retro)
+- [评论或举报审批如何接入 Activiti 流程](/articles/activiti-comment-report-approval)
+- [审批状态、任务状态与业务状态如何对应](/articles/approval-and-business-status)
+- [文档检索服务的接口设计：上传、分类与分页](/articles/document-search-api-design)
+- [文档检索系统设计：MySQL、Elasticsearch 与 RAG 的边界](/articles/document-retrieval-platform-redacted)
+- [用 Canal 同步 MySQL 变更到搜索索引](/articles/canal-mysql-to-elasticsearch)
+- [预约和服务订单中的状态流转与重复提交](/articles/appointment-order-state-idempotency)
+- [预约与审批的状态建模：业务状态、任务状态与幂等](/articles/clinic-appointment-approval-redacted)
+- [Activiti 7 审批流程：从流程定义到任务处理](/articles/activiti7-approval-flow)
+- [Codex 和 Cursor 如何辅助接口开发与代码理解](/articles/ai-coding-tools-workflow)
+- [DAU 与 MAU：先统一活跃口径，再看留存和频率](/articles/dau-mau-metrics)
+- [Elasticsearch 深分页：用 PIT 与 search_after 稳定翻页](/articles/074-elasticsearch-pit-search-after)
+- [Elasticsearch bool 查询与高亮：组合过滤条件并返回可展示片段](/articles/064-elasticsearch-bool-highlight)
+- [Java 后端项目中的接口文档与安全检查清单](/articles/api-doc-security-checklist)
 - [Linux 上运行 Spring Boot JAR：systemd 管理与故障排查](/articles/065-linux-springboot-jar-systemd)
-
-### 数据库、缓存与搜索
-
+- [Maven 多模块项目：聚合、依赖管理与团队构建边界](/articles/048-maven-multi-module)
+- [MyBatis 查询与批量写入性能：识别 N+1 并控制数据库往返](/articles/047-mybatis-query-batch-performance)
+- [Nginx 反向代理与负载均衡：把请求稳妥地交给 Spring Boot](/articles/058-nginx-java-load-balancing)
+- [RBAC 权限模型：角色、菜单与接口授权](/articles/050-ruoyi-rbac-permission-model)
+- [Redis 持久化与恢复：RDB、AOF 和缓存重建的边界](/articles/075-redis-persistence-recovery)
 - [Redis 分布式锁实践：租约、唯一标识与数据库兜底](/articles/054-redis-distributed-lock)
 - [Redis Lua 实现每日点赞配额：把检查和计数放进同一次操作](/articles/057-redis-daily-quota-lua)
-- [MySQL 分组统计实战：从订单明细到分类报表](/articles/062-mysql-grouped-reporting)
-- [Elasticsearch bool 查询与高亮：组合过滤条件并返回可展示片段](/articles/064-elasticsearch-bool-highlight)
-- [MySQL InnoDB MVCC：一致性读与事务快照](/articles/067-mysql-innodb-mvcc-consistent-read)
-- [Elasticsearch 深分页：用 PIT 与 search_after 稳定翻页](/articles/074-elasticsearch-pit-search-after)
-- [Redis 持久化与恢复：RDB、AOF 和缓存重建的边界](/articles/075-redis-persistence-recovery)
-
-### AI 与工程实践
-
-- [RAG 检索评估：用黄金问题集定位召回与回答问题](/articles/060-rag-retrieval-evaluation)
-- [Transactional Outbox：让 MySQL 写入与 RabbitMQ 事件可靠衔接](/articles/068-transactional-outbox-mysql-rabbitmq)
-- [Spring AI 流式响应：用 WebFlux 与 SSE 逐段返回模型内容](/articles/069-spring-ai-streaming-sse)
-- [Spring AI 会话记忆：会话隔离、窗口裁剪与 JDBC 持久化](/articles/070-spring-ai-chat-memory-session)
-- [Spring AI MCP：用标准协议连接 Java 工具服务](/articles/097-spring-ai-mcp-client-server)
-- [多智能体协同的几种编排模式：路由、串联、并行与评估](/articles/098-spring-ai-multi-agent-patterns)
-- [Hutool 常用工具类：字符串、标识符与 JSON](/articles/099-hutool-java-utilities)
+- [Redis TTL 在验证码和临时状态管理中的应用](/articles/redis-ttl)
+- [Spring 定时任务与 Quartz：从单机触发到多实例调度](/articles/055-quartz-scheduled-jobs)
+- [Spring Boot 启动与自动配置：从条件装配到问题诊断](/articles/049-springboot-auto-configuration)
 - [Spring Boot 文件上传：大小校验、隔离存储与失败补偿](/articles/073-springboot-file-upload-quarantine)
+- [Spring Boot 应用容器化发布：从可执行 JAR 到多阶段镜像](/articles/059-springboot-docker-multistage)
+- [Transactional Outbox：让 MySQL 写入与 RabbitMQ 事件可靠衔接](/articles/068-transactional-outbox-mysql-rabbitmq)
 
-## 课堂资料补充
+## AI 应用开发
 
-以下文章依据课堂笔记整理，补足原路线中缺少的基础主题，内容属于学习整理与课堂案例。
-
-1. [Java 基础语法：变量、输入与流程控制](/articles/java-syntax-control-flow-notes)
-2. [Object 与包装类](/articles/java-object-wrapper-notes)
-3. [MySQL 基础 SQL：建表与单表查询](/articles/mysql-basic-crud-notes)
-4. [员工信息管理：JDBC 课堂案例](/articles/jdbc-employee-classroom-case)
-5. [HTML 与 CSS：表格与表单](/articles/html-css-form-notes)
-6. [JavaScript 基础与 DOM 事件](/articles/javascript-dom-events-notes)
-
-### 课程资料补充
-
-本批文章依据课程笔记和资料整理。课堂项目复盘明确标注为学习案例；独立示例不表示真实企业项目实践。
-
-- [Linux 基础操作笔记：命令、权限与网络排查](/articles/linux-command-basics)
-- [旅游分享微服务课程流程：注册、攻略与内容检索](/articles/wolf2w-course-project-flow)
-- [布隆过滤器入门：用概率结构拦截不存在的数据](/articles/bloom-filter-fundamentals)
-- [Java 设计模式总览：按创建、结构与行为梳理](/articles/java-design-patterns-overview)
-- [DAU 与 MAU：先统一活跃口径，再看留存和频率](/articles/dau-mau-metrics)
-- [Swagger2 接口文档与 SkyWalking 链路追踪：课堂配置和版本边界](/articles/swagger2-skywalking-observability)
-
-### 五阶段资料对照补充
-
-三篇文章按资料类型区分代码证据与设计梳理。
-
-- [Spring AI MCP：用标准协议连接 Java 工具服务](/articles/097-spring-ai-mcp-client-server)
 - [多智能体协同的几种编排模式：路由、串联、并行与评估](/articles/098-spring-ai-multi-agent-patterns)
-- [Hutool 常用工具类：字符串、标识符与 JSON](/articles/099-hutool-java-utilities)
+- [Agent 工具调用：输入校验、权限边界与失败处理](/articles/045-agent-tool-boundaries)
+- [Embedding 接入 Elasticsearch：dense_vector、KNN 与维度核对](/articles/044-elasticsearch-embedding-knn)
+- [RAG 检索评估：用黄金问题集定位召回与回答问题](/articles/060-rag-retrieval-evaluation)
+- [RAG 文档切分与向量检索：实现和评估边界](/articles/rag-chunking-vector-search-demo)
+- [RAG 文档问答的基本链路：文档、检索与模型 API](/articles/rag-document-qa)
+- [Spring AI 会话记忆：会话隔离、窗口裁剪与 JDBC 持久化](/articles/070-spring-ai-chat-memory-session)
+- [Spring AI 流式响应：用 WebFlux 与 SSE 逐段返回模型内容](/articles/069-spring-ai-streaming-sse)
+- [Spring AI 与 Ollama：配置和本地模型调用](/articles/043-spring-ai-ollama)
+- [Spring AI MCP：用标准协议连接 Java 工具服务](/articles/097-spring-ai-mcp-client-server)
+
+## Web 基础
+
+- [Servlet 与 JSP 请求流程：列表查询、转发和数据绑定](/articles/servlet-jsp-webcrud-classroom)
+- [Tomcat 与 Servlet：从 URL 映射到生命周期](/articles/servlet-tomcat-lifecycle)
+- [HTML 与 CSS 入门：表格、表单和提交方式](/articles/html-css-form-notes)
+- [JavaScript 基础与 DOM：用事件更新页面](/articles/javascript-dom-events-notes)
+- [Vue 2 单页应用：响应式、路由与请求拦截](/articles/vue2-admin-learning-notes)

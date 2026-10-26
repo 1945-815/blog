@@ -1,22 +1,18 @@
 ---
-title: "Linux 基础操作笔记：命令、权限与网络排查"
+title: "Linux 常用命令：文件、权限与网络排查"
 date: "2026-10-16"
 categories: ["工程实践"]
 tags: ["Linux", "命令行", "权限", "网络排查"]
-description: "整理 CentOS 7 课堂资料中的文件操作、权限、服务与网络排查，并标注旧环境边界。"
+description: "整理文件操作、权限、进程和网络排查命令，并说明发行版与安全配置的边界。"
 plan_date: "2026-10-16"
-phase: "企业开发技术学习"
+phase: "后端工程实践"
 ---
 
-# Linux 基础操作笔记：命令、权限与网络排查
+# Linux 常用命令：文件、权限与网络排查
 
-课堂环境是 VMware NAT 网络中的 CentOS 7 Minimal，通过 SecureCRT 使用 SSH 连接。示例命令是学习用例，不代表在生产服务器上执行过。
+Linux 路径区分大小写。执行文件操作前先用 `pwd` 确认当前位置，并检查命令影响范围；不同发行版的服务名、网络配置工具和软件包管理方式可能不同。
 
-CentOS Linux 7 已于 2024 年 6 月 30 日结束维护。复现旧课程时可以使用隔离的虚拟机；新环境应选择仍受维护的发行版，并按对应版本确认网络和软件包管理方式。[CentOS Linux 生命周期说明](https://www.centos.org/centos-linux/)
-
-## 一、文件与目录操作
-
-Linux 路径区分大小写。先用 `pwd` 确认当前目录，再执行文件操作。
+## 文件与目录
 
 ~~~bash
 pwd
@@ -28,7 +24,7 @@ mv ~/lab/notes.bak ~/lab/notes-old.txt
 rm ~/lab/notes-old.txt
 ~~~
 
-查找和阅读日志：
+阅读和查找日志时，可先确认文件路径与权限：
 
 ~~~bash
 find /var/log -type f -name "*.log"
@@ -37,7 +33,7 @@ tail -n 100 app.log
 tail -f app.log
 ~~~
 
-压缩包先查看清单，再解压到明确目录：
+压缩包先查看文件清单，再解压到明确目录：
 
 ~~~bash
 tar -czf logs.tar.gz ./logs
@@ -45,7 +41,7 @@ tar -tzf logs.tar.gz
 tar -xzf logs.tar.gz -C /tmp
 ~~~
 
-## 二、进程、服务和权限
+## 进程、服务与权限
 
 ~~~bash
 ps -ef | grep '[j]ava'
@@ -57,11 +53,11 @@ chmod 640 app.yml
 sudo chown app:app app.yml
 ~~~
 
-服务应使用低权限专用账号；`chmod 777` 不是权限问题的通用修复。课程虚拟机使用的弱口令只适合隔离练习，不能沿用到可访问的主机。
+服务宜使用权限受限的专用账号。`chmod 777` 会向所有用户开放读写执行权限，不是通用的权限修复方式。实际服务单元名称也可能因发行版或软件包而异，可先用 `systemctl list-unit-files` 查询。
 
-## 三、网络排查
+## 网络排查
 
-VMware NAT、虚拟网卡、来宾系统地址和默认路由都可能影响连接。先核对网络信息，不要直接关闭防火墙：
+先查看接口、路由、名称解析和监听端口，再检查防火墙及上游网络：
 
 ~~~bash
 ip addr
@@ -71,19 +67,12 @@ ss -lntp
 curl -v http://127.0.0.1:8080/actuator/health
 ~~~
 
-课堂中的 CentOS 7 静态网络配置使用 `/etc/sysconfig/network-scripts/ifcfg-ens...`；该路径不能直接套用到所有新版本发行版。只开放所需网络端口，并按系统版本核对配置工具。
+`curl` 示例要求目标应用提供该健康检查路径。若服务部署在容器或虚拟机中，还要核对端口映射、虚拟网络、来宾地址和默认路由；容器 IP 通常不应作为固定地址，容器网络内优先使用服务名。
 
-## 四、vi 和 SSH 连接
+较旧的 CentOS 7 环境可能通过 `/etc/sysconfig/network-scripts/ifcfg-*` 配置网卡。CentOS Linux 7 已于 2024 年 6 月 30 日结束维护，因此这类路径只适用于相应旧环境；新系统应查阅当前发行版文档并使用受支持的网络管理工具。[CentOS Linux 生命周期说明](https://www.centos.org/centos-linux/)
 
-改系统配置前先备份；影响网络或 SSH 的改动要确保能从虚拟机控制台恢复。
+## SSH 与变更恢复
 
-课程用 SSH 连接虚拟机的 22 端口。生产环境应按组织规范配置密钥、账号权限、来源限制和审计。
+修改网络或 SSH 配置前应备份文件，并确认有可用的带外或本地控制台访问方式，以便在远程连接中断时恢复。可访问的主机应按组织安全要求配置密钥认证、账号权限、来源限制和审计，不使用弱口令。
 
-## 与已有部署文章的关系
-
-博客已有 [Linux 上运行 Spring Boot JAR 的 systemd 管理笔记](/articles/065-linux-springboot-jar-systemd)，侧重应用服务部署。CentOS 7 的具体命令保留为旧课堂环境记录，不是新服务器部署建议。
-
-
-- Linux 基础学习笔记
-- Linux 基础练习题
-- Linux 进阶网络配置笔记
+博客中的 [Linux 上使用 systemd 管理 Spring Boot JAR](./065-linux-springboot-jar-systemd.md) 进一步讨论应用进程管理。

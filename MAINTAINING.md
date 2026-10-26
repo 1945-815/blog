@@ -13,24 +13,22 @@ npm run docs:dev
 npm run docs:build
 ```
 
-## 个人资料与项目
+## 个人资料与公开页面
 
-- 主页职业摘要、教育经历、实习经历与技能分组：`docs/.vitepress/theme/data/profile.ts`
-- 主页项目卡片：`docs/.vitepress/theme/data/projects.ts`
-- 项目介绍和详情：`docs/projects.md`、`docs/projects/`
+- 个人简介与教育信息：`docs/.vitepress/theme/data/profile.ts`
 - 关于页：`docs/about.md`
 
-修改职业事实前，请与最新简历核对。页面当前只写入本次任务明确提供的内容；手机号和私人邮箱没有在公开页展示。
+公开页面只保留有明确依据且适合公开的信息；不要加入雇主、内部系统、客户、未授权源码或无法核实的经历和结果。
 
 ## 文章、分类与日期
 
 - 文章正文与 Front Matter：`docs/articles/*.md`
-- 学习阶段和原有路线参考数据：`content-plan.json`
+- 内容编排顺序与文章索引：`content-plan.json`
 - 文章列表全文索引由 `docs/article-search.data.ts` 从现有 Markdown 自动生成；搜索时才加载正文索引，首页不会下载它。
 
-文章的 `date` 字段保留原有含义；`plan_date` 用作阶段参考或内容规划。新增文章时依照原文来源填写，不能把写作日、规划日和真实公开日互相替换。
+文章的 `date` 与 `plan_date` 均保留原值和原始含义。新增文章时依照可核验来源填写，不能把写作日、规划日和真实公开日互相替换。
 
-文章分类页根据标题、原有分类、标签和阶段信息汇总；筛选条件同步至 URL。不要为了填充分类而新增没有对应文章的标签。
+文章分类页根据标题、分类、标签和技术主题汇总；筛选条件同步至 URL。不要为了填充分类而新增没有对应文章的标签。
 
 ## 友情链接
 
@@ -50,7 +48,7 @@ npm run docs:build
 
 ## 音乐
 
-在 `docs/.vitepress/theme/data/music.ts` 添加曲目。优先使用获准公开的本地音频，例如放在 `docs/public/music/`，并把路径写成 `/music/文件名.mp3`；也可使用稳定且有权使用的公开源。播放器由用户点击后才开始播放，并在站内路由切换时保留实例。
+在 `docs/.vitepress/theme/data/music.ts` 添加曲目。优先使用获准公开的本地音频，例如放在 `docs/public/music/`，并把路径写成 `/music/文件名.mp3`；也可使用稳定且有权使用的公开源。播放器首次加载时尝试自动播放并恢复上次曲目；浏览器可能阻止有声自动播放，此时用户可点击播放键开始。播放器在站内路由切换时保留实例。
 
 浏览器只在 `localStorage` 中保存曲目序号、播放位置、音量、随机和循环偏好；不会保存私人相册密码。不要添加未经授权的音源或盗链。
 

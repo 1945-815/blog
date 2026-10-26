@@ -5,12 +5,12 @@ categories: ["Java 基础"]
 tags: ["Java", "Hutool", "工具类", "JSON"]
 description: "整理 Hutool 常用 API、依赖版本和不应交给工具类的业务判断。"
 plan_date: "2026-10-17"
-phase: "AI 应用探索"
+phase: "Java 与并发"
 ---
 
 # Hutool 常用工具类：字符串、标识符与 JSON
 
-## 一、引入依赖
+## 引入依赖
 
 
 ~~~xml
@@ -23,7 +23,7 @@ phase: "AI 应用探索"
 
 示例使用 Hutool 5.8.34。新项目应使用项目统一管理的版本，并核对对应 API 文档、Java 版本要求和安全更新；不要因为示例中出现某个版本就直接复制到所有工程。
 
-## 二、把常见工具放到一次输入处理中
+## 把常见工具放到一次输入处理中
 
 下面的例子把表单名称做空白处理和校验，生成一个请求关联标识，再序列化为 JSON。它展示工具类 API 的组合，不构成业务校验或授权：
 
@@ -52,7 +52,7 @@ public class HutoolLogExample {
 
 `StrUtil.isBlank` 适合判断空字符串和空白字符；`IdUtil.simpleUUID` 生成不带连字符的 UUID 文本；`JSONUtil.toJsonStr` 负责 JSON 序列化。这个 `requestId` 只用于关联一次请求的日志，不能作为登录凭证、授权令牌或数据库唯一约束的替代品。
 
-## 三、思维导图中的工具分类
+## 思维导图中的工具分类
 
 | 工具类 | 常见用途 | 使用边界 |
 | --- | --- | --- |
@@ -66,13 +66,13 @@ public class HutoolLogExample {
 | `MapUtil`、`JSONUtil` | Map 操作与 JSON 转换 | JSON 格式正确不代表字段可信；反序列化后仍需 schema 和业务校验 |
 | `SpringUtil` | 从 Spring 容器取 Bean | 常规业务优先构造器注入；静态全局取 Bean 会隐藏依赖关系 |
 
-## 四、在 Spring AI 辅助代码中的位置
+## 在 Spring AI 辅助代码中的位置
 
 天气查询工具可以用 `HttpUtil` 请求外部服务，再用 `JSONUtil` 读取响应并组装 `WeatherDTO`。工具类减少重复的 HTTP/JSON 操作，但不会替代超时、状态码检查、响应字段校验、异常映射和密钥保护。对外服务调用仍应使用连接超时和读取超时，并且只把必要字段返回给模型。
 
 当工具由 `@Tool` 暴露给模型时，调用参数仍然不可信：先校验城市 id，再访问服务端；结果应脱敏并限制大小。工具类的便捷 API 不能把这个安全边界自动补上。
 
-## 五、常见问题
+## 常见问题
 
 ### `isEmpty` 和 `isBlank` 怎么选？
 
@@ -90,7 +90,7 @@ public class HutoolLogExample {
 
 不可靠。解析器只负责把文本转换成对象；字段类型、范围、身份和业务状态仍要由应用校验。
 
-## 六、学习总结
+## 小结
 
 Hutool 把字符串、集合、日期、ID、Bean 和 JSON 的常见操作放进统一工具库，适合减少样板代码。使用时仍要理解 API 的边界：序列化不做业务验证，Bean 复制不做字段授权，随机数不等于安全令牌，日期格式化也不会自动决定正确时区。
 
