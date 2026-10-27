@@ -3,5 +3,5 @@ import { withBase } from 'vitepress'
 </script>
 
 <template>
-  <img class="brand-mark" :src="withBase('/wave-mark.svg')" alt="派大星头像" width="36" height="36" />
+  <img class="brand-mark" :src="withBase('/patrick-star.png')" alt="派大星" width="40" height="40" />
 </template>

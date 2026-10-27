@@ -36,3 +36,5 @@ import ContactCard from './.vitepress/theme/components/ContactCard.vue'
 <ContactCard />
 
 </div>
+
+<p class="about-asset-attribution">派大星头像：<a href="https://commons.wikimedia.org/wiki/File:Patrick_Star_character.png" target="_blank" rel="noopener noreferrer">NickRewind（Wikimedia Commons）</a>，采用 <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener noreferrer">CC BY 3.0</a> 许可；图像已缩放用于站点标识。</p>
