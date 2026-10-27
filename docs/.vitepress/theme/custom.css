@@ -53,7 +53,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .has-scrolled .VPNavBar { box-shadow: 0 6px 20px rgba(22, 34, 31, .055); }
 .VPNavBar .divider-line { background-color: var(--blog-line) !important; }
 .VPNavBarTitle .title { font-weight: 720; letter-spacing: -.035em; }
-.brand-mark { display: block; width: 32px; height: 32px; margin-right: 9px; }
+.brand-mark { display: block; width: 36px; height: 36px; margin-right: 9px; }
 .VPNavBar .VPNavBarSearch .DocSearch-Button,
 .VPNavBar .VPNavBarSearch .VPNavBarSearchButton { min-height: 34px; border: 1px solid var(--blog-line); border-radius: 7px; background: var(--blog-card); color: var(--vp-c-text-2); box-shadow: none; }
 .VPNavBar .VPNavBarSearch .DocSearch-Button:hover,
